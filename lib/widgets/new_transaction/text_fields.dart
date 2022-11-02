@@ -4,7 +4,7 @@ import '../../controllers/new_transaction_controller.dart';
 
 class TextInputFields extends StatelessWidget {
   TextInputFields({super.key});
-  final Controller c = Get.find();
+  final NewTransactionController c = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,12 @@ class TextInputFields extends StatelessWidget {
               color: Colors.white,
             ),
             decoration: const InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+              ),
               labelText: 'Title',
               labelStyle: TextStyle(
                 color: Color.fromARGB(255, 33, 150, 243),
@@ -31,6 +37,12 @@ class TextInputFields extends StatelessWidget {
               color: Colors.white,
             ),
             decoration: const InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+              ),
               labelText: 'Amount',
               labelStyle: TextStyle(
                 color: Color.fromARGB(255, 33, 150, 243),

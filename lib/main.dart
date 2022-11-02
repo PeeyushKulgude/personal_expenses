@@ -7,7 +7,7 @@ void main() {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      systemNavigationBarColor: Color.fromARGB(255, 14, 14, 14),
+      systemNavigationBarColor: Color.fromARGB(161, 14, 14, 14),
     ),
   );
   runApp(const MyApp());
@@ -16,6 +16,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 
 class DateChoice extends StatelessWidget {
 
-  final Controller c = Get.find();
+  final NewTransactionController c = Get.find();
+
+  DateChoice({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(

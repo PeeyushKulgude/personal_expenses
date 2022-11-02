@@ -41,6 +41,8 @@ dependencies:
   flutter_staggered_grid_view:
   loading_animation_widget:
   get:
+  path:
+  pie_chart:
 
 dev_dependencies:
   flutter_test:

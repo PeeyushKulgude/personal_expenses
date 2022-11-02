@@ -1,3 +1,4 @@
+import 'category_select.dart';
 import 'text_fields.dart';
 import 'date_choice.dart';
 import 'account_choice.dart';
@@ -7,12 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/new_transaction_controller.dart';
 
-
 class NewTransaction extends StatelessWidget {
   final Function addTx;
   NewTransaction(this.addTx, {super.key});
 
-  final Controller c = Get.put(Controller());
+  final NewTransactionController c = Get.put(NewTransactionController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class NewTransaction extends StatelessWidget {
                 ),
               ),
             ),
+            CategorySelect(),
             TextInputFields(),
             DateChoice(),
             AccountChoice(),

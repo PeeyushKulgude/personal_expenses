@@ -7,7 +7,7 @@ import 'chart_bar.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
 
-  Chart(this.recentTransactions);
+  const Chart(this.recentTransactions, {super.key});
 
   List<Map<String, Object>> get groupedTransactionValuesWeekly {
     return List.generate(7, (index) {
@@ -52,7 +52,7 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromARGB(255, 14, 14, 14),
+      color: const Color.fromARGB(255, 14, 14, 14),
       margin: const EdgeInsets.all(20),
       child: Column(children: [
         Padding(

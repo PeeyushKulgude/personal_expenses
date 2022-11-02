@@ -7,7 +7,7 @@ class AddTransaction extends StatelessWidget {
   Function aT;
   AddTransaction(this.aT, {super.key});
 
-  final Controller c = Get.find();
+  final NewTransactionController c = Get.find();
 
   void _addTransaction() {
     String acc = "";
@@ -25,15 +25,21 @@ class AddTransaction extends StatelessWidget {
     } else if (c.typeChoice.value == 2) {
       currType = "Expense";
     }
-    final enteredTitle = c.titleController.value.text;
+
+    var enteredTitle = c.titleController.value.text;
     final enteredAmount = double.parse(c.amountController.value.text);
 
-    if (enteredTitle.isEmpty ||
-        enteredAmount <= 0 ||
+    if (enteredTitle == '') {
+      c.titleController.value.text = c.currCategory.value;
+    }
+
+    if (enteredAmount <= 0 ||
         c.accountChoice.value == 0 ||
-        c.typeChoice.value == 0) {
+        c.typeChoice.value == 0 ||
+        c.currCategory.value == '') {
       c.accountChoice = 0.obs;
       c.typeChoice = 0.obs;
+      c.currCategory = ''.obs;
 
       c.titleController.value.clear();
       c.amountController.value.clear();
@@ -42,14 +48,17 @@ class AddTransaction extends StatelessWidget {
       return;
     } else {
       aT(Transaction(
-          title: c.titleController.value.text,
-          amount: int.parse(c.amountController.value.text),
-          date: c.currDate.value,
-          type: currType,
-          account: acc));
+        title: c.titleController.value.text,
+        amount: int.parse(c.amountController.value.text),
+        date: c.currDate.value,
+        type: currType,
+        account: acc,
+        category: c.currCategory.value,
+      ));
 
       c.accountChoice = 0.obs;
       c.typeChoice = 0.obs;
+      c.currCategory = ''.obs;
 
       c.titleController.value.clear();
       c.amountController.value.clear();

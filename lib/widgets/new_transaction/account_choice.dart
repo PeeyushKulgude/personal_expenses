@@ -5,7 +5,7 @@ import '../../controllers/new_transaction_controller.dart';
 
 class AccountChoice extends StatelessWidget {
   AccountChoice({super.key});
-  final Controller c = Get.find();
+  final NewTransactionController c = Get.find();
 
   @override
   Widget build(BuildContext context) {

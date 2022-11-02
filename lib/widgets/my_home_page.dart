@@ -3,6 +3,7 @@ import 'chart.dart';
 import 'transaction_list.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../controllers/home_page_controller.dart';
+import 'navigation_drawer.dart';
 import 'package:get/get.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -21,6 +22,7 @@ class MyHomePage extends StatelessWidget {
         ),
         backgroundColor: const Color.fromARGB(255, 179, 3, 3),
       ),
+      drawer: const NavigationDrawer(),
       body: Obx((() => SingleChildScrollView(
             child: c.isLoading.value
                 ? SizedBox(
@@ -32,7 +34,7 @@ class MyHomePage extends StatelessWidget {
                 : Column(
                     children: <Widget>[
                       Chart(c.recentTransactions),
-                      TransactionList(c.userTransactions, c.deleteTransaction),
+                      TransactionList(),
                     ],
                   ),
           ))),

@@ -39,7 +39,8 @@ CREATE TABLE ${t.tableTransactions} (
   ${t.TransactionFields.amount} $integerType,
   ${t.TransactionFields.date} $textType,
   ${t.TransactionFields.type} $textType,
-  ${t.TransactionFields.account} $textType
+  ${t.TransactionFields.account} $textType,
+  ${t.TransactionFields.category} $textType
   )
 ''');
   }
@@ -58,6 +59,18 @@ CREATE TABLE ${t.tableTransactions} (
 
     if (map.isNotEmpty) {
       return map.map((e) => t.Transaction.fromJson(e)).toList();
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Map<String, Object?>>?> findCategorySum() async {
+    final db = await instance.database;
+
+    final map = await db.rawQuery(
+        "SELECT ${t.TransactionFields.category}, SUM (${t.TransactionFields.amount}) FROM ${t.tableTransactions} WHERE ${t.TransactionFields.type} = 'Expense' GROUP BY ${t.TransactionFields.category};");
+    if (map.isNotEmpty) {
+      return map;
     } else {
       return null;
     }

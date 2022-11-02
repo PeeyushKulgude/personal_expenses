@@ -6,10 +6,12 @@ import '../widgets/new_transaction/new_transaction.dart';
 
 class HomePageController extends GetxController {
   var userTransactions = <Transaction>[].obs;
+  var categoryWiseList = <String, double>{}.obs;
   var isLoading = false.obs;
 
   HomePageController() {
     refreshTransactions();
+    findCategorySum();
   }
 
   Future refreshTransactions() async {
@@ -38,6 +40,16 @@ class HomePageController extends GetxController {
   void deleteTransaction(int id) async {
     await TransactionDatabase.instance.delete(id);
     refreshTransactions();
+  }
+
+  void findCategorySum() async {
+    var list = (await TransactionDatabase.instance.findCategorySum());
+    if (list != null) {
+      for (int i = 0; i < list.length; i++) {
+        categoryWiseList[list[i]['category'] as String] =
+            (list[i]['SUM (amount)'] as int).toDouble();
+      }
+    }
   }
 
   Widget startAddNewTransaction(BuildContext context) {

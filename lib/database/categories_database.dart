@@ -2,12 +2,12 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/categories.dart';
 
-class TransactionDatabase {
-  static final TransactionDatabase instance = TransactionDatabase._init();
+class CategoryDatabase {
+  static final CategoryDatabase instance = CategoryDatabase._init();
 
   static Database? _database;
 
-  TransactionDatabase._init();
+  CategoryDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -29,7 +29,6 @@ class TransactionDatabase {
 
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    const integerType = 'INTEGER NOT NULL';
     const textType = 'TEXT NOT NULL';
 
     await db.execute('''
@@ -46,7 +45,7 @@ CREATE TABLE $tableCategories (
     return category.copy(id: id);
   }
 
-  Future<List<Category>?> readAllTransactions() async {
+  Future<List<Category>?> readAllCategories() async {
     final db = await instance.database;
 
     const orderBy = '${CategoryFields.title} ASC';
