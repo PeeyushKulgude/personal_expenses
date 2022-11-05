@@ -15,38 +15,43 @@ class AccountChoice extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Obx(() => IconButton(
+              child: Obx(
+            () => IconButton(
               icon: SvgPicture.asset(
                 'assets/images/cash.svg',
-                color: c.accountChoice.value == 1 ? const Color.fromARGB(255, 179, 3, 0) : Colors.white,
+                color: c.accountChoice.value == 1
+                    ? const Color.fromARGB(255, 179, 3, 0)
+                    : Colors.white,
               ),
               onPressed: (() => c.accountChoice.value = 1),
               color: Colors.black,
               splashRadius: 1,
-            ),)
-          ),
+            ),
+          )),
           Expanded(
-            child: Obx((() => IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/upi.svg',
-                color: c.accountChoice.value == 2 ? const Color.fromARGB(255, 179, 3, 0) : Colors.white,
-              ),
-              onPressed: (() => c.accountChoice.value = 2),
-              color: Colors.black,
-              splashRadius: 1,
-            )))
-          ),
+              child: Obx((() => IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/images/upi.svg',
+                      color: c.accountChoice.value == 2
+                          ? const Color.fromARGB(255, 179, 3, 0)
+                          : Colors.white,
+                    ),
+                    onPressed: (() => c.accountChoice.value = 2),
+                    color: Colors.black,
+                    splashRadius: 1,
+                  )))),
           Expanded(
-            child: Obx((() => IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/debitcard.svg',
-                color: c.accountChoice.value == 3 ? const Color.fromARGB(255, 179, 3, 0) : Colors.white,
-              ),
-              onPressed: (() => c.accountChoice.value = 3),
-              color: Colors.black,
-              splashRadius: 1,
-            )))
-          ),
+              child: Obx((() => IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/images/debitcard.svg',
+                      color: c.accountChoice.value == 3
+                          ? const Color.fromARGB(255, 179, 3, 0)
+                          : Colors.white,
+                    ),
+                    onPressed: (() => c.accountChoice.value = 3),
+                    color: Colors.black,
+                    splashRadius: 1,
+                  )))),
         ],
       ),
     );

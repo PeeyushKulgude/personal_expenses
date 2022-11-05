@@ -22,23 +22,41 @@ class PieChartDisplay extends StatelessWidget {
       ),
       drawer: const NavigationDrawer(),
       body: Center(
-        child: PieChart(
-          dataMap: homePageController.categoryWiseList,
-          animationDuration: const Duration(milliseconds: 1500),
-          chartRadius: MediaQuery.of(context).size.width / 1.25,
-          baseChartColor: Colors.transparent,
-          chartValuesOptions: const ChartValuesOptions(
-              chartValueStyle: TextStyle(color: Colors.white),
-              showChartValues: true,
-              showChartValuesInPercentage: true,
-              showChartValuesOutside: false,
-              showChartValueBackground: false),
-          legendOptions: const LegendOptions(
-              showLegends: true,
-              legendShape: BoxShape.circle,
-              legendTextStyle: TextStyle(color: Colors.white),
-              legendPosition: LegendPosition.bottom,
-              showLegendsInRow: true),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 24,
+            ),
+            const Text(
+              'Expenses',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 12,
+            ),
+            PieChart(
+              dataMap: homePageController.categoryWiseList,
+              animationDuration: const Duration(milliseconds: 1500),
+              chartRadius: MediaQuery.of(context).size.width / 1.25,
+              baseChartColor: Colors.transparent,
+              chartValuesOptions: const ChartValuesOptions(
+                  chartValueStyle: TextStyle(color: Colors.white),
+                  showChartValues: true,
+                  showChartValuesInPercentage: true,
+                  showChartValuesOutside: false,
+                  showChartValueBackground: false),
+              legendOptions: const LegendOptions(
+                  showLegends: true,
+                  legendShape: BoxShape.circle,
+                  legendTextStyle: TextStyle(color: Colors.white),
+                  legendPosition: LegendPosition.bottom,
+                  showLegendsInRow: true),
+            ),
+          ],
         ),
       ),
     );

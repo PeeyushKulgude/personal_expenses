@@ -8,7 +8,8 @@ class TransactionList extends StatelessWidget {
   TransactionList({super.key});
 
   final HomePageController homePageController = Get.find();
-  final NewTransactionController newTransactionController = Get.put(NewTransactionController());
+  final NewTransactionController newTransactionController =
+      Get.put(NewTransactionController());
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +173,7 @@ class TransactionList extends StatelessWidget {
                                     homePageController
                                         .userTransactions[index].category;
                                 showDialog(
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) =>
                                         homePageController
@@ -395,6 +397,7 @@ class TransactionList extends StatelessWidget {
                                         homePageController
                                             .userTransactions[index].category;
                                     showDialog(
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (BuildContext context) =>
                                             homePageController

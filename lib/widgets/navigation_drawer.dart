@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/widgets/pie_chart.dart';
 import 'my_home_page.dart';
+import 'sms_display.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
@@ -37,8 +38,24 @@ class NavigationDrawer extends StatelessWidget {
               onTap: (() {
                 Navigator.pop(context);
 
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: ((context) => PieChartDisplay())));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => PieChartDisplay())));
+              }),
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.message_rounded,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Add Via SMS',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: (() {
+                Navigator.pop(context);
+
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => SmsDisplay())));
               }),
             ),
           ],

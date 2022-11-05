@@ -28,7 +28,7 @@ class MyHomePage extends StatelessWidget {
                 ? SizedBox(
                     height: MediaQuery.of(context).size.height - 120,
                     child: Center(
-                        child: LoadingAnimationWidget.beat(
+                        child: LoadingAnimationWidget.staggeredDotsWave(
                             color: Colors.white, size: 50)),
                   )
                 : Column(

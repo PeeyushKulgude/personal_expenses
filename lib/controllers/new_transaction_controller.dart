@@ -68,11 +68,11 @@ class NewTransactionController extends GetxController {
     );
   }
 
-  void startAddCategory(BuildContext context, String title, {int id = 20000}) {
-    var categoryController = TextEditingController(text: title);
+  void startAddCategory(BuildContext context) {
+    var categoryController = TextEditingController();
     showDialog<void>(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
@@ -125,6 +125,73 @@ class NewTransactionController extends GetxController {
               onPressed: () {
                 if (categoryController.text != '') {
                   addCategory(Category(title: categoryController.text));
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void startEditCategory(BuildContext context, String title, int id) {
+    var categoryController = TextEditingController(text: title);
+    showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              side: BorderSide(color: Colors.white)),
+          backgroundColor: Colors.black,
+          title: const Text('Edit Category',
+              style: TextStyle(color: Colors.white)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                TextField(
+                  controller: categoryController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: const InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                    ),
+                    labelText: 'New Category',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 33, 150, 243),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'Add',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                if (categoryController.text != '') {
+                  addCategory(Category(title: categoryController.text));
                   if (userCategories.length == 1) {
                     deleteCategory(id);
                     userCategories.value = [];
@@ -132,7 +199,7 @@ class NewTransactionController extends GetxController {
                     deleteCategory(id);
                   }
                   Navigator.of(context).pop();
-                  // Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 }
               },
             ),

@@ -48,9 +48,9 @@ class CategorySelect extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            c.startAddCategory(
+                            c.startEditCategory(
                                 context, c.userCategories[index].title,
-                                id: c.userCategories[index].id as int);
+                                c.userCategories[index].id as int);
                           },
                           color: Colors.white,
                           icon: const Icon(Icons.edit_outlined),
@@ -79,7 +79,7 @@ class CategorySelect extends StatelessWidget {
             ),
           ),
           IconButton(
-              onPressed: () => c.startAddCategory(context, ''),
+              onPressed: () => c.startAddCategory(context),
               icon: const Icon(Icons.add),
               color: Colors.white),
         ],
