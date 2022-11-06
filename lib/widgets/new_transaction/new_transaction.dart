@@ -28,7 +28,7 @@ class NewTransaction extends StatelessWidget {
               child: Text(
                 'New Transaction',
                 style: TextStyle(
-                  color: Color.fromARGB(255, 33, 150, 243),
+                  color: Colors.white,
                   fontSize: 18,
                 ),
               ),

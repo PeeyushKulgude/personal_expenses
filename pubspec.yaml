@@ -46,6 +46,7 @@ dependencies:
   flutter_sms_inbox:
   permission_handler: ^10.2.0
   shared_preferences: ^2.0.15
+  string_validator: ^0.3.0
   
 
 dev_dependencies:
