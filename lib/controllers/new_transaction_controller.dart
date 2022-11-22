@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/categories.dart';
 import '../database/categories_database.dart';
+import '../../controllers/theme_controller.dart';
+import '../../themes/app_colors.dart';
 
 class NewTransactionController extends GetxController {
   var currDate = DateTime.now().obs;
@@ -12,6 +14,7 @@ class NewTransactionController extends GetxController {
   var currCategory = "".obs;
 
   var userCategories = <Category>[].obs;
+  final ThemeController themeController = Get.put(ThemeController());
 
   NewTransactionController() {
     refreshCategories();
@@ -39,15 +42,21 @@ class NewTransactionController extends GetxController {
       builder: (context, child) {
         return Theme(
           data: ThemeData(
+            dialogTheme: DialogTheme(
+              backgroundColor: themeController.isDarkMode.value
+                ? AppColors.titleTextColorLight
+                : AppColors.cardBackgroundColorLight,
+            ),
             colorScheme: const ColorScheme.dark(
               primary: Color.fromARGB(255, 179, 3, 3),
               onPrimary: Colors.white,
               onSurface: Colors.redAccent,
             ),
-            dialogBackgroundColor: Colors.black,
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: Colors.white, // button text color
+                foregroundColor: themeController.isDarkMode.value
+                    ? AppColors.titleTextColorDark
+                    : AppColors.titleTextColorLight,
               ),
             ),
           ),
@@ -75,32 +84,54 @@ class NewTransactionController extends GetxController {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              side: BorderSide(color: Colors.white)),
-          backgroundColor: Colors.black,
-          title: const Text('Add A New Category',
-              style: TextStyle(color: Colors.white)),
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            side: BorderSide(
+                color: themeController.isDarkMode.value
+                    ? AppColors.cardBorderSideColorDark
+                    : AppColors.cardBorderSideColorLight,
+                width: 1),
+          ),
+          elevation: 10,
+          backgroundColor: themeController.isDarkMode.value
+              ? AppColors.cardBackgroundColorDark
+              : AppColors.cardBackgroundColorLight,
+          title: Text('Add A New Category',
+              style: TextStyle(
+                color: themeController.isDarkMode.value
+                    ? AppColors.titleTextColorDark
+                    : AppColors.titleTextColorLight,
+              )),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
                 TextField(
                   controller: categoryController,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                      borderSide: BorderSide(
+                        color: themeController.isDarkMode.value
+                            ? AppColors.newTransactionTextFieldColorDark
+                            : AppColors.newTransactionTextFieldColorLight,
+                      ),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                      borderSide: BorderSide(
+                        color: themeController.isDarkMode.value
+                            ? AppColors.newTransactionTextFieldColorDark
+                            : AppColors.newTransactionTextFieldColorLight,
+                      ),
                     ),
                     labelText: 'New Category',
                     labelStyle: TextStyle(
-                      color: Color.fromARGB(255, 33, 150, 243),
+                      color: themeController.isDarkMode.value
+                          ? AppColors.titleTextColorDark
+                          : AppColors.titleTextColorLight,
                     ),
                   ),
                 ),
@@ -109,18 +140,24 @@ class NewTransactionController extends GetxController {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text(
+              child: Text(
                 'Cancel',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text(
+              child: Text(
                 'Add',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onPressed: () {
                 if (categoryController.text != '') {

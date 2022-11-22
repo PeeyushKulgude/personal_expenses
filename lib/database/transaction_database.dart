@@ -64,6 +64,26 @@ CREATE TABLE ${t.tableTransactions} (
     }
   }
 
+  Future<List<Map<String, dynamic>>> datewiseTransactions() async {
+    final db = await instance.database;
+    List<Map<String, dynamic>> lst = [];
+
+    final d = await db.rawQuery(
+        "SELECT DISTINCT ${t.TransactionFields.date} FROM ${t.tableTransactions} ORDER BY ${t.TransactionFields.date} DESC");
+    for (int i = 0; i < d.length; i++) {
+      final transactions = await db.query(t.tableTransactions,
+          columns: t.TransactionFields.values,
+          where: '${t.TransactionFields.date} = ?',
+          whereArgs: [d[i]['date']]);
+      lst.add({
+        'date': DateTime.parse(d[i]['date'] as String),
+        'transactions': List.generate(transactions.length,
+            (index) => t.Transaction.fromJson(transactions[index])),
+      });
+    }
+    return lst;
+  }
+
   Future<List<Map<String, Object?>>?> findCategorySum() async {
     final db = await instance.database;
 

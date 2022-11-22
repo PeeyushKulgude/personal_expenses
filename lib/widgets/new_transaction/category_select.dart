@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../controllers/new_transaction_controller.dart';
 import 'package:get/get.dart';
+import '../../controllers/theme_controller.dart';
+import '../../themes/app_colors.dart';
 
 class CategorySelect extends StatelessWidget {
   CategorySelect({super.key});
 
   final NewTransactionController c = Get.find();
+  final ThemeController themeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -14,21 +17,39 @@ class CategorySelect extends StatelessWidget {
         children: [
           DropdownButton(
             hint: c.currCategory.value == ""
-                ? const Text(
+                ? Text(
                     'Select Category',
-                    style: TextStyle(color: Color.fromARGB(100, 255, 255, 255)),
+                    style: TextStyle(
+                      color: themeController.isDarkMode.value
+                          ? AppColors.subtitleTextColorDark
+                          : AppColors.subtitleTextColorLight,
+                    ),
                   )
                 : Text(
                     c.currCategory.value,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: themeController.isDarkMode.value
+                          ? AppColors.titleTextColorDark
+                          : AppColors.titleTextColorLight,
+                    ),
                   ),
-            dropdownColor: const Color.fromARGB(255, 14, 14, 14),
-            iconEnabledColor: Colors.white,
+            dropdownColor: themeController.isDarkMode.value
+                ? AppColors.cardBackgroundColorDark
+                : AppColors.cardBackgroundColorLight,
+            iconEnabledColor: themeController.isDarkMode.value
+                ? AppColors.newTransactionIconColorDark
+                : AppColors.newTransactionIconColorLight,
             elevation: 16,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: themeController.isDarkMode.value
+                  ? AppColors.titleTextColorDark
+                  : AppColors.titleTextColorLight,
+            ),
             underline: Container(
-              height: 2,
-              color: const Color.fromARGB(255, 33, 150, 243),
+              height: 1,
+              color: themeController.isDarkMode.value
+                  ? AppColors.newTransactionTextFieldColorDark
+                  : AppColors.newTransactionTextFieldColorLight,
             ),
             onChanged: ((value) => c.currCategory.value = value as String),
             items: List.generate(
@@ -43,16 +64,23 @@ class CategorySelect extends StatelessWidget {
                         Expanded(
                           child: Text(
                             c.userCategories[index].title,
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: themeController.isDarkMode.value
+                                  ? AppColors.titleTextColorDark
+                                  : AppColors.titleTextColorLight,
+                            ),
                           ),
                         ),
                         IconButton(
                           onPressed: () {
                             c.startEditCategory(
-                                context, c.userCategories[index].title,
+                                context,
+                                c.userCategories[index].title,
                                 c.userCategories[index].id as int);
                           },
-                          color: Colors.white,
+                          color: themeController.isDarkMode.value
+                              ? AppColors.newTransactionIconColorDark
+                              : AppColors.newTransactionIconColorLight,
                           icon: const Icon(Icons.edit_outlined),
                         ),
                         IconButton(
@@ -68,7 +96,7 @@ class CategorySelect extends StatelessWidget {
                               Navigator.of(context).pop();
                             }
                           },
-                          color: Colors.white,
+                          color: AppColors.deleteIconColor,
                           icon: const Icon(Icons.delete_outline_rounded),
                         ),
                       ],
@@ -79,9 +107,12 @@ class CategorySelect extends StatelessWidget {
             ),
           ),
           IconButton(
-              onPressed: () => c.startAddCategory(context),
-              icon: const Icon(Icons.add),
-              color: Colors.white),
+            onPressed: () => c.startAddCategory(context),
+            icon: const Icon(Icons.add),
+            color: themeController.isDarkMode.value
+                ? AppColors.newTransactionTextFieldColorDark
+                : AppColors.newTransactionTextFieldColorLight,
+          ),
         ],
       ),
     );

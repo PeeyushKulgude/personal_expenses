@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
+import 'package:personal_expenses/controllers/theme_controller.dart';
+import 'package:personal_expenses/themes/app_colors.dart';
 import 'navigation_drawer.dart';
 import '../controllers/sms_controller.dart';
 import 'package:get/get.dart';
@@ -18,93 +21,183 @@ class SmsDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SmsDbAndController c = Get.put(SmsDbAndController());
+    final SmsAndDbController smsAndDbController = Get.put(SmsAndDbController());
+    final ThemeController themeController = Get.find();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color.fromARGB(255, 14, 14, 14),
       appBar: AppBar(
-        title: const Text(
-          'Inbox Messages',
+        backgroundColor: themeController.isDarkMode.value
+            ? AppColors.appBarBackgroundColorDark
+            : AppColors.appBarBackgroundColorLight,
+        elevation: 0,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.11,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            color: AppColors.appBarFillColor,
+          ),
+          margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.055,
+            bottom: MediaQuery.of(context).size.height * 0.015,
+            left: MediaQuery.of(context).size.width * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05,
+          ),
+          child: Row(
+            children: [
+              Builder(builder: ((context) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    onPressed: (() => Scaffold.of(context).openDrawer()),
+                    icon: Icon(
+                      Icons.menu_rounded,
+                      color: themeController.isDarkMode.value
+                        ? AppColors.appBarIconColorDark
+                        : AppColors.appBarIconColorLight,
+                    ),
+                  ),
+                );
+              })),
+              Expanded(
+                child: Text(
+                  'Personal Expenses',
+                  style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: IconButton(
+                  onPressed: (() {
+                    themeController.isDarkMode.value =
+                        !themeController.isDarkMode.value;
+                    themeController.changeTheme();
+                  }),
+                  icon: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (child, anim) => RotationTransition(
+                      turns: child.key == const ValueKey('icon1')
+                          ? Tween<double>(begin: 1, end: 0.75).animate(anim)
+                          : Tween<double>(begin: 0.75, end: 1).animate(anim),
+                      child: ScaleTransition(scale: anim, child: child),
+                    ),
+                    child: themeController.isDarkMode.value
+                        ? Icon(
+                            Icons.sunny,
+                            key: const ValueKey('icon1'),
+                            color: AppColors.appBarIconColorDark,
+                          )
+                        : Icon(
+                            CupertinoIcons.moon_stars_fill,
+                            key: const ValueKey('icon2'),
+                            color: AppColors.appBarIconColorLight,
+                          ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        backgroundColor: const Color.fromARGB(255, 179, 3, 3),
       ),
-      drawer: const NavigationDrawer(),
-      body: FutureBuilder(
-          future: c.getAllMessages(),
+      drawer: NavigationDrawer(),
+      body: Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.width / 30),
+        child: FutureBuilder(
+          future: smsAndDbController.getAllMessages(),
           builder: (context, AsyncSnapshot<List<SmsMessage>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: LoadingAnimationWidget.staggeredDotsWave(
-                    color: Colors.white, size: 50),
+                  color: themeController.isDarkMode.value
+                      ? AppColors.iconColor1Dark
+                      : AppColors.iconColor1Light,
+                  size: 50,
+                ),
               );
             }
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      final sms = snapshot.data![index];
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: MediaQuery.of(context).size.width / 30,
-                            horizontal: MediaQuery.of(context).size.width / 15),
-                        child: InkWell(
-                          onTap: (() {
-                            final smsBody = sms.body!.toLowerCase();
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final sms = snapshot.data![index];
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.width / 45,
+                          horizontal: MediaQuery.of(context).size.width / 22.5),
+                      child: InkWell(
+                        onTap: (() {
+                          final smsBody = sms.body!.toLowerCase();
 
-                            newTransactionController.currDate.value = sms.date!;
+                          newTransactionController.currDate.value = sms.date!;
 
-                            newTransactionController.accountChoice.value =
-                                smsBody.contains('upi') ? 2 : 3;
+                          newTransactionController.accountChoice.value =
+                              smsBody.contains('upi') ? 2 : 3;
 
-                            newTransactionController.typeChoice.value =
-                                smsBody.contains('credited') ? 1 : 2;
+                          newTransactionController.typeChoice.value =
+                              smsBody.contains('credited') ? 1 : 2;
 
-                            bool found = false;
-                            String amount = '';
-                            for (int i = 1; i < smsBody.length; i++) {
-                              if (found) {
-                                if (smsBody[i] == '.' && isInt(smsBody[i-1])) {
-                                  break;
-                                } else if (isAlpha(smsBody[i])) {
-                                  break;
-                                } else if (isInt(smsBody[i])) {
-                                  amount += smsBody[i];
-                                }
-                              } else if (smsBody[i] == 's' &&
-                                  smsBody[i - 1] == 'r') {
-                                found = true;
+                          bool found = false;
+                          String amount = '';
+                          for (int i = 1; i < smsBody.length; i++) {
+                            if (found) {
+                              if (smsBody[i] == '.' && isInt(smsBody[i - 1])) {
+                                break;
+                              } else if (isAlpha(smsBody[i])) {
+                                break;
+                              } else if (isInt(smsBody[i])) {
+                                amount += smsBody[i];
                               }
+                            } else if (smsBody[i] == 's' &&
+                                smsBody[i - 1] == 'r') {
+                              found = true;
                             }
-                            newTransactionController
-                                .amountController.value.text = amount;
+                          }
+                          newTransactionController.amountController.value.text =
+                              amount;
 
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  homePageController
-                                      .startAddNewTransaction(context),
-                            ).then((value) {
-                              newTransactionController.currDate.value =
-                                  DateTime.now();
-                              newTransactionController.accountChoice.value = 0;
-                              newTransactionController.typeChoice.value = 0;
-                              newTransactionController.titleController.value =
-                                  TextEditingController();
-                              newTransactionController.amountController.value =
-                                  TextEditingController();
-                              newTransactionController.currCategory.value = "";
-                            });
-                          }),
-                          child: Container(
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                homePageController
+                                    .startAddNewTransaction(context),
+                          ).then((value) {
+                            newTransactionController.currDate.value =
+                                DateTime.now();
+                            newTransactionController.accountChoice.value = 0;
+                            newTransactionController.typeChoice.value = 0;
+                            newTransactionController.titleController.value =
+                                TextEditingController();
+                            newTransactionController.amountController.value =
+                                TextEditingController();
+                            newTransactionController.currCategory.value = "";
+                          });
+                        }),
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              side: BorderSide(
+                                  color: themeController.isDarkMode.value
+                                      ? AppColors.cardBorderSideColorDark
+                                      : AppColors.cardBorderSideColorLight,
+                                  width: 1),
+                            ),
+                            elevation: 10,
+                            color: themeController.isDarkMode.value
+                                ? AppColors.cardBackgroundColorDark
+                                : AppColors.cardBackgroundColorLight,
+                            child: Padding(
                               padding: EdgeInsets.all(
                                   MediaQuery.of(context).size.width / 50),
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
                               child: ListTile(
                                 title: Row(
                                   mainAxisAlignment:
@@ -112,31 +205,43 @@ class SmsDisplay extends StatelessWidget {
                                   children: [
                                     Text(
                                       '${sms.sender}',
-                                      style:
-                                          const TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                          color: themeController
+                                                  .isDarkMode.value
+                                              ? AppColors.titleTextColorDark
+                                              : AppColors.titleTextColorLight),
                                     ),
                                     Text(
                                       DateFormat('HH:mm     dd/MM/yyyy')
                                           .format(sms.date as DateTime),
-                                      style:
-                                          const TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                          color: themeController
+                                                  .isDarkMode.value
+                                              ? AppColors.subtitleTextColorDark
+                                              : AppColors
+                                                  .subtitleTextColorLight),
                                     ),
                                   ],
                                 ),
                                 subtitle: Text(
                                   '${sms.body}',
-                                  style: const TextStyle(
-                                      color:
-                                          Color.fromARGB(125, 255, 255, 255)),
+                                  style: TextStyle(
+                                      color: themeController.isDarkMode.value
+                                          ? AppColors.subtitleTextColorDark
+                                          : AppColors.subtitleTextColorLight),
                                 ),
-                              )),
-                        ),
-                      );
-                    });
+                              ),
+                            )),
+                      ),
+                    );
+                  },
+                );
               }
             }
             return Container();
-          }),
+          },
+        ),
+      ),
     );
   }
 }

@@ -2,46 +2,88 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../controllers/new_transaction_controller.dart';
+import '../../controllers/theme_controller.dart';
+import '../../themes/app_colors.dart';
 
 class TypeChoice extends StatelessWidget {
   TypeChoice({super.key});
 
   final NewTransactionController c = Get.find();
+  final ThemeController themeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      width: MediaQuery.of(context).size.width * 0.45,
+      child: Column(
         children: [
-          Expanded(
-            child: Obx((() => IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/down-arrow.svg',
-                color: c.typeChoice.value == 1
-                    ? const Color.fromARGB(255, 33, 150, 243)
-                    : Colors.white,
-                // width: 1,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'Income',
+                    style: TextStyle(
+                      color: themeController.isDarkMode.value
+                          ? AppColors.titleTextColorDark
+                          : AppColors.titleTextColorLight,
+                    ),
+                  ),
+                ),
               ),
-              onPressed: (() => c.typeChoice.value = 1),
-              color: Colors.black,
-              splashRadius: 1,
-            )))
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'Expense',
+                    style: TextStyle(
+                      color: themeController.isDarkMode.value
+                          ? AppColors.titleTextColorDark
+                          : AppColors.titleTextColorLight,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Obx((() => IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/up-arrow.svg',
-                color: c.typeChoice.value == 2
-                    ? const Color.fromARGB(255, 179, 3, 0)
-                    : Colors.white,
-                // width: 1,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Obx(
+                  (() => IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/images/down-arrow.svg',
+                          color: c.typeChoice.value == 1
+                              ? AppColors.incomePrimaryColor
+                              : themeController.isDarkMode.value
+                                  ? AppColors.newTransactionIconColorDark
+                                  : AppColors.newTransactionIconColorLight,
+                        ),
+                        onPressed: (() => c.typeChoice.value = 1),
+                        color: Colors.black,
+                        splashRadius: 1,
+                      )),
+                ),
               ),
-              onPressed: (() => c.typeChoice.value = 2),
-              color: Colors.black,
-              splashRadius: 1,
-            )))
+              Expanded(
+                child: Obx(
+                  (() => IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/images/up-arrow.svg',
+                          color: c.typeChoice.value == 2
+                              ? AppColors.expensePrimaryColor
+                              : themeController.isDarkMode.value
+                                  ? AppColors.newTransactionIconColorDark
+                                  : AppColors.newTransactionIconColorLight,
+                        ),
+                        onPressed: (() => c.typeChoice.value = 2),
+                        color: Colors.black,
+                        splashRadius: 1,
+                      )),
+                ),
+              ),
+            ],
           ),
         ],
       ),

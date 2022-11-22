@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:personal_expenses/widgets/pie_chart.dart';
 import 'my_home_page.dart';
 import 'sms_display.dart';
+import '../themes/app_themes.dart';
+import '../themes/app_colors.dart';
+import '../../controllers/theme_controller.dart';
+import 'package:get/get.dart';
 
 class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({super.key});
+  NavigationDrawer({super.key});
+  final ThemeController themeController = Get.find();
 
   Widget buildHeader(BuildContext context) => Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top));
@@ -15,25 +20,35 @@ class NavigationDrawer extends StatelessWidget {
           runSpacing: MediaQuery.of(context).size.height / 50,
           children: [
             ListTile(
-              leading: const Icon(
+              leading: Icon(
                 Icons.home_filled,
-                color: Colors.white,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
               ),
-              title: const Text(
+              title: Text(
                 'Home',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onTap: (() => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: ((context) => MyHomePage())))),
             ),
             ListTile(
-              leading: const Icon(
+              leading: Icon(
                 Icons.pie_chart_sharp,
-                color: Colors.white,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
               ),
-              title: const Text(
+              title: Text(
                 'Pie Chart',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onTap: (() {
                 Navigator.pop(context);
@@ -43,19 +58,24 @@ class NavigationDrawer extends StatelessWidget {
               }),
             ),
             ListTile(
-              leading: const Icon(
+              leading: Icon(
                 Icons.message_rounded,
-                color: Colors.white,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
               ),
-              title: const Text(
+              title: Text(
                 'Add Via SMS',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onTap: (() {
                 Navigator.pop(context);
 
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => SmsDisplay())));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: ((context) => SmsDisplay())));
               }),
             ),
           ],
@@ -65,7 +85,7 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color.fromARGB(255, 14, 14, 14),
+      backgroundColor: themeController.isDarkMode.value ? AppThemes.darkTheme.canvasColor : AppThemes.lightTheme.canvasColor,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

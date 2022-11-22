@@ -3,24 +3,36 @@ import '../models/transaction.dart';
 import '../database/transaction_database.dart';
 import 'package:flutter/material.dart';
 import '../widgets/new_transaction/new_transaction.dart';
+import 'theme_controller.dart';
+import '../themes/app_colors.dart';
 
 class HomePageController extends GetxController {
   var userTransactions = <Transaction>[].obs;
+  var datewiseGroupedTransactions = <Map<String, dynamic>>[].obs;
   var categoryWiseList = <String, double>{}.obs;
-  var isLoading = false.obs;
+  final ThemeController themeController = Get.put(ThemeController());
 
   HomePageController() {
+    getDatewiseGroupedTransactions();
     refreshTransactions();
     findCategorySum();
   }
 
   Future refreshTransactions() async {
-    isLoading.value = true;
     var list = (await TransactionDatabase.instance.readAllTransactions());
     if (list != null) {
       userTransactions.value = list;
     }
-    isLoading.value = false;
+  }
+
+  Future getDatewiseGroupedTransactions() async {
+    var list = (await TransactionDatabase.instance.datewiseTransactions());
+    datewiseGroupedTransactions.value = list;
+  }
+
+  Future getDatewiseGroupedTransactionsFuture() async {
+    var list = (await TransactionDatabase.instance.datewiseTransactions());
+    return list;
   }
 
   List<Transaction> get recentTransactions {
@@ -34,11 +46,13 @@ class HomePageController extends GetxController {
 
   void addTx(transaction) async {
     await TransactionDatabase.instance.create(transaction);
+    getDatewiseGroupedTransactions();
     refreshTransactions();
   }
 
   void deleteTransaction(int id) async {
     await TransactionDatabase.instance.delete(id);
+    getDatewiseGroupedTransactions();
     refreshTransactions();
   }
 
@@ -58,14 +72,35 @@ class HomePageController extends GetxController {
       child: Center(
         child: SingleChildScrollView(
           child: AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                side: BorderSide(color: Colors.white)),
-            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              side: BorderSide(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.cardBorderSideColorDark
+                      : AppColors.cardBorderSideColorLight,
+                  width: 1),
+            ),
+            elevation: 10,
+            backgroundColor: themeController.isDarkMode.value
+                ? AppColors.cardBackgroundColorDark
+                : AppColors.cardBackgroundColorLight,
             actions: <Widget>[NewTransaction(addTx)],
           ),
         ),
       ),
     );
+  }
+
+  Map<String, double> get groupedTransactionValuesMonthly {
+    var totalIncome = 0.0;
+    var totalExpense = 0.0;
+    for (int i = 0; i < recentTransactions.length; i++) {
+      if (recentTransactions[i].type == "Expense") {
+        totalExpense += recentTransactions[i].amount;
+      } else {
+        totalIncome += recentTransactions[i].amount;
+      }
+    }
+    return {'expense': totalExpense, 'income': totalIncome};
   }
 }

@@ -1,51 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/new_transaction_controller.dart';
+import '../../controllers/theme_controller.dart';
+import '../../themes/app_colors.dart';
 
 class TextInputFields extends StatelessWidget {
   TextInputFields({super.key});
   final NewTransactionController c = Get.find();
+  final ThemeController themeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 280,
+      width: MediaQuery.of(context).size.width * 0.7,
       child: Column(
         children: [
           TextField(
             controller: c.titleController.value,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: themeController.isDarkMode.value
+                  ? AppColors.titleTextColorDark
+                  : AppColors.titleTextColorLight,
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                borderSide: BorderSide(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.newTransactionTextFieldColorDark
+                      : AppColors.newTransactionTextFieldColorLight,
+                ),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                borderSide: BorderSide(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.newTransactionTextFieldColorDark
+                      : AppColors.newTransactionTextFieldColorLight,
+                ),
               ),
               labelText: 'Title',
               labelStyle: TextStyle(
-                color: Color.fromARGB(255, 33, 150, 243),
+                color: themeController.isDarkMode.value
+                    ? AppColors.titleTextColorDark
+                    : AppColors.titleTextColorLight,
               ),
             ),
           ),
           TextField(
             keyboardType: TextInputType.number,
             controller: c.amountController.value,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: themeController.isDarkMode.value
+                  ? AppColors.titleTextColorDark
+                  : AppColors.titleTextColorLight,
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                borderSide: BorderSide(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.newTransactionTextFieldColorDark
+                      : AppColors.newTransactionTextFieldColorLight,
+                ),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
+                borderSide: BorderSide(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.newTransactionTextFieldColorDark
+                      : AppColors.newTransactionTextFieldColorLight,
+                ),
               ),
               labelText: 'Amount',
               labelStyle: TextStyle(
-                color: Color.fromARGB(255, 33, 150, 243),
+                color: themeController.isDarkMode.value
+                    ? AppColors.titleTextColorDark
+                    : AppColors.titleTextColorLight,
               ),
             ),
           ),

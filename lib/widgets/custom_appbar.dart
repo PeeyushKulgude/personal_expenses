@@ -1,29 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/controllers/theme_controller.dart';
-import 'total_of_transactions.dart';
-import 'transaction_list/transaction_list.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import '../controllers/home_page_controller.dart';
-import 'navigation_drawer.dart';
+import '../controllers/theme_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../themes/app_colors.dart';
 
-class MyHomePage extends StatelessWidget {
-  final HomePageController homePageController = Get.put(HomePageController());
-  final ThemeController themeController = Get.find();
-
-  MyHomePage({super.key});
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Function drawer;
+  const CustomAppBar(this.drawer, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-      backgroundColor: themeController.isDarkMode.value
-                        ? AppColors.appBarBackgroundColorDark
-                        : AppColors.appBarBackgroundColorLight,
-      elevation: 0,
+    ThemeController themeController = Get.find();
+    return AppBar(
       toolbarHeight: MediaQuery.of(context).size.height * 0.11,
       automaticallyImplyLeading: false,
       flexibleSpace: Container(
@@ -43,12 +31,12 @@ class MyHomePage extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
-                  onPressed: (() => Scaffold.of(context).openDrawer()),
+                  onPressed: (() => drawer()),
                   icon: Icon(
                     Icons.menu_rounded,
                     color: themeController.isDarkMode.value
-                        ? AppColors.appBarIconColorDark
-                        : AppColors.appBarIconColorLight,
+                        ? AppColors.iconColor1Dark
+                        : AppColors.iconColor1Light,
                   ),
                 ),
               );
@@ -86,12 +74,12 @@ class MyHomePage extends StatelessWidget {
                       ? Icon(
                           Icons.sunny,
                           key: const ValueKey('icon1'),
-                          color: AppColors.appBarIconColorDark,
+                          color: AppColors.iconColor1Dark,
                         )
                       : Icon(
                           CupertinoIcons.moon_stars_fill,
                           key: const ValueKey('icon2'),
-                          color: AppColors.appBarIconColorLight,
+                          color: AppColors.iconColor1Light,
                         ),
                 ),
               ),
@@ -99,40 +87,9 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-    ),
-      drawer: NavigationDrawer(),
-      body: Obx(
-        (() => SingleChildScrollView(
-              child: Column(
-                      children: <Widget>[
-                        TotalOfTransactions(
-                            homePageController.groupedTransactionValuesMonthly),
-                        TransactionList(),
-                      ],
-                    ),
-            )),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        height: 45,
-        width: 150,
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-        child: FloatingActionButton(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25)),
-          ),
-          onPressed: (() {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) =>
-                    homePageController.startAddNewTransaction(context));
-          }),
-          child: const Text(
-            "+ Add Transaction",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-        ),
-      ),
     );
   }
+
+  @override
+  Size get preferredSize => throw UnimplementedError();
 }

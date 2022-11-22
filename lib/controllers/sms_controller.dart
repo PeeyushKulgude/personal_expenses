@@ -1,9 +1,8 @@
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:personal_expenses/widgets/sms_display.dart';
 
-class SmsDbAndController extends GetxController {
+class SmsAndDbController extends GetxController {
   final SmsQuery _query = SmsQuery();
 
   bool checkMessage(SmsMessage message) {
@@ -19,6 +18,7 @@ class SmsDbAndController extends GetxController {
         !lst.contains('rummy') &&
         !lst.contains('claim') &&
         !lst.contains('click') &&
+        !lst.contains('get') &&
         !lst.contains('prize')) {
       return true;
     } else {

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import '../../models/transaction.dart';
 import '../../controllers/new_transaction_controller.dart';
 import 'package:get/get.dart';
+import 'package:string_validator/string_validator.dart';
+import '../../controllers/theme_controller.dart';
+import '../../themes/app_colors.dart';
 
 class AddTransaction extends StatelessWidget {
   Function aT;
   AddTransaction(this.aT, {super.key});
 
   final NewTransactionController c = Get.find();
+  final ThemeController themeController = Get.find();
 
   void wrongInputDialog(BuildContext context) {
     showDialog<void>(
@@ -15,21 +19,39 @@ class AddTransaction extends StatelessWidget {
       barrierDismissible: false,
       builder: ((context) {
         return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              side: BorderSide(color: Colors.white)),
-          backgroundColor: Colors.black,
-          title:
-              const Text('Wrong Input!', style: TextStyle(color: Colors.white)),
-          content: const Text(
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            side: BorderSide(
+                color: themeController.isDarkMode.value
+                    ? AppColors.cardBorderSideColorDark
+                    : AppColors.cardBorderSideColorLight,
+                width: 1),
+          ),
+          elevation: 10,
+          backgroundColor: themeController.isDarkMode.value
+              ? AppColors.cardBackgroundColorDark
+              : AppColors.cardBackgroundColorLight,
+          title: Text('Wrong Input!',
+              style: TextStyle(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.titleTextColorDark
+                      : AppColors.titleTextColorLight)),
+          content: Text(
             "Some fields might have invalid values or may not be chosen at all.",
-            style: TextStyle(color: Color.fromARGB(125, 255, 255, 255)),
+            style: TextStyle(
+              color: themeController.isDarkMode.value
+                  ? AppColors.subtitleTextColorDark
+                  : AppColors.subtitleTextColorLight,
+            ),
           ),
           actions: [
             TextButton(
-              child: const Text(
+              child: Text(
                 'Okay',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -51,7 +73,11 @@ class AddTransaction extends StatelessWidget {
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
-              side: const BorderSide(width: 1, color: Colors.white),
+              side: BorderSide(
+                  width: 1,
+                  color: themeController.isDarkMode.value
+                      ? AppColors.titleTextColorDark
+                      : AppColors.titleTextColorLight),
             ),
           ),
         ),
@@ -73,24 +99,23 @@ class AddTransaction extends StatelessWidget {
           }
 
           var enteredTitle = c.titleController.value.text;
-          final enteredAmount = double.tryParse(c.amountController.value.text);
 
           if (enteredTitle == '') {
             c.titleController.value.text = c.currCategory.value;
           }
-
-          if (enteredAmount == null ||
-              enteredAmount <= 0 ||
+          if (!isInt(c.amountController.value.text) ||
+              int.parse(c.amountController.value.text) <= 0 ||
               c.accountChoice.value == 0 ||
               c.typeChoice.value == 0 ||
               c.currCategory.value == '') {
             wrongInputDialog(context);
             return;
           } else {
+            DateTime now = c.currDate.value;
             aT(Transaction(
               title: c.titleController.value.text,
-              amount: int.parse(enteredAmount.toString()),
-              date: c.currDate.value,
+              amount: int.parse(c.amountController.value.text),
+              date: DateTime(now.year, now.month, now.day),
               type: currType,
               account: acc,
               category: c.currCategory.value,
@@ -107,9 +132,12 @@ class AddTransaction extends StatelessWidget {
             return;
           }
         }),
-        child: const Text(
+        child: Text(
           "Add Transaction",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+              color: themeController.isDarkMode.value
+                  ? AppColors.titleTextColorDark
+                  : AppColors.titleTextColorLight),
         ),
       ),
     );

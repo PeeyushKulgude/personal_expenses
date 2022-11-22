@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/new_transaction_controller.dart';
 import 'package:get/get.dart';
+import '../../controllers/theme_controller.dart';
+import '../../themes/app_colors.dart';
 
 class DateChoice extends StatelessWidget {
-
   final NewTransactionController c = Get.find();
+  final ThemeController themeController = Get.find();
 
   DateChoice({super.key});
   @override
@@ -19,9 +21,13 @@ class DateChoice extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Obx((() => Text(
-              DateFormat('dd/MM/yyyy').format(c.currDate.value).toString(),
-              style: const TextStyle(color: Colors.white),
-            ))),
+                  DateFormat('dd/MM/yyyy').format(c.currDate.value).toString(),
+                  style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight,
+                  ),
+                ))),
           ),
           TextButton(
             onPressed: (() => c.presentDatePicker(context)),
