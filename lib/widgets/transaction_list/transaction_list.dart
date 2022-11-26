@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
@@ -60,7 +61,8 @@ class TransactionList extends StatelessWidget {
               );
             }
             return Column(
-              children: <Widget>[
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
                 Text(
                   'No transactions added yet!',
                   style: TextStyle(
@@ -71,17 +73,42 @@ class TransactionList extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 79),
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    height: 240,
+                Text(
+                  'Click here to add your first transaction.',
+                  style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
                 ),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    child: Image.asset(
+                        'assets/images/swirly-scribbled-arrow.jpeg'),),
               ],
             );
           }
-          return Container();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'No transactions added yet!',
+                style: TextStyle(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.titleTextColorDark
+                      : AppColors.titleTextColorLight,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child:
+                      Image.asset('assets/images/swirly-scribbled-arrow.jpeg')),
+            ],
+          );
         },
       ),
     );

@@ -8,7 +8,8 @@ import '../../themes/app_colors.dart';
 
 class AddTransaction extends StatelessWidget {
   Function aT;
-  AddTransaction(this.aT, {super.key});
+  int editing;
+  AddTransaction(this.aT, this.editing, {super.key});
 
   final NewTransactionController c = Get.find();
   final ThemeController themeController = Get.find();
@@ -29,8 +30,8 @@ class AddTransaction extends StatelessWidget {
           ),
           elevation: 10,
           backgroundColor: themeController.isDarkMode.value
-              ? AppColors.cardBackgroundColorDark
-              : AppColors.cardBackgroundColorLight,
+              ? AppColors.alertDialogBackgroundColorDark
+              : AppColors.alertDialogBackgroundColorLight,
           title: Text('Wrong Input!',
               style: TextStyle(
                   color: themeController.isDarkMode.value
@@ -101,33 +102,53 @@ class AddTransaction extends StatelessWidget {
           var enteredTitle = c.titleController.value.text;
 
           if (enteredTitle == '') {
-            c.titleController.value.text = c.currCategory.value;
+            c.titleController.value.text = c.currCategoryTitle.value;
           }
           if (!isInt(c.amountController.value.text) ||
               int.parse(c.amountController.value.text) <= 0 ||
               c.accountChoice.value == 0 ||
               c.typeChoice.value == 0 ||
-              c.currCategory.value == '') {
+              c.currCategoryTitle.value == '' ||
+              ((c.typeChoice.value == 1 ? 'Income' : 'Expense') !=
+                  c.currCategoryType.value)) {
             wrongInputDialog(context);
             return;
           } else {
             DateTime now = c.currDate.value;
-            aT(Transaction(
-              title: c.titleController.value.text,
-              amount: int.parse(c.amountController.value.text),
-              date: DateTime(now.year, now.month, now.day),
-              type: currType,
-              account: acc,
-              category: c.currCategory.value,
-            ));
+            if (editing != 0) {
+              aT(Transaction(
+                  id: editing,
+                  title: c.titleController.value.text,
+                  amount: int.parse(c.amountController.value.text),
+                  date: DateTime(now.year, now.month, now.day),
+                  type: currType,
+                  account: acc,
+                  category: c.currCategoryTitle.value,
+                  iconCode: c.currCategoryIconCode.value,
+                  categoryType: 'Expense'));
+            } else {
+              aT(Transaction(
+                  title: c.titleController.value.text,
+                  amount: int.parse(c.amountController.value.text),
+                  date: DateTime(now.year, now.month, now.day),
+                  type: currType,
+                  account: acc,
+                  category: c.currCategoryTitle.value,
+                  iconCode: c.currCategoryIconCode.value,
+                  categoryType: 'Expense'));
+            }
 
             c.accountChoice = 0.obs;
             c.typeChoice = 0.obs;
-            c.currCategory = ''.obs;
+            c.currCategoryTitle = ''.obs;
 
             c.titleController.value.clear();
             c.amountController.value.clear();
             c.currDate.value = DateTime.now();
+            c.currCategoryTitle = "".obs;
+            c.currCategoryType = "".obs;
+            c.currCategoryIconCode = 0.obs;
+
             Navigator.pop(context);
             return;
           }
@@ -135,9 +156,10 @@ class AddTransaction extends StatelessWidget {
         child: Text(
           "Add Transaction",
           style: TextStyle(
-              color: themeController.isDarkMode.value
-                  ? AppColors.titleTextColorDark
-                  : AppColors.titleTextColorLight),
+            color: themeController.isDarkMode.value
+                ? AppColors.titleTextColorDark
+                : AppColors.titleTextColorLight,
+          ),
         ),
       ),
     );

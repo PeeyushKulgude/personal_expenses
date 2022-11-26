@@ -25,17 +25,21 @@ class CategoryDatabase {
       version: 1,
       onCreate: _createDB,
     );
+
     return database;
   }
 
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
+    const integerType = 'INTEGER NOT NULL';
 
     await db.execute('''
 CREATE TABLE $tableCategories (
   ${CategoryFields.id} $idType,
-  ${CategoryFields.title} $textType
+  ${CategoryFields.title} $textType,
+  ${CategoryFields.iconCode} $integerType,
+  ${CategoryFields.categoryType} $textType
   )
 ''');
   }
@@ -49,8 +53,22 @@ CREATE TABLE $tableCategories (
   Future<List<Category>?> readAllCategories() async {
     final db = await instance.database;
 
-    const orderBy = '${CategoryFields.title} ASC';
-    final map = await db.query(tableCategories, orderBy: orderBy);
+    const orderBy = '${CategoryFields.categoryType} DESC';
+    var map = await db.query(tableCategories, orderBy: orderBy);
+    if (map.isNotEmpty) {
+      return map.map((e) => Category.fromJson(e)).toList();
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<Category>?> readSpecificCategories(String type) async {
+    final db = await instance.database;
+
+    final map = await db.query(tableCategories,
+        columns: CategoryFields.values,
+        where: '${CategoryFields.categoryType} = ?',
+        whereArgs: [type]);
 
     if (map.isNotEmpty) {
       return map.map((e) => Category.fromJson(e)).toList();

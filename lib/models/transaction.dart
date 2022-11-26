@@ -10,7 +10,9 @@ class TransactionFields {
     date,
     type,
     account,
-    category
+    category,
+    iconCode,
+    categoryType
   ];
   static const String id = '_id';
   static const String title = 'title';
@@ -19,6 +21,8 @@ class TransactionFields {
   static const String type = 'type';
   static const String account = 'account';
   static const String category = 'category';
+  static const String iconCode = 'iconCode';
+  static const String categoryType = 'categoryType';
 }
 
 class Transaction {
@@ -29,16 +33,19 @@ class Transaction {
   final String type;
   final String account;
   final String category;
+  final int iconCode;
+  final String categoryType;
 
-  Transaction({
-    this.id,
-    required this.title,
-    required this.amount,
-    required this.date,
-    required this.type,
-    required this.account,
-    required this.category,
-  });
+  Transaction(
+      {this.id,
+      required this.title,
+      required this.amount,
+      required this.date,
+      required this.type,
+      required this.account,
+      required this.category,
+      required this.iconCode,
+      required this.categoryType});
 
   Map<String, Object?> toJson() {
     return {
@@ -49,17 +56,22 @@ class Transaction {
       TransactionFields.type: type,
       TransactionFields.account: account,
       TransactionFields.category: category,
+      TransactionFields.iconCode: iconCode,
+      TransactionFields.categoryType: categoryType,
     };
   }
 
-  Transaction copy(
-          {int? id,
-          String? title,
-          int? amount,
-          DateTime? date,
-          String? type,
-          String? account,
-          String? category}) =>
+  Transaction copy({
+    int? id,
+    String? title,
+    int? amount,
+    DateTime? date,
+    String? type,
+    String? account,
+    String? category,
+    int? iconCode,
+    String? categoryType,
+  }) =>
       Transaction(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -68,15 +80,19 @@ class Transaction {
         type: type ?? this.type,
         account: account ?? this.account,
         category: category ?? this.category,
+        iconCode: iconCode ?? this.iconCode,
+        categoryType: categoryType ?? this.categoryType,
       );
 
   static Transaction fromJson(Map<String, dynamic> json) => Transaction(
-        id: json[TransactionFields.id] as int?,
+        id: json[TransactionFields.id] as int,
         title: json[TransactionFields.title] as String,
         amount: json[TransactionFields.amount] as int,
         date: DateTime.parse(json[TransactionFields.date] as String),
         type: json[TransactionFields.type] as String,
         account: json[TransactionFields.account] as String,
         category: json[TransactionFields.category] as String,
+        iconCode: json[TransactionFields.iconCode] as int,
+        categoryType: json[TransactionFields.categoryType] as String,
       );
 }

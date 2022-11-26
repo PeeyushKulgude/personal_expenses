@@ -25,23 +25,26 @@ class TextInputFields extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: themeController.isDarkMode.value
-                      ? AppColors.newTransactionTextFieldColorDark
-                      : AppColors.newTransactionTextFieldColorLight,
+                  color: AppColors.appBarFillColor,
                 ),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: themeController.isDarkMode.value
-                      ? AppColors.newTransactionTextFieldColorDark
-                      : AppColors.newTransactionTextFieldColorLight,
+                  color: AppColors.appBarFillColor,
                 ),
               ),
-              labelText: 'Title',
+              labelText: 'Description',
+              hintText: 'It is set as category name if left empty.',
+              alignLabelWithHint: true,
               labelStyle: TextStyle(
                 color: themeController.isDarkMode.value
                     ? AppColors.titleTextColorDark
                     : AppColors.titleTextColorLight,
+              ),
+              hintStyle: TextStyle(
+                color: themeController.isDarkMode.value
+                    ? AppColors.subtitleTextColorDark
+                    : AppColors.subtitleTextColorLight,
               ),
             ),
           ),
@@ -56,19 +59,16 @@ class TextInputFields extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: themeController.isDarkMode.value
-                      ? AppColors.newTransactionTextFieldColorDark
-                      : AppColors.newTransactionTextFieldColorLight,
+                  color: AppColors.appBarFillColor,
                 ),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: themeController.isDarkMode.value
-                      ? AppColors.newTransactionTextFieldColorDark
-                      : AppColors.newTransactionTextFieldColorLight,
+                  color: AppColors.appBarFillColor,
                 ),
               ),
               labelText: 'Amount',
+              alignLabelWithHint: true,
               labelStyle: TextStyle(
                 color: themeController.isDarkMode.value
                     ? AppColors.titleTextColorDark

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
 import '../../controllers/home_page_controller.dart';
 import '../../controllers/new_transaction_controller.dart';
+import '../../database/icons_database.dart';
 import '../../themes/app_colors.dart';
 import '../../models/transaction.dart';
 
@@ -81,14 +83,29 @@ class TransactionDataDisplay extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 150,
                 ),
-                Text(
-                  transaction.category,
-                  style: TextStyle(
-                    color: themeController.isDarkMode.value
-                        ? AppColors.subtitleTextColorDark
-                        : AppColors.subtitleTextColorLight,
-                    fontSize: 13,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                      CategoryIcons.iconData[transaction.iconCode]!,
+                      color: themeController.isDarkMode.value
+                          ? AppColors.subtitleTextColorDark
+                          : AppColors.subtitleTextColorLight,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      transaction.category,
+                      style: TextStyle(
+                        color: themeController.isDarkMode.value
+                            ? AppColors.subtitleTextColorDark
+                            : AppColors.subtitleTextColorLight,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -108,14 +125,16 @@ class TransactionDataDisplay extends StatelessWidget {
                   transaction.title;
               newTransactionController.amountController.value.text =
                   transaction.amount.toString();
-              newTransactionController.currCategory.value =
+              newTransactionController.currCategoryTitle.value =
                   transaction.category;
+              newTransactionController.currCategoryIconCode.value =
+                  transaction.iconCode;
+              newTransactionController.currCategoryType.value =
+                  transaction.type;
               showDialog(
-                  barrierDismissible: false,
                   context: context,
-                  builder: (BuildContext context) =>
-                      homePageController.startAddNewTransaction(context));
-              homePageController.deleteTransaction(transaction.id as int);
+                  builder: (BuildContext context) => homePageController
+                      .editTransaction(context, transaction.id!));
             }),
             color: themeController.isDarkMode.value
                 ? AppColors.iconColor1Dark

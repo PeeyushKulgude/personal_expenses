@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/widgets/pie_chart.dart';
+import 'package:personal_expenses/widgets/screens/pie_chart.dart';
 import 'my_home_page.dart';
 import 'sms_display.dart';
-import '../themes/app_themes.dart';
-import '../themes/app_colors.dart';
-import '../../controllers/theme_controller.dart';
+import '../../themes/app_themes.dart';
+import '../../themes/app_colors.dart';
+import '../../../controllers/theme_controller.dart';
 import 'package:get/get.dart';
+import 'user_categories/user_categories.dart';
 
 class NavigationDrawer extends StatelessWidget {
   NavigationDrawer({super.key});
@@ -78,6 +79,27 @@ class NavigationDrawer extends StatelessWidget {
                     MaterialPageRoute(builder: ((context) => SmsDisplay())));
               }),
             ),
+            ListTile(
+              leading: Icon(
+                Icons.category_rounded,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
+              ),
+              title: Text(
+                'Your Categories',
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
+              ),
+              onTap: (() {
+                Navigator.pop(context);
+
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => UserCategories())));
+              }),
+            ),
           ],
         ),
       );
@@ -85,7 +107,9 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: themeController.isDarkMode.value ? AppThemes.darkTheme.canvasColor : AppThemes.lightTheme.canvasColor,
+      backgroundColor: themeController.isDarkMode.value
+          ? AppColors.alertDialogBackgroundColorDark
+          : AppColors.alertDialogBackgroundColorLight,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,4 +1,4 @@
-import 'category_select.dart';
+import 'category_select/category_select.dart';
 import 'text_fields.dart';
 import 'date_choice.dart';
 import 'account_choice.dart';
@@ -12,7 +12,8 @@ import '../../controllers/theme_controller.dart';
 
 class NewTransaction extends StatelessWidget {
   final Function addTx;
-  NewTransaction(this.addTx, {super.key});
+  int editing;
+  NewTransaction(this.addTx, this.editing, {super.key});
 
   final NewTransactionController c = Get.put(NewTransactionController());
   final ThemeController themeController = Get.put(ThemeController());
@@ -25,7 +26,8 @@ class NewTransaction extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.01),
             child: Text(
               'New Transaction',
               style: TextStyle(
@@ -36,12 +38,12 @@ class NewTransaction extends StatelessWidget {
               ),
             ),
           ),
-          CategorySelect(),
           TextInputFields(),
+          CategorySelect(),
           DateChoice(),
           AccountChoice(),
           TypeChoice(),
-          AddTransaction(addTx),
+          AddTransaction(addTx, editing),
         ],
       ),
     );

@@ -4,9 +4,6 @@ class AppColors {
   static Color appBarIconColorDark = const Color.fromRGBO(255, 255, 255, 1);
   static Color appBarIconColorLight = const Color.fromRGBO(0, 0, 0, 0.8);
   static Color appBarFillColor = const Color.fromRGBO(72, 145, 148, 70);
-  static Color appBarBackgroundColorLight =
-      const Color.fromRGBO(250, 250, 250, 1);
-  static Color appBarBackgroundColorDark = Colors.transparent;
 
   static Color cardBackgroundColorDark = const Color.fromARGB(156, 27, 27, 27);
   static Color cardBackgroundColorLight =
@@ -14,6 +11,11 @@ class AppColors {
   static Color cardBorderSideColorDark = const Color.fromARGB(156, 39, 39, 39);
   static Color cardBorderSideColorLight =
       const Color.fromRGBO(206, 206, 206, 1);
+
+  static Color alertDialogBackgroundColorDark =
+      const Color.fromRGBO(27, 27, 27, 0.95);
+  static Color alertDialogBackgroundColorLight =
+      const Color.fromRGBO(227, 227, 227, 0.95);
 
   static Color incomePrimaryColor = const Color.fromRGBO(50, 176, 74, 1);
   static Color incomeBackgroundColor = const Color.fromRGBO(50, 176, 74, 0.4);

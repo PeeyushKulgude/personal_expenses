@@ -12,8 +12,7 @@ class DateChoice extends StatelessWidget {
   DateChoice({super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 5),
+    return SizedBox(
       height: 60,
       width: 200,
       child: Row(

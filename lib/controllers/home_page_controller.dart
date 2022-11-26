@@ -50,6 +50,12 @@ class HomePageController extends GetxController {
     refreshTransactions();
   }
 
+  void editTx(transaction) async {
+    await TransactionDatabase.instance.update(transaction.id, transaction);
+    getDatewiseGroupedTransactions();
+    refreshTransactions();
+  }
+
   void deleteTransaction(int id) async {
     await TransactionDatabase.instance.delete(id);
     getDatewiseGroupedTransactions();
@@ -82,9 +88,34 @@ class HomePageController extends GetxController {
             ),
             elevation: 10,
             backgroundColor: themeController.isDarkMode.value
-                ? AppColors.cardBackgroundColorDark
-                : AppColors.cardBackgroundColorLight,
-            actions: <Widget>[NewTransaction(addTx)],
+                ? AppColors.alertDialogBackgroundColorDark
+                : AppColors.alertDialogBackgroundColorLight,
+            actions: <Widget>[NewTransaction(addTx, 0)],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget editTransaction(BuildContext context, int editing) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Center(
+        child: SingleChildScrollView(
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              side: BorderSide(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.cardBorderSideColorDark
+                      : AppColors.cardBorderSideColorLight,
+                  width: 1),
+            ),
+            elevation: 10,
+            backgroundColor: themeController.isDarkMode.value
+                ? AppColors.alertDialogBackgroundColorDark
+                : AppColors.alertDialogBackgroundColorLight,
+            actions: <Widget>[NewTransaction(editTx, editing)],
           ),
         ),
       ),

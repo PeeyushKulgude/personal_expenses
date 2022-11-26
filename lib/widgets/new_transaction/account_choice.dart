@@ -14,7 +14,8 @@ class AccountChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

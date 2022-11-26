@@ -85,13 +85,40 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/cash.svg
-    - assets/images/debitcard.svg
-    - assets/images/upi.svg
-    - assets/images/up-arrow.svg
-    - assets/images/down-arrow.svg
-    - assets/images/waiting.png
-    - assets/images/icon.png
+    - assets/
+    - assets/images/
+    - assets/images/category_icons/
+    # - assets/images/cash.svg
+    # - assets/images/debitcard.svg
+    # - assets/images/upi.svg
+    # - assets/images/up-arrow.svg
+    # - assets/images/down-arrow.svg
+    # - assets/images/waiting.png
+    # - assets/images/icon.png
+    # - assets/images/swirly-scribbled-arrow.svg
+    # - assets/images/swirly-scribbled-arrow.jpeg
+    # - assets/images/expense_icons/food.svg
+    # - assets/images/expense_icons/phone.svg
+    # - assets/images/expense_icons/house.svg
+    # - assets/images/expense_icons/entertainment.svg
+    # - assets/images/expense_icons/education.svg
+    # - assets/images/expense_icons/beauty.svg
+    # - assets/images/expense_icons/sport.svg
+    # - assets/images/expense_icons/transportation.svg
+    # - assets/images/expense_icons/clothing.svg
+    # - assets/images/expense_icons/car.svg
+    # - assets/images/expense_icons/electronics.svg
+    # - assets/images/expense_icons/travel.svg
+    # - assets/images/expense_icons/health.svg
+    # - assets/images/expense_icons/pet.svg
+    # - assets/images/expense_icons/carrot.svg
+    # - assets/images/expense_icons/pear.svg
+    # - assets/images/expense_icons/credit-card.svg
+    # - assets/images/expense_icons/money-plant.svg
+    # - assets/images/expense_icons/clock-with-dollar-sign.svg
+    # - assets/images/expense_icons/award.svg
+    # - assets/images/expense_icons/other-income.svg
+    # - assets/images/expense_icons/game-controller.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

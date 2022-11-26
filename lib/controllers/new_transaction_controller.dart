@@ -4,6 +4,7 @@ import '../models/categories.dart';
 import '../database/categories_database.dart';
 import '../../controllers/theme_controller.dart';
 import '../../themes/app_colors.dart';
+import '../widgets/new_transaction/type_choice.dart';
 
 class NewTransactionController extends GetxController {
   var currDate = DateTime.now().obs;
@@ -11,30 +12,138 @@ class NewTransactionController extends GetxController {
   var typeChoice = 0.obs;
   var titleController = TextEditingController().obs;
   var amountController = TextEditingController().obs;
-  var currCategory = "".obs;
-
+  var currCategoryTitle = "".obs;
+  var currCategoryType = "".obs;
+  var currCategoryIconCode = 0.obs;
   var userCategories = <Category>[].obs;
+
   final ThemeController themeController = Get.put(ThemeController());
 
-  NewTransactionController() {
-    refreshCategories();
+  Future<List<Category>?> getSpecificCategories(String title) async {
+    var list = (await CategoryDatabase.instance.readSpecificCategories(title));
+    if (list != null) {
+      return list;
+    } else {
+      addCategory(
+          Category(title: 'Food', iconCode: 1, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Recharge', iconCode: 2, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Household', iconCode: 3, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Entertainment', iconCode: 4, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Education', iconCode: 5, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Beauty', iconCode: 6, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Sport', iconCode: 7, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Transportation', iconCode: 8, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Clothing', iconCode: 9, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Car', iconCode: 10, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Electronics', iconCode: 11, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Travel', iconCode: 12, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Health', iconCode: 13, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Pet', iconCode: 14, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Vegetables', iconCode: 15, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Fruits', iconCode: 16, categoryType: 'Expense'));
+
+      addCategory(
+          Category(title: 'Salary', iconCode: 17, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Investments', iconCode: 18, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Part-time', iconCode: 19, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Awards', iconCode: 20, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Others', iconCode: 21, categoryType: 'Income'));
+      return null;
+    }
   }
 
-  Future refreshCategories() async {
+  Future<List<Category>?> readAllCategories() async {
     var list = (await CategoryDatabase.instance.readAllCategories());
     if (list != null) {
-      userCategories.value = list;
+      return list;
+    } else {
+      addCategory(
+          Category(title: 'Food', iconCode: 1, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Recharge', iconCode: 2, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Household', iconCode: 3, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Entertainment', iconCode: 4, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Education', iconCode: 5, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Beauty', iconCode: 6, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Sport', iconCode: 7, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Transportation', iconCode: 8, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Clothing', iconCode: 9, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Electricity', iconCode: 22, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Car', iconCode: 10, categoryType: 'Expense'));
+      addCategory(Category(
+          title: 'Electronics', iconCode: 11, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Travel', iconCode: 12, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Health', iconCode: 13, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Pet', iconCode: 14, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Vegetables', iconCode: 15, categoryType: 'Expense'));
+      addCategory(
+          Category(title: 'Fruits', iconCode: 16, categoryType: 'Expense'));
+
+      addCategory(
+          Category(title: 'Salary', iconCode: 17, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Investments', iconCode: 18, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Part-time', iconCode: 19, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Awards', iconCode: 20, categoryType: 'Income'));
+      addCategory(
+          Category(title: 'Others', iconCode: 21, categoryType: 'Income'));
+      return null;
     }
   }
 
   void addCategory(Category category) async {
     await CategoryDatabase.instance.create(category);
-    refreshCategories();
+    currCategoryIconCode.value = 0;
+    currCategoryTitle.value = '';
+    currCategoryType.value = '';
   }
 
   void deleteCategory(int id) async {
     await CategoryDatabase.instance.delete(id);
-    refreshCategories();
+    currCategoryIconCode.value = 0;
+    currCategoryTitle.value = '';
+    currCategoryType.value = '';
+  }
+
+  void editCategory(Category category) async {
+    await CategoryDatabase.instance.update(category);
+    currCategoryIconCode.value = 0;
+    currCategoryTitle.value = '';
+    currCategoryType.value = '';
   }
 
   void presentDatePicker(BuildContext context) {
@@ -44,8 +153,8 @@ class NewTransactionController extends GetxController {
           data: ThemeData(
             dialogTheme: DialogTheme(
               backgroundColor: themeController.isDarkMode.value
-                ? AppColors.titleTextColorLight
-                : AppColors.cardBackgroundColorLight,
+                  ? AppColors.alertDialogBackgroundColorDark
+                  : AppColors.alertDialogBackgroundColorLight,
             ),
             colorScheme: const ColorScheme.dark(
               primary: Color.fromARGB(255, 179, 3, 3),
@@ -73,175 +182,6 @@ class NewTransactionController extends GetxController {
           currDate.value = value;
         }
         return;
-      },
-    );
-  }
-
-  void startAddCategory(BuildContext context) {
-    var categoryController = TextEditingController();
-    showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            side: BorderSide(
-                color: themeController.isDarkMode.value
-                    ? AppColors.cardBorderSideColorDark
-                    : AppColors.cardBorderSideColorLight,
-                width: 1),
-          ),
-          elevation: 10,
-          backgroundColor: themeController.isDarkMode.value
-              ? AppColors.cardBackgroundColorDark
-              : AppColors.cardBackgroundColorLight,
-          title: Text('Add A New Category',
-              style: TextStyle(
-                color: themeController.isDarkMode.value
-                    ? AppColors.titleTextColorDark
-                    : AppColors.titleTextColorLight,
-              )),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                TextField(
-                  controller: categoryController,
-                  style: TextStyle(
-                    color: themeController.isDarkMode.value
-                        ? AppColors.titleTextColorDark
-                        : AppColors.titleTextColorLight,
-                  ),
-                  decoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: themeController.isDarkMode.value
-                            ? AppColors.newTransactionTextFieldColorDark
-                            : AppColors.newTransactionTextFieldColorLight,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: themeController.isDarkMode.value
-                            ? AppColors.newTransactionTextFieldColorDark
-                            : AppColors.newTransactionTextFieldColorLight,
-                      ),
-                    ),
-                    labelText: 'New Category',
-                    labelStyle: TextStyle(
-                      color: themeController.isDarkMode.value
-                          ? AppColors.titleTextColorDark
-                          : AppColors.titleTextColorLight,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                    color: themeController.isDarkMode.value
-                        ? AppColors.titleTextColorDark
-                        : AppColors.titleTextColorLight),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text(
-                'Add',
-                style: TextStyle(
-                    color: themeController.isDarkMode.value
-                        ? AppColors.titleTextColorDark
-                        : AppColors.titleTextColorLight),
-              ),
-              onPressed: () {
-                if (categoryController.text != '') {
-                  addCategory(Category(title: categoryController.text));
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void startEditCategory(BuildContext context, String title, int id) {
-    var categoryController = TextEditingController(text: title);
-    showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              side: BorderSide(color: Colors.white)),
-          backgroundColor: Colors.black,
-          title: const Text('Edit Category',
-              style: TextStyle(color: Colors.white)),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                TextField(
-                  controller: categoryController,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                  decoration: const InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 33, 150, 243)),
-                    ),
-                    labelText: 'New Category',
-                    labelStyle: TextStyle(
-                      color: Color.fromARGB(255, 33, 150, 243),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                'Cancel',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text(
-                'Add',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                if (categoryController.text != '') {
-                  addCategory(Category(title: categoryController.text));
-                  if (userCategories.length == 1) {
-                    deleteCategory(id);
-                    userCategories.value = [];
-                  } else {
-                    deleteCategory(id);
-                  }
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
       },
     );
   }

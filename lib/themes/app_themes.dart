@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expenses/themes/app_colors.dart';
 
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
@@ -7,9 +8,10 @@ class AppThemes {
     splashColor: const Color.fromRGBO(72, 145, 148, 70),
     canvasColor: const Color.fromRGBO(250, 250, 250, 1),
     fontFamily: 'Quicksand',
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      titleTextStyle: TextStyle(
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: AppColors.appBarIconColorLight),
+      backgroundColor: AppColors.appBarFillColor,
+      titleTextStyle: const TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -22,9 +24,10 @@ class AppThemes {
     splashColor: const Color.fromRGBO(72, 145, 148, 70),
     canvasColor: const Color.fromRGBO(17, 17, 17, 100),
     fontFamily: 'Quicksand',
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent,
-      titleTextStyle: TextStyle(
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: AppColors.appBarIconColorDark),
+      backgroundColor: AppColors.appBarFillColor,
+      titleTextStyle: const TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 20,
         fontWeight: FontWeight.bold,

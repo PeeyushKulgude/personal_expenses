@@ -40,7 +40,9 @@ CREATE TABLE ${t.tableTransactions} (
   ${t.TransactionFields.date} $textType,
   ${t.TransactionFields.type} $textType,
   ${t.TransactionFields.account} $textType,
-  ${t.TransactionFields.category} $textType
+  ${t.TransactionFields.category} $textType,
+  ${t.TransactionFields.iconCode} $integerType,
+  ${t.TransactionFields.categoryType} $textType
   )
 ''');
   }
@@ -111,14 +113,13 @@ CREATE TABLE ${t.tableTransactions} (
     }
   }
 
-  Future<int> update(t.Transaction transaction) async {
+  Future<int> update(int id, t.Transaction transaction) async {
     final db = await instance.database;
-
     return db.update(
       t.tableTransactions,
       transaction.toJson(),
       where: '${t.TransactionFields.id} = ?',
-      whereArgs: [transaction.id],
+      whereArgs: [id],
     );
   }
 
