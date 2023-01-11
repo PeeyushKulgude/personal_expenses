@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
-import '../total_of_transactions.dart';
-import '../transaction_list/transaction_list.dart';
+import 'package:personal_expenses/widgets/constants/appbar/custom_appbar.dart';
+import '../constants/total_of_transactions/total_of_transactions.dart';
+import '../constants/transaction_list/transaction_list.dart';
 import '../../controllers/home_page_controller.dart';
 import 'navigation_drawer.dart';
 import 'package:get/get.dart';
-import '../../themes/app_colors.dart';
 
 class MyHomePage extends StatelessWidget {
   final HomePageController homePageController = Get.put(HomePageController());
@@ -18,48 +17,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: Text(
-          'Personal Expenses',
-          style: TextStyle(
-            color: themeController.isDarkMode.value
-                ? AppColors.titleTextColorDark
-                : AppColors.titleTextColorLight,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-            fontSize: 20,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: (() {
-              themeController.isDarkMode.value =
-                  !themeController.isDarkMode.value;
-              themeController.changeTheme();
-            }),
-            icon: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              transitionBuilder: (child, anim) => RotationTransition(
-                turns: child.key == const ValueKey('icon1')
-                    ? Tween<double>(begin: 1, end: 0.75).animate(anim)
-                    : Tween<double>(begin: 0.75, end: 1).animate(anim),
-                child: ScaleTransition(scale: anim, child: child),
-              ),
-              child: themeController.isDarkMode.value
-                  ? Icon(
-                      Icons.sunny,
-                      key: const ValueKey('icon1'),
-                      color: AppColors.appBarIconColorDark,
-                    )
-                  : Icon(
-                      CupertinoIcons.moon_stars_fill,
-                      key: const ValueKey('icon2'),
-                      color: AppColors.appBarIconColorLight,
-                    ),
-            ),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar('Personal Expenses'),
       drawer: NavigationDrawer(),
       body: Obx(
         (() => SingleChildScrollView(
@@ -72,10 +30,10 @@ class MyHomePage extends StatelessWidget {
               ),
             )),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        height: 45,
-        width: 150,
+        height: MediaQuery.of(context).size.height * 0.06,
+        width: MediaQuery.of(context).size.width * 0.45,
         margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         child: FloatingActionButton(
           shape: const RoundedRectangleBorder(
@@ -85,7 +43,7 @@ class MyHomePage extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (BuildContext context) =>
-                    homePageController.startAddNewTransaction(context));
+                    homePageController.startAddNewTransaction(context, null));
           }),
           child: const Text(
             "+ Add Transaction",

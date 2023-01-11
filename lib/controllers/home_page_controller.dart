@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import '../models/sms.dart';
 import '../models/transaction.dart';
 import '../database/transaction_database.dart';
 import 'package:flutter/material.dart';
-import '../widgets/new_transaction/new_transaction.dart';
+import '../widgets/constants/new_transaction/new_transaction.dart';
 import 'theme_controller.dart';
 import '../themes/app_colors.dart';
 
@@ -25,14 +26,13 @@ class HomePageController extends GetxController {
     }
   }
 
-  Future getDatewiseGroupedTransactions() async {
-    var list = (await TransactionDatabase.instance.datewiseTransactions());
-    datewiseGroupedTransactions.value = list;
-  }
-
-  Future getDatewiseGroupedTransactionsFuture() async {
-    var list = (await TransactionDatabase.instance.datewiseTransactions());
-    return list;
+  Future<List<Map<String, dynamic>>?> getDatewiseGroupedTransactions() async {
+    var list = await TransactionDatabase.instance.datewiseTransactions();
+    if (list != null) {
+      datewiseGroupedTransactions.value = list;
+      return list;
+    }
+    return null;
   }
 
   List<Transaction> get recentTransactions {
@@ -72,7 +72,7 @@ class HomePageController extends GetxController {
     }
   }
 
-  Widget startAddNewTransaction(BuildContext context) {
+  Widget startAddNewTransaction(BuildContext context, SMS? sms) {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Center(
@@ -90,7 +90,7 @@ class HomePageController extends GetxController {
             backgroundColor: themeController.isDarkMode.value
                 ? AppColors.alertDialogBackgroundColorDark
                 : AppColors.alertDialogBackgroundColorLight,
-            actions: <Widget>[NewTransaction(addTx, 0)],
+            actions: <Widget>[NewTransaction(addTx, 0, sms)],
           ),
         ),
       ),
@@ -115,7 +115,7 @@ class HomePageController extends GetxController {
             backgroundColor: themeController.isDarkMode.value
                 ? AppColors.alertDialogBackgroundColorDark
                 : AppColors.alertDialogBackgroundColorLight,
-            actions: <Widget>[NewTransaction(editTx, editing)],
+            actions: <Widget>[NewTransaction(editTx, editing, null)],
           ),
         ),
       ),

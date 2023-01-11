@@ -22,7 +22,7 @@ class AppThemes {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: Color.fromRGBO(72, 145, 148, 70)),
     splashColor: const Color.fromRGBO(72, 145, 148, 70),
-    canvasColor: const Color.fromRGBO(17, 17, 17, 100),
+    canvasColor: const Color.fromRGBO(17, 17, 17, 1),
     fontFamily: 'Quicksand',
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: AppColors.appBarIconColorDark),

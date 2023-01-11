@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/widgets/screens/pie_chart.dart';
+import 'package:personal_expenses/widgets/screens/statistics.dart';
 import 'my_home_page.dart';
 import 'sms_display.dart';
-import '../../themes/app_themes.dart';
 import '../../themes/app_colors.dart';
 import '../../../controllers/theme_controller.dart';
 import 'package:get/get.dart';
-import 'user_categories/user_categories.dart';
+import 'user_categories.dart';
 
 class NavigationDrawer extends StatelessWidget {
   NavigationDrawer({super.key});
@@ -22,7 +21,7 @@ class NavigationDrawer extends StatelessWidget {
           children: [
             ListTile(
               leading: Icon(
-                Icons.home_filled,
+                Icons.home_rounded,
                 color: themeController.isDarkMode.value
                     ? AppColors.iconColor1Dark
                     : AppColors.iconColor1Light,
@@ -39,13 +38,13 @@ class NavigationDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(
-                Icons.pie_chart_sharp,
+                Icons.pie_chart_rounded,
                 color: themeController.isDarkMode.value
                     ? AppColors.iconColor1Dark
                     : AppColors.iconColor1Light,
               ),
               title: Text(
-                'Pie Chart',
+                'Statistics',
                 style: TextStyle(
                     color: themeController.isDarkMode.value
                         ? AppColors.titleTextColorDark
@@ -75,8 +74,8 @@ class NavigationDrawer extends StatelessWidget {
               onTap: (() {
                 Navigator.pop(context);
 
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: ((context) => SmsDisplay())));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => const SmsDisplay())));
               }),
             ),
             ListTile(
@@ -97,7 +96,7 @@ class NavigationDrawer extends StatelessWidget {
                 Navigator.pop(context);
 
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => UserCategories())));
+                    builder: ((context) => const UserCategories())));
               }),
             ),
           ],

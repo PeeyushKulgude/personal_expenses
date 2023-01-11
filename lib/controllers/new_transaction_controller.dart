@@ -4,7 +4,6 @@ import '../models/categories.dart';
 import '../database/categories_database.dart';
 import '../../controllers/theme_controller.dart';
 import '../../themes/app_colors.dart';
-import '../widgets/new_transaction/type_choice.dart';
 
 class NewTransactionController extends GetxController {
   var currDate = DateTime.now().obs;
@@ -18,6 +17,10 @@ class NewTransactionController extends GetxController {
   var userCategories = <Category>[].obs;
 
   final ThemeController themeController = Get.put(ThemeController());
+
+  NewTransactionController() {
+    readAllCategories();
+  }
 
   Future<List<Category>?> getSpecificCategories(String title) async {
     var list = (await CategoryDatabase.instance.readSpecificCategories(title));
@@ -71,9 +74,11 @@ class NewTransactionController extends GetxController {
     }
   }
 
+  // ignore: body_might_complete_normally_nullable
   Future<List<Category>?> readAllCategories() async {
     var list = (await CategoryDatabase.instance.readAllCategories());
     if (list != null) {
+      userCategories.value = list;
       return list;
     } else {
       addCategory(
@@ -121,7 +126,7 @@ class NewTransactionController extends GetxController {
           Category(title: 'Awards', iconCode: 20, categoryType: 'Income'));
       addCategory(
           Category(title: 'Others', iconCode: 21, categoryType: 'Income'));
-      return null;
+      readAllCategories();
     }
   }
 
@@ -130,6 +135,7 @@ class NewTransactionController extends GetxController {
     currCategoryIconCode.value = 0;
     currCategoryTitle.value = '';
     currCategoryType.value = '';
+    readAllCategories();
   }
 
   void deleteCategory(int id) async {
@@ -137,6 +143,7 @@ class NewTransactionController extends GetxController {
     currCategoryIconCode.value = 0;
     currCategoryTitle.value = '';
     currCategoryType.value = '';
+    readAllCategories();
   }
 
   void editCategory(Category category) async {
@@ -144,6 +151,7 @@ class NewTransactionController extends GetxController {
     currCategoryIconCode.value = 0;
     currCategoryTitle.value = '';
     currCategoryType.value = '';
+    readAllCategories();
   }
 
   void presentDatePicker(BuildContext context) {

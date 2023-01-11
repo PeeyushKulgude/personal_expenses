@@ -66,7 +66,7 @@ CREATE TABLE ${t.tableTransactions} (
     }
   }
 
-  Future<List<Map<String, dynamic>>> datewiseTransactions() async {
+  Future<List<Map<String, dynamic>>?> datewiseTransactions() async {
     final db = await instance.database;
     List<Map<String, dynamic>> lst = [];
 
@@ -82,6 +82,9 @@ CREATE TABLE ${t.tableTransactions} (
         'transactions': List.generate(transactions.length,
             (index) => t.Transaction.fromJson(transactions[index])),
       });
+    }
+    if (lst.isEmpty) {
+      return null;
     }
     return lst;
   }

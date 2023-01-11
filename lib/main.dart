@@ -7,10 +7,11 @@ import 'widgets/screens/my_home_page.dart';
 import './themes/app_themes.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      systemNavigationBarColor: Color.fromARGB(0, 255, 255, 255),
+      systemNavigationBarColor: Color.fromARGB(0, 0, 0, 0),
     ),
   );
   await GetStorage.init();
