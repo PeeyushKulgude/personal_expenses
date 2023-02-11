@@ -31,7 +31,7 @@ class NewTransaction extends StatelessWidget {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.01),
             child: Text(
-              'New Transaction',
+              editing == 0 ? 'New Transaction' : 'Edit Transaction',
               style: TextStyle(
                 color: themeController.isDarkMode.value
                     ? AppColors.titleTextColorDark

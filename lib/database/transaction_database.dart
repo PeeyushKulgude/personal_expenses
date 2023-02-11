@@ -70,18 +70,41 @@ CREATE TABLE ${t.tableTransactions} (
     final db = await instance.database;
     List<Map<String, dynamic>> lst = [];
 
-    final d = await db.rawQuery(
-        "SELECT DISTINCT ${t.TransactionFields.date} FROM ${t.tableTransactions} ORDER BY ${t.TransactionFields.date} DESC");
+    final d = await db.rawQuery("SELECT DISTINCT ${t.TransactionFields.date} FROM ${t.tableTransactions} ORDER BY ${t.TransactionFields.date} DESC");
     for (int i = 0; i < d.length; i++) {
-      final transactions = await db.query(t.tableTransactions,
-          columns: t.TransactionFields.values,
-          where: '${t.TransactionFields.date} = ?',
-          whereArgs: [d[i]['date']]);
+      final transactions = await db.query(t.tableTransactions, columns: t.TransactionFields.values, where: '${t.TransactionFields.date} = ?', whereArgs: [d[i]['date']]);
       lst.add({
         'date': DateTime.parse(d[i]['date'] as String),
-        'transactions': List.generate(transactions.length,
-            (index) => t.Transaction.fromJson(transactions[index])),
+        'transactions': List.generate(transactions.length, (index) => t.Transaction.fromJson(transactions[index])),
       });
+    }
+    if (lst.isEmpty) {
+      return null;
+    }
+    return lst;
+  }
+
+  Future<List<Map<String, dynamic>>?> categoryWiseTransactions(String categoryName) async {
+    final db = await instance.database;
+    List<Map<String, dynamic>> lst = [];
+
+    final dates = await db.rawQuery("SELECT DISTINCT ${t.TransactionFields.date} FROM ${t.tableTransactions} ORDER BY ${t.TransactionFields.date} DESC");
+    for (int i = 0; i < dates.length; i++) {
+      final transactions = await db.query(t.tableTransactions, columns: t.TransactionFields.values, where: '${t.TransactionFields.date} = ?', whereArgs: [dates[i]['date']]);
+
+      List tran = [];
+      for (var i = 0; i < transactions.length; i++) {
+        t.Transaction temp = t.Transaction.fromJson(transactions[i]);
+        if (temp.category == categoryName) {
+          tran.add(temp);
+        }
+      }
+      if (tran.isNotEmpty) {
+        lst.add({
+          'date': DateTime.parse(dates[i]['date'] as String),
+          'transactions': tran,
+        });
+      }
     }
     if (lst.isEmpty) {
       return null;
@@ -92,8 +115,7 @@ CREATE TABLE ${t.tableTransactions} (
   Future<List<Map<String, Object?>>?> findCategorySum() async {
     final db = await instance.database;
 
-    final map = await db.rawQuery(
-        "SELECT ${t.TransactionFields.category}, SUM (${t.TransactionFields.amount}) FROM ${t.tableTransactions} WHERE ${t.TransactionFields.type} = 'Expense' GROUP BY ${t.TransactionFields.category};");
+    final map = await db.rawQuery("SELECT ${t.TransactionFields.category}, SUM (${t.TransactionFields.amount}) FROM ${t.tableTransactions} WHERE ${t.TransactionFields.type} = 'Expense' GROUP BY ${t.TransactionFields.category};");
     if (map.isNotEmpty) {
       return map;
     } else {
@@ -104,10 +126,7 @@ CREATE TABLE ${t.tableTransactions} (
   Future<t.Transaction?> readTransaction(int id) async {
     final db = await instance.database;
 
-    final map = await db.query(t.tableTransactions,
-        columns: t.TransactionFields.values,
-        where: '${t.TransactionFields.id} = ?',
-        whereArgs: [id]);
+    final map = await db.query(t.tableTransactions, columns: t.TransactionFields.values, where: '${t.TransactionFields.id} = ?', whereArgs: [id]);
 
     if (map.isNotEmpty) {
       return t.Transaction.fromJson(map.first);

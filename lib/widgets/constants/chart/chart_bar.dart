@@ -14,7 +14,7 @@ class ChartBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.find();
-    return Column(
+    return Obx((() => Column(
       children: [
         SizedBox(
           height: 20,
@@ -71,6 +71,6 @@ class ChartBar extends StatelessWidget {
                   : AppColors.subtitleTextColorLight),
         ),
       ],
-    );
+    )));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/categories.dart';
+import '../models/category.dart';
 
 class CategoryDatabase {
   static final CategoryDatabase instance = CategoryDatabase._init();
@@ -42,6 +42,14 @@ CREATE TABLE $tableCategories (
   ${CategoryFields.categoryType} $textType
   )
 ''');
+await db.execute('''
+CREATE TABLE $tableNotificationCategories (
+  ${CategoryFields.id} $idType,
+  ${CategoryFields.title} $textType,
+  ${CategoryFields.iconCode} $integerType,
+  ${CategoryFields.categoryType} $textType
+  )
+''');
   }
 
   Future<Category> create(Category category) async {
@@ -62,19 +70,34 @@ CREATE TABLE $tableCategories (
     }
   }
 
+  Future<List<Category>?> readAllNotificationCategories() async {
+    final db = await instance.database;
+    var map = await db.query(tableNotificationCategories);
+    if (map.isNotEmpty) {
+      return map.map((e) => Category.fromJson(e)).toList();
+    } else {
+      return null;
+    }
+  }
+
   Future<List<Category>?> readSpecificCategories(String type) async {
     final db = await instance.database;
 
-    final map = await db.query(tableCategories,
-        columns: CategoryFields.values,
-        where: '${CategoryFields.categoryType} = ?',
-        whereArgs: [type]);
+    final map = await db.query(tableCategories, columns: CategoryFields.values, where: '${CategoryFields.categoryType} = ?', whereArgs: [type]);
 
     if (map.isNotEmpty) {
       return map.map((e) => Category.fromJson(e)).toList();
     } else {
       return null;
     }
+  }
+
+  Future<Category> getCategory(String name) async {
+    final db = await instance.database;
+
+    final map = await db.query(tableCategories, columns: CategoryFields.values, where: '${CategoryFields.title} = ?', whereArgs: [name]);
+
+    return Category.fromJson(map.first);
   }
 
   Future<int> update(Category category) async {
@@ -101,5 +124,22 @@ CREATE TABLE $tableCategories (
   Future close() async {
     final db = await instance.database;
     db.close();
+  }
+
+  Future<Category> createNotificationCategory(Category category) async {
+    final db = await instance.database;
+    final id = await db.insert(tableNotificationCategories, category.toJson());
+    return category.copy(id: id);
+  }
+
+  Future<int> updateNotificationCategory(int id, Category category) async {
+    final db = await instance.database;
+
+    return db.update(
+      tableNotificationCategories,
+      category.toJson(),
+      where: '${CategoryFields.id} = ?',
+      whereArgs: [id],
+    );
   }
 }

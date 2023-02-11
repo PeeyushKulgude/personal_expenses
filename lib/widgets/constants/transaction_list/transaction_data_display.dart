@@ -38,8 +38,7 @@ class TransactionDataDisplay extends StatelessWidget {
             width: 100,
             child: Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.only(
-                  top: 10, bottom: 10, right: 15, left: 3),
+              margin: const EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 3),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 color: transaction.type == "Expense"
@@ -71,13 +70,15 @@ class TransactionDataDisplay extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  transaction.title,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: themeController.isDarkMode.value
-                        ? AppColors.titleTextColorDark
-                        : AppColors.titleTextColorLight,
+                FittedBox(
+                  child: Text(
+                    transaction.title,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: themeController.isDarkMode.value
+                          ? AppColors.titleTextColorDark
+                          : AppColors.titleTextColorLight,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -97,12 +98,14 @@ class TransactionDataDisplay extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      transaction.category,
-                      style: TextStyle(
-                        color: themeController.isDarkMode.value
-                            ? AppColors.subtitleTextColorDark
-                            : AppColors.subtitleTextColorLight,
+                    FittedBox(
+                      child: Text(
+                        transaction.category,
+                        style: TextStyle(
+                          color: themeController.isDarkMode.value
+                              ? AppColors.subtitleTextColorDark
+                              : AppColors.subtitleTextColorLight,
+                        ),
                       ),
                     ),
                   ],
@@ -113,28 +116,21 @@ class TransactionDataDisplay extends StatelessWidget {
           IconButton(
             onPressed: (() {
               newTransactionController.currDate.value = transaction.date;
-              newTransactionController.accountChoice.value =
-                  transaction.account == 'Cash'
-                      ? 1
-                      : transaction.account == 'UPI'
-                          ? 2
-                          : 3;
-              newTransactionController.typeChoice.value =
-                  transaction.type == 'Income' ? 1 : 2;
-              newTransactionController.titleController.value.text =
-                  transaction.title;
-              newTransactionController.amountController.value.text =
-                  transaction.amount.toString();
-              newTransactionController.currCategoryTitle.value =
-                  transaction.category;
-              newTransactionController.currCategoryIconCode.value =
-                  transaction.iconCode;
-              newTransactionController.currCategoryType.value =
-                  transaction.type;
+              newTransactionController.accountChoice.value = transaction.account == 'Cash'
+                  ? 1
+                  : transaction.account == 'UPI'
+                      ? 2
+                      : 3;
+              newTransactionController.typeChoice.value = transaction.type == 'Income' ? 1 : 2;
+              newTransactionController.titleController.value.text = transaction.title;
+              newTransactionController.amountController.value.text = transaction.amount.toString();
+              newTransactionController.currCategoryTitle.value = transaction.category;
+              newTransactionController.currCategoryIconCode.value = transaction.iconCode;
+              newTransactionController.currCategoryType.value = transaction.type;
               showDialog(
                   context: context,
-                  builder: (BuildContext context) => homePageController
-                      .editTransaction(context, transaction.id!));
+                  builder: (BuildContext context) =>
+                      homePageController.editTransaction(context, transaction.id!));
             }),
             color: themeController.isDarkMode.value
                 ? AppColors.iconColor1Dark

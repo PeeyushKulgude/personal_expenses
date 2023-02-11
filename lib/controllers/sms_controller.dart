@@ -4,14 +4,19 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:personal_expenses/database/sms_database.dart';
 import 'package:personal_expenses/models/sms.dart';
 import '../database/blocked_sender_database.dart';
+import '../database/categories_database.dart';
 import '../models/blocked_sender.dart';
+import '../models/category.dart';
 
 class SmsController extends GetxController {
   final SmsQuery _query = SmsQuery();
   var smsList = <SMS>[].obs;
+  var notificationCategoryList = <Category>[].obs;
   var blockedSendersList = <BlockedSender>[].obs;
+  var latestRefreshDate = DateTime(2000).obs;
 
   SmsController() {
+    getNotificationCategories();
     getAllBlockedSenders();
   }
 
@@ -28,9 +33,14 @@ class SmsController extends GetxController {
     var dbList = await SMSDatabase.instance.readAllSMS();
     var deviceList = await getAllMessagesFromDevice();
     if (dbList != null) {
-      final first = dbList.first;
+      var first = dbList.first.time;
+      if (first.isBefore(latestRefreshDate.value)) {
+        first = latestRefreshDate.value;
+      } else {
+        latestRefreshDate.value = first;
+      }
       for (var element in deviceList) {
-        if (element.date!.isAfter(first.time)) {
+        if (element.date!.isAfter(first)) {
           await SMSDatabase.instance.create(SMS(
             sender: element.sender!,
             body: element.body!,
@@ -52,15 +62,66 @@ class SmsController extends GetxController {
     return SMSDatabase.instance.readAllSMS();
   }
 
-  void added(SMS sms) {
+  void getPreviousSMS(BlockedSender blockedSender) async {
+    var deviceList = await getAllMessagesFromDevice();
+    for (var element in deviceList.where((element) => element.sender == blockedSender.sender)) {
+      await SMSDatabase.instance.create(
+        SMS(
+          sender: element.sender!,
+          body: element.body!,
+          time: element.date!,
+        ),
+      );
+      if (element.date!.isAfter(latestRefreshDate.value)) {
+        latestRefreshDate.value = element.date!;
+      }
+    }
+  }
+
+  void markSMSAsAdded(SMS sms) {
     SMSDatabase.instance.added(sms);
+  }
+
+  void addSender(String sender) {
+    BlockedSenderDatabase.instance.create(BlockedSender(sender: sender));
+    SMSDatabase.instance.blockSender(sender);
+    getAllBlockedSenders();
+  }
+
+  void deleteSender(BlockedSender blockedSender) {
+    BlockedSenderDatabase.instance.delete(blockedSender.id!);
+    getAllBlockedSenders();
+  }
+
+  Future<Iterable<SmsMessage>> getAllMessagesFromDevice() async {
+    var permission = await Permission.sms.status;
+    var filteredMessages = <SmsMessage>[];
+    if (permission.isGranted) {
+      final messages = await _query.querySms(
+        kinds: [SmsQueryKind.inbox],
+      );
+      for (int i = 0; i < messages.length; i++) {
+        if (await checkMessage(messages[i])) {
+          filteredMessages.add(messages[i]);
+        }
+      }
+    } else {
+      await Permission.sms.request();
+      final messages = await _query.querySms(
+        kinds: [SmsQueryKind.inbox],
+      );
+      for (int i = 0; i < messages.length; i++) {
+        if (await checkMessage(messages[i])) {
+          filteredMessages.add(messages[i]);
+        }
+      }
+    }
+    return filteredMessages;
   }
 
   Future<bool> checkMessage(SmsMessage message) async {
     String lst = message.body!.toLowerCase();
-    if ((lst.contains('credited') ||
-            lst.contains('debited') ||
-            lst.contains('transaction')) &&
+    if ((lst.contains('credited') || lst.contains('debited') || lst.contains('transaction')) &&
         !lst.contains('recharge') &&
         !lst.contains('sale') &&
         !lst.contains('expire') &&
@@ -86,39 +147,33 @@ class SmsController extends GetxController {
     }
   }
 
-  void addSender(String sender) {
-    BlockedSenderDatabase.instance.create(BlockedSender(sender: sender));
-    getAllBlockedSenders();
+  void addNotificationCategories() {
+    addNotificationCategory(Category(title: 'Food', iconCode: 1, categoryType: 'Expense'));
+    addNotificationCategory(Category(title: 'Recharge', iconCode: 2, categoryType: 'Expense'));
+    addNotificationCategory(Category(title: 'Household', iconCode: 3, categoryType: 'Expense'));
+    addNotificationCategory(Category(title: 'Entertainment', iconCode: 4, categoryType: 'Expense'));
+    addNotificationCategory(Category(title: 'Education', iconCode: 5, categoryType: 'Expense'));
+
+    addNotificationCategory(Category(title: 'Salary', iconCode: 17, categoryType: 'Income'));
+    addNotificationCategory(Category(title: 'Investments', iconCode: 18, categoryType: 'Income'));
+    addNotificationCategory(Category(title: 'Part-time', iconCode: 19, categoryType: 'Income'));
+    addNotificationCategory(Category(title: 'Awards', iconCode: 20, categoryType: 'Income'));
+    addNotificationCategory(Category(title: 'Others', iconCode: 21, categoryType: 'Income'));
   }
 
-  void deleteSender(BlockedSender blockedSender) {
-    BlockedSenderDatabase.instance.delete(blockedSender.id!);
-    getAllBlockedSenders();
+  void addNotificationCategory(Category category) async {
+    await CategoryDatabase.instance.createNotificationCategory(category);
   }
 
-  Future<List<SmsMessage>> getAllMessagesFromDevice() async {
-    var permission = await Permission.sms.status;
-    var filteredMessages = <SmsMessage>[];
-    if (permission.isGranted) {
-      final messages = await _query.querySms(
-        kinds: [SmsQueryKind.inbox],
-      );
-      for (int i = 0; i < messages.length; i++) {
-        if (await checkMessage(messages[i])) {
-          filteredMessages.add(messages[i]);
-        }
-      }
-    } else {
-      await Permission.sms.request();
-      final messages = await _query.querySms(
-        kinds: [SmsQueryKind.inbox],
-      );
-      for (int i = 0; i < messages.length; i++) {
-        if (await checkMessage(messages[i])) {
-          filteredMessages.add(messages[i]);
-        }
-      }
+  void editNotificationCategory(int id, Category category) async {
+    await CategoryDatabase.instance.updateNotificationCategory(id, category);
+  }
+
+  Future<List<Category>?> getNotificationCategories() async {
+    var list = await CategoryDatabase.instance.readAllNotificationCategories();
+    if (list != null) {
+      notificationCategoryList.value = list;
     }
-    return filteredMessages;
+    return list;
   }
 }

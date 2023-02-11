@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../database/icons_database.dart';
-import 'income_categories.dart';
-import 'expense_categories.dart';
+import 'category_gridview.dart';
 import '../../../../controllers/new_transaction_controller.dart';
 import 'package:get/get.dart';
 import '../../../../controllers/theme_controller.dart';
@@ -73,6 +72,10 @@ class _CategorySelectState extends State<CategorySelect>
                                     labelColor: themeController.isDarkMode.value
                                         ? AppColors.titleTextColorDark
                                         : AppColors.titleTextColorLight,
+                                    unselectedLabelColor:
+                                        themeController.isDarkMode.value
+                                            ? AppColors.subtitleTextColorDark
+                                            : AppColors.subtitleTextColorLight,
                                     tabs: const [
                                       Tab(
                                         text: 'Expense',
@@ -89,8 +92,8 @@ class _CategorySelectState extends State<CategorySelect>
                                   child: TabBarView(
                                     controller: tabBarController,
                                     children: [
-                                      ExpenseCategories(),
-                                      IncomeCategories(),
+                                      CategoryGridView('Expense'),
+                                      CategoryGridView('Income'),
                                     ],
                                   ),
                                 ),

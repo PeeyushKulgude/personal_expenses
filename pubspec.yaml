@@ -19,12 +19,15 @@ dependencies:
   loading_animation_widget:
   get:
   path:
-  pie_chart:
   flutter_sms_inbox:
   permission_handler: ^10.2.0
   shared_preferences:
   string_validator: ^0.3.0
   get_storage:
+  fl_chart: ^0.55.2
+  pie_chart: ^5.3.2
+  workmanager: ^0.5.1
+  awesome_notifications: ^0.6.21
 
 dev_dependencies:
   flutter_test:

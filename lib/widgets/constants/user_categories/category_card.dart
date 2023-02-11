@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:personal_expenses/models/categories.dart';
+import 'package:personal_expenses/models/category.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/new_transaction_controller.dart';

@@ -12,7 +12,7 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Obx((() => Card(
       color: themeController.isDarkMode.value
           ? const Color.fromARGB(156, 27, 27, 27)
           : const Color.fromRGBO(227, 227, 227, 1),
@@ -47,6 +47,6 @@ class TransactionCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )));
   }
 }

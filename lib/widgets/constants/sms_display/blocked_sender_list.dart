@@ -23,17 +23,20 @@ class BlockedSendersList extends StatelessWidget {
             color: themeController.isDarkMode.value
                 ? AppColors.cardBorderSideColorDark
                 : AppColors.cardBorderSideColorLight,
-            width: 1),
+            width: 1,),
       ),
       elevation: 10,
       backgroundColor: themeController.isDarkMode.value
           ? AppColors.alertDialogBackgroundColorDark
           : AppColors.alertDialogBackgroundColorLight,
-      title: Text('Blocked List',
-          style: TextStyle(
-              color: themeController.isDarkMode.value
-                  ? AppColors.titleTextColorDark
-                  : AppColors.titleTextColorLight)),
+      title: Text(
+        'Black List',
+        style: TextStyle(
+          color: themeController.isDarkMode.value
+              ? AppColors.titleTextColorDark
+              : AppColors.titleTextColorLight,
+        ),
+      ),
       content: SizedBox(
         height: MediaQuery.of(context).size.height * 0.25,
         child: FutureBuilder(
@@ -79,6 +82,8 @@ class BlockedSendersList extends StatelessWidget {
                               smsController.deleteSender(
                                 snapshot.data![index],
                               );
+                              smsController
+                                  .getPreviousSMS(snapshot.data![index]);
                               refresh();
                             }),
                             color: AppColors.deleteIconColor,

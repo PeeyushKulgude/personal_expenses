@@ -10,37 +10,36 @@ class NoStatisticsAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Positioned(
+        Padding(
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.2, bottom: 50),
           child: Obx(
             (() => themeController.isDarkMode.value
                 ? Image.asset(
                     'assets/animations/no_data_dark.gif',
-                    height: 500,
-                    width: 500,
+                    width: 300,
                   )
                 : Image.asset(
                     'assets/animations/no_data_light.gif',
-                    height: 500,
-                    width: 500,
+                    width: 300,
                   )),
           ),
         ),
-        Positioned(
-          top: 350,
-          left: MediaQuery.of(context).size.width * 0.25,
-          child: Text(
-            'No data for analysis',
-            style: TextStyle(
-              color: themeController.isDarkMode.value
-                  ? AppColors.titleTextColorDark
-                  : AppColors.titleTextColorLight,
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-            ),
-          ),
+        Obx(
+          (() => Text(
+                'No data for analysis.',
+                style: TextStyle(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.titleTextColorDark
+                      : AppColors.titleTextColorLight,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              )),
         ),
       ],
     );

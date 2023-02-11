@@ -13,7 +13,7 @@ class DateHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Obx((() => Padding(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Row(
         children: <Widget>[
@@ -57,6 +57,6 @@ class DateHeader extends StatelessWidget {
           )
         ],
       ),
-    );
+    )));
   }
 }
