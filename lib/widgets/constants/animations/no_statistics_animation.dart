@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../themes/app_colors.dart';
 
@@ -16,17 +17,12 @@ class NoStatisticsAnimation extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.2, bottom: 50),
-          child: Obx(
-            (() => themeController.isDarkMode.value
-                ? Image.asset(
-                    'assets/animations/no_data_dark.gif',
-                    width: 300,
-                  )
-                : Image.asset(
-                    'assets/animations/no_data_light.gif',
-                    width: 300,
-                  )),
+            top: MediaQuery.of(context).size.height * 0.15,
+            bottom: 30,
+            left: 25,
+          ),
+          child: Lottie.asset(
+            'assets/animations/no_data.json',
           ),
         ),
         Obx(
@@ -37,7 +33,7 @@ class NoStatisticsAnimation extends StatelessWidget {
                       ? AppColors.titleTextColorDark
                       : AppColors.titleTextColorLight,
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: 18,
                 ),
               )),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../themes/app_colors.dart';
 
@@ -17,18 +18,9 @@ class NoSMSFoundAnimation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.25, bottom: 50),
-            child: Obx(
-              (() => themeController.isDarkMode.value
-                  ? Image.asset(
-                      'assets/animations/sms_loading_dark.gif',
-                      width: 200,
-                    )
-                  : Image.asset(
-                      'assets/animations/sms_loading_light.gif',
-                      width: 200,
-                    )),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+            child: Lottie.asset(
+              'assets/animations/no_sms.json',
             ),
           ),
           Obx(

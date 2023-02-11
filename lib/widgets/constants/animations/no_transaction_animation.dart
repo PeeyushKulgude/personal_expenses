@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../themes/app_colors.dart';
 
@@ -15,29 +16,20 @@ class NoTransactionFoundAnimation extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.2, bottom: 30),
-          child: Obx(
-            (() => themeController.isDarkMode.value
-                ? Image.asset(
-                    'assets/animations/no_transaction_green_dark.gif',
-                    width: 250,
-                  )
-                : Image.asset(
-                    'assets/animations/no_transaction_green_light.gif',
-                    width: 250,
-                  )),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+          child: Lottie.asset(
+            'assets/animations/no_transaction.json',
           ),
         ),
         Obx(
           (() => Text(
-                'No transactions.',
+                'No transactions found.',
                 style: TextStyle(
                   color: themeController.isDarkMode.value
                       ? AppColors.titleTextColorDark
                       : AppColors.titleTextColorLight,
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: 18,
                 ),
               )),
         ),
