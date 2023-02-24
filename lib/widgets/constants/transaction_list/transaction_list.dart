@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
 import 'package:personal_expenses/widgets/constants/animations/no_transaction_animation.dart';
-import 'package:personal_expenses/widgets/constants/chart/chart.dart';
 import 'package:personal_expenses/widgets/constants/transaction_list/transaction_card.dart';
 import '../../../controllers/home_page_controller.dart';
 import '../../../controllers/new_transaction_controller.dart';
@@ -40,12 +39,7 @@ class TransactionList extends StatelessWidget {
                 if (index == 0) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-                    child: Column(
-                      children: [
-                        Chart(homePageController.recentTransactions),
-                        TransactionCard(transaction),
-                      ],
-                    ),
+                    child: TransactionCard(transaction),
                   );
                 } else {
                   return Padding(
