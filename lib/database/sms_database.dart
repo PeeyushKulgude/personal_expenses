@@ -54,7 +54,7 @@ CREATE TABLE $tableSms (
     final db = await instance.database;
 
     const orderBy = '${SMSFields.time} DESC';
-    var map = await db.query(tableSms, orderBy: orderBy, limit: 50);
+    var map = await db.query(tableSms, orderBy: orderBy, limit: 60);
     if (map.isNotEmpty) {
       return map.map((e) => SMS.fromJson(e)).toList();
     } else {

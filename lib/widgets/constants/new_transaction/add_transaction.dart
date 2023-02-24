@@ -26,22 +26,37 @@ class AddTransaction extends StatelessWidget {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            side: BorderSide(color: themeController.isDarkMode.value ? AppColors.cardBorderSideColorDark : AppColors.cardBorderSideColorLight, width: 1),
+            side: BorderSide(
+                color: themeController.isDarkMode.value
+                    ? AppColors.cardBorderSideColorDark
+                    : AppColors.cardBorderSideColorLight,
+                width: 1),
           ),
           elevation: 10,
-          backgroundColor: themeController.isDarkMode.value ? AppColors.alertDialogBackgroundColorDark : AppColors.alertDialogBackgroundColorLight,
-          title: Text('Wrong Input!', style: TextStyle(color: themeController.isDarkMode.value ? AppColors.titleTextColorDark : AppColors.titleTextColorLight)),
+          backgroundColor: themeController.isDarkMode.value
+              ? AppColors.alertDialogBackgroundColorDark
+              : AppColors.alertDialogBackgroundColorLight,
+          title: Text('Wrong Input!',
+              style: TextStyle(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.titleTextColorDark
+                      : AppColors.titleTextColorLight)),
           content: Text(
             "Some fields might have invalid values or may not be chosen at all.",
             style: TextStyle(
-              color: themeController.isDarkMode.value ? AppColors.subtitleTextColorDark : AppColors.subtitleTextColorLight,
+              color: themeController.isDarkMode.value
+                  ? AppColors.subtitleTextColorDark
+                  : AppColors.subtitleTextColorLight,
             ),
           ),
           actions: [
             TextButton(
               child: Text(
                 'Okay',
-                style: TextStyle(color: themeController.isDarkMode.value ? AppColors.titleTextColorDark : AppColors.titleTextColorLight),
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -65,7 +80,9 @@ class AddTransaction extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
               side: BorderSide(
                 width: 1,
-                color: themeController.isDarkMode.value ? AppColors.titleTextColorDark : AppColors.titleTextColorLight,
+                color: themeController.isDarkMode.value
+                    ? AppColors.titleTextColorDark
+                    : AppColors.titleTextColorLight,
               ),
             ),
           ),
@@ -92,15 +109,37 @@ class AddTransaction extends StatelessWidget {
           if (enteredTitle == '') {
             c.titleController.value.text = c.currCategoryTitle.value;
           }
-          if (!isInt(c.amountController.value.text) || int.parse(c.amountController.value.text) <= 0 || c.accountChoice.value == 0 || c.typeChoice.value == 0 || c.currCategoryTitle.value == '' || ((c.typeChoice.value == 1 ? 'Income' : 'Expense') != c.currCategoryType.value)) {
+          if (double.tryParse(c.amountController.value.text) == null ||
+              double.parse(c.amountController.value.text) <= 0 ||
+              c.accountChoice.value == 0 ||
+              c.typeChoice.value == 0 ||
+              c.currCategoryTitle.value == '' ||
+              ((c.typeChoice.value == 1 ? 'Income' : 'Expense') != c.currCategoryType.value)) {
             wrongInputDialog(context);
             return;
           } else {
             DateTime now = c.currDate.value;
             if (editing != 0) {
-              aT(Transaction(id: editing, title: c.titleController.value.text, amount: int.parse(c.amountController.value.text), date: DateTime(now.year, now.month, now.day), type: currType, account: acc, category: c.currCategoryTitle.value, iconCode: c.currCategoryIconCode.value, categoryType: 'Expense'));
+              aT(Transaction(
+                  id: editing,
+                  title: c.titleController.value.text,
+                  amount: double.parse(c.amountController.value.text),
+                  date: DateTime(now.year, now.month, now.day),
+                  type: currType,
+                  account: acc,
+                  category: c.currCategoryTitle.value,
+                  iconCode: c.currCategoryIconCode.value,
+                  categoryType: 'Expense'));
             } else {
-              aT(Transaction(title: c.titleController.value.text, amount: int.parse(c.amountController.value.text), date: DateTime(now.year, now.month, now.day), type: currType, account: acc, category: c.currCategoryTitle.value, iconCode: c.currCategoryIconCode.value, categoryType: 'Expense'));
+              aT(Transaction(
+                  title: c.titleController.value.text,
+                  amount: double.parse(c.amountController.value.text),
+                  date: DateTime(now.year, now.month, now.day),
+                  type: currType,
+                  account: acc,
+                  category: c.currCategoryTitle.value,
+                  iconCode: c.currCategoryIconCode.value,
+                  categoryType: 'Expense'));
             }
             if (sms != null) {
               smsController.markSMSAsAdded(sms!);
@@ -124,7 +163,9 @@ class AddTransaction extends StatelessWidget {
         child: Text(
           editing == 0 ? 'Add Transaction' : 'Submit Changes',
           style: TextStyle(
-            color: themeController.isDarkMode.value ? AppColors.titleTextColorDark : AppColors.titleTextColorLight,
+            color: themeController.isDarkMode.value
+                ? AppColors.titleTextColorDark
+                : AppColors.titleTextColorLight,
           ),
         ),
       ),

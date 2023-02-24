@@ -28,7 +28,7 @@ class TransactionFields {
 class Transaction {
   final int? id;
   final String title;
-  final int amount;
+  final double amount;
   final DateTime date;
   final String type;
   final String account;
@@ -64,7 +64,7 @@ class Transaction {
   Transaction copy({
     int? id,
     String? title,
-    int? amount,
+    double? amount,
     DateTime? date,
     String? type,
     String? account,
@@ -87,7 +87,7 @@ class Transaction {
   static Transaction fromJson(Map<String, dynamic> json) => Transaction(
         id: json[TransactionFields.id] as int,
         title: json[TransactionFields.title] as String,
-        amount: json[TransactionFields.amount] as int,
+        amount: json[TransactionFields.amount] as double,
         date: DateTime.parse(json[TransactionFields.date] as String),
         type: json[TransactionFields.type] as String,
         account: json[TransactionFields.account] as String,

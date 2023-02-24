@@ -74,7 +74,7 @@ class _UserCategoriesState extends State<UserCategories> with TickerProviderStat
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         height: 45,
         width: 150,

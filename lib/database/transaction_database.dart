@@ -31,12 +31,13 @@ class TransactionDatabase {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const integerType = 'INTEGER NOT NULL';
     const textType = 'TEXT NOT NULL';
+    const doubleType = 'DOUBLE NOT NULL';
 
     await db.execute('''
 CREATE TABLE ${t.tableTransactions} (
   ${t.TransactionFields.id} $idType,
   ${t.TransactionFields.title} $textType,
-  ${t.TransactionFields.amount} $integerType,
+  ${t.TransactionFields.amount} $doubleType,
   ${t.TransactionFields.date} $textType,
   ${t.TransactionFields.type} $textType,
   ${t.TransactionFields.account} $textType,

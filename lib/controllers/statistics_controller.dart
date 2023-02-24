@@ -15,7 +15,7 @@ class StatisticsController extends GetxController {
       var categoryWiseList = <String, double>{};
       categoryList.value = [];
       for (int i = 0; i < list.length; i++) {
-        categoryWiseList[list[i]['category'] as String] = (list[i]['SUM (amount)'] as int).toDouble();
+        categoryWiseList[list[i]['category'] as String] = (list[i]['SUM (amount)'] as double);
         getCategory(list[i]['category'] as String);
       }
       return categoryWiseList;

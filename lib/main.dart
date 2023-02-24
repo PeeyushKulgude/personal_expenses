@@ -92,7 +92,7 @@ void main() async {
     TransactionDatabase.instance.create(
       Transaction(
         title: event.buttonKeyPressed,
-        amount: int.parse(event.payload!['amount']!),
+        amount: double.parse(event.payload!['amount']!),
         date: DateTime(date.year, date.month, date.day),
         type: event.payload!['type']!,
         account: event.payload!['account']!,
@@ -134,7 +134,7 @@ class MyApp extends StatelessWidget {
         DateTime.now().second.toString(),
         taskName1,
         frequency: const Duration(minutes: 15),
-        initialDelay: const Duration(seconds: 40), //increase to 2 minutes at the time of publishing
+        initialDelay: const Duration(seconds: 120),
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
       Workmanager().registerPeriodicTask(
