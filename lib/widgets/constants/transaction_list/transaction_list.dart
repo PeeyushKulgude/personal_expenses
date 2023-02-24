@@ -36,17 +36,10 @@ class TransactionList extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final transaction = snapshot.data![index];
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-                    child: TransactionCard(transaction),
-                  );
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TransactionCard(transaction),
-                  );
-                }
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                  child: TransactionCard(transaction),
+                );
               },
             );
           } else {
