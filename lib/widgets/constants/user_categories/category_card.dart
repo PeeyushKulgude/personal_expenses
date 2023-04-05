@@ -73,6 +73,7 @@ class CategoryCard extends StatelessWidget {
                               category.title,
                               category.categoryType == 'Income' ? 1 : 2,
                               category.iconCode,
+                              changeState,
                             );
                           });
                       newTransactionController.readAllCategories();
@@ -85,12 +86,10 @@ class CategoryCard extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       if (newTransactionController.userCategories.length == 1) {
-                        newTransactionController
-                            .deleteCategory(category.id as int);
+                        newTransactionController.deleteCategory(category.id as int);
                         newTransactionController.userCategories.value = [];
                       } else {
-                        newTransactionController
-                            .deleteCategory(category.id as int);
+                        newTransactionController.deleteCategory(category.id as int);
                       }
                       changeState();
                     },

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expenses/controllers/home_page_controller.dart';
 import '../../../themes/app_colors.dart';
 import '../../../../controllers/theme_controller.dart';
 import 'package:get/get.dart';
 
 class TotalOfTransactions extends StatelessWidget {
-  final Map<String, double> groupedTransactionValuesMonthly;
 
-  TotalOfTransactions(this.groupedTransactionValuesMonthly, {super.key});
+  TotalOfTransactions({super.key});
 
   final ThemeController themeController = Get.find();
+  final HomePageController homePageController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class TotalOfTransactions extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Text(
-                          groupedTransactionValuesMonthly['income']!.toStringAsFixed(2),
+                          homePageController.incomeAndExpenseMonthlyTotal['income']!.toStringAsFixed(2),
                           style: TextStyle(
                             color: AppColors.incomeBorderColor,
                             fontSize: 20,
@@ -76,7 +77,7 @@ class TotalOfTransactions extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Text(
-                          groupedTransactionValuesMonthly['expense']!.toStringAsFixed(2),
+                          homePageController.incomeAndExpenseMonthlyTotal['expense']!.toStringAsFixed(2),
                           style: TextStyle(
                             color: AppColors.expenseBorderColor,
                             fontSize: 20,
@@ -88,7 +89,7 @@ class TotalOfTransactions extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Text(
-                          (groupedTransactionValuesMonthly['income']! - groupedTransactionValuesMonthly['expense']!).toStringAsFixed(2),
+                          (homePageController.incomeAndExpenseMonthlyTotal['income']! - homePageController.incomeAndExpenseMonthlyTotal['expense']!).toStringAsFixed(2),
                           style: TextStyle(
                             color: themeController.isDarkMode.value ? AppColors.titleTextColorDark : AppColors.titleTextColorLight,
                             fontSize: 20,

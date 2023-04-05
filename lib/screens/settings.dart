@@ -15,7 +15,7 @@ class Settings extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar('Settings'),
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.height / 30),
         child: ListView(

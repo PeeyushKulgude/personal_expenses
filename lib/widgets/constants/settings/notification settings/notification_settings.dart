@@ -21,7 +21,7 @@ class NotificationSettings extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar('Notification Settings'),
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       body: Obx((() => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,

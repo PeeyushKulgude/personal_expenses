@@ -38,7 +38,7 @@ class _SmsDisplayState extends State<SmsDisplay> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar('Add Via SMS'),
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       body: FutureBuilder(
         future: smsAndDbController.getAllMessagesFromDB(),
         builder: (context, AsyncSnapshot<List<SMS>?> snapshot) {

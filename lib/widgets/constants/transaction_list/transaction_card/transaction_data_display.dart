@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
-import '../../../controllers/home_page_controller.dart';
-import '../../../controllers/new_transaction_controller.dart';
-import '../../../database/icons_database.dart';
-import '../../../themes/app_colors.dart';
-import '../../../models/transaction.dart';
+import '../../../../controllers/home_page_controller.dart';
+import '../../../../controllers/new_transaction_controller.dart';
+import '../../../../database/icons_database.dart';
+import '../../../../themes/app_colors.dart';
+import '../../../../models/transaction.dart';
 
 class TransactionDataDisplay extends StatelessWidget {
   final Transaction transaction;

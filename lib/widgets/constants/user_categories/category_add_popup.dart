@@ -12,8 +12,9 @@ import 'icon_choice_popup.dart';
 class CategoryPopUp extends StatelessWidget {
   final categoryController = TextEditingController();
   final int editing;
+  final Function changeState;
 
-  CategoryPopUp(this.editing, title, int type, int iconCode, {super.key}) {
+  CategoryPopUp(this.editing, title, int type, int iconCode, this.changeState, {super.key}) {
     categoryController.text = title;
     newTransactionController.typeChoice.value = type;
     newTransactionController.currCategoryIconCode.value = iconCode;
@@ -251,6 +252,7 @@ class CategoryPopUp extends StatelessWidget {
               newTransactionController.currCategoryIconCode.value = 0;
               newTransactionController.typeChoice.value = 0;
               Navigator.of(context).pop();
+              changeState();
             }
           },
         ),

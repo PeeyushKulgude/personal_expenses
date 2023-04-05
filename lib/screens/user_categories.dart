@@ -31,7 +31,7 @@ class _UserCategoriesState extends State<UserCategories> with TickerProviderStat
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar('Your Categories'),
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       body: Column(
         children: [
           Obx(
@@ -93,6 +93,7 @@ class _UserCategoriesState extends State<UserCategories> with TickerProviderStat
                     '',
                     0,
                     0,
+                    changeState,
                   );
                 });
           }),

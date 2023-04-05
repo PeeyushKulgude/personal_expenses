@@ -31,7 +31,7 @@ class _StatisticsDisplayState extends State<StatisticsDisplay> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar('Statistics'),
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       body: RefreshIndicator(
         color: AppColors.appBarFillColor,
         onRefresh: (() => refresh()),

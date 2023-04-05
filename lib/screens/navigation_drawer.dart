@@ -10,8 +10,8 @@ import '../../controllers/theme_controller.dart';
 import 'package:get/get.dart';
 import 'user_categories.dart';
 
-class NavigationDrawer extends StatelessWidget {
-  NavigationDrawer({super.key});
+class CustomNavigationDrawer extends StatelessWidget {
+  CustomNavigationDrawer({super.key});
   final ThemeController themeController = Get.find();
   final SmsController smsController = Get.find();
   final StatisticsController statisticsController = Get.put(StatisticsController());

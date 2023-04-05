@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/theme_controller.dart';
 import '../../../themes/app_colors.dart';
-import '../transaction_list/date_header.dart';
+import '../transaction_list/transaction_card/date_header.dart';
 import 'transaction_data_without_buttons.dart';
 
 class TransactionCardWithoutButtons extends StatelessWidget {

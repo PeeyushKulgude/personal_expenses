@@ -54,23 +54,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar('Personal Expenses'),
-      drawer: NavigationDrawer(),
-      body: Obx(
-        (() => RefreshIndicator(
-              color: AppColors.appBarFillColor,
-              onRefresh: () => _refreshHomePage(),
-              child: Stack(
-                children: [
-                  ListView(),
-                  Column(
-                    children: <Widget>[
-                      TotalOfTransactions(_homePageController.groupedTransactionValuesMonthly),
-                      Expanded(child: TransactionList()),
-                    ],
-                  ),
-                ],
-              ),
-            )),
+      drawer: CustomNavigationDrawer(),
+      body: RefreshIndicator(
+        color: AppColors.appBarFillColor,
+        onRefresh: () => _refreshHomePage(),
+        child: Stack(
+          children: [
+            ListView(),
+            Column(
+              children: <Widget>[
+                TotalOfTransactions(),
+                Expanded(child: TransactionList()),
+              ],
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
