@@ -11,6 +11,7 @@ import 'package:personal_expenses/controllers/theme_controller.dart';
 import 'package:personal_expenses/database/transaction_database.dart';
 import 'package:personal_expenses/models/category.dart';
 import 'package:personal_expenses/models/transaction.dart';
+import 'controllers/home_page_controller.dart';
 import 'models/blocked_sender.dart';
 import 'screens/my_home_page.dart';
 import './themes/app_themes.dart';
@@ -122,10 +123,12 @@ class MyApp extends StatelessWidget {
 
   final SmsController _smsController = Get.put(SmsController());
 
+  final HomePageController _homePageController = Get.put(HomePageController());
+
   @override
   Widget build(BuildContext context) {
     if (_themeController.appData.read(darkmode) == null) {
-      _themeController.appData.writeIfNull(darkmode, false);
+      _themeController.appData.writeIfNull(darkmode, true);
       _themeController.appData.writeIfNull(showNewTransactionNotification, true);
       _themeController.appData.writeIfNull(showReminderNotification, true);
       _newTransactionController.addDefaultCategories();

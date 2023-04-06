@@ -6,6 +6,7 @@ import 'package:personal_expenses/widgets/constants/appbar/custom_appbar.dart';
 import '../themes/app_colors.dart';
 import '../widgets/constants/statistics/custom_pie_chart.dart';
 import '../widgets/constants/statistics/category_graphs_and_details.dart';
+import '../widgets/constants/statistics/time_interval_selector.dart';
 import 'navigation_drawer.dart';
 import 'package:get/get.dart';
 import '../widgets/constants/animations/no_statistics_animation.dart';
@@ -18,12 +19,27 @@ class StatisticsDisplay extends StatefulWidget {
 }
 
 class _StatisticsDisplayState extends State<StatisticsDisplay> {
-  final StatisticsController statisticsController = Get.put(StatisticsController());
-
   final ThemeController themeController = Get.find();
 
   Future<void> refresh() async {
     setState(() {});
+  }
+
+  void showDetailsOfEachCategory(BuildContext context) {
+    showBottomSheet(
+      elevation: 0,
+      context: context,
+      builder: ((context) => Obx(
+            () => Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height - Get.statusBarHeight,
+              color: themeController.isDarkMode.value
+                  ? AppColors.canvasColorDark
+                  : AppColors.canvasColorLight,
+              child: const CategoryGraphAndDetails(),
+            ),
+          )),
+    );
   }
 
   @override
@@ -38,10 +54,9 @@ class _StatisticsDisplayState extends State<StatisticsDisplay> {
         child: Stack(
           children: [
             ListView(),
-            FutureBuilder(
-              future: statisticsController.findCategorySum(),
-              builder: ((context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+            GetBuilder<StatisticsController>(
+              builder: (statisticsController) {
+                if (statisticsController.pageState.value == AppState.initial) {
                   return Center(
                     child: LoadingAnimationWidget.staggeredDotsWave(
                       color: themeController.isDarkMode.value
@@ -50,55 +65,62 @@ class _StatisticsDisplayState extends State<StatisticsDisplay> {
                       size: 50,
                     ),
                   );
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData) {
-                    return GestureDetector(
-                      onVerticalDragEnd: (details) {
-                        if (details.primaryVelocity! < 0) {
-                          showBottomSheet(
-                            context: context,
-                            builder: ((context) => Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  color: themeController.isDarkMode.value
-                                      ? AppColors.canvasColorDark
-                                      : AppColors.canvasColorLight,
-                                  child: const CategoryGraphAndDetails(),
-                                )),
-                          );
-                        }
-                      },
+                } else if (statisticsController.pageState.value == AppState.loading) {
+                  return Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                      color: themeController.isDarkMode.value
+                          ? AppColors.iconColor1Dark
+                          : AppColors.iconColor1Light,
+                      size: 50,
+                    ),
+                  );
+                } else if (statisticsController.pageState.value == AppState.loaded) {
+                  return GestureDetector(
+                    onVerticalDragEnd: (details) {
+                      if (details.primaryVelocity! < 0) {
+                        showDetailsOfEachCategory(context);
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).padding.bottom + 10),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomPieChart(snapshot.data!),
-                          Column(
-                            children: [
-                              Icon(
-                                Icons.keyboard_arrow_up_rounded,
-                                color: themeController.isDarkMode.value
-                                    ? AppColors.iconColor1Dark
-                                    : AppColors.iconColor1Light,
-                              ),
-                              Text(
-                                'Swipe up to see details of each category',
-                                style: TextStyle(
+                          TimeIntervalSelector(),
+                          CustomPieChart(statisticsController.categoryWiseList),
+                          Obx(
+                            () => Column(
+                              children: [
+                                Icon(
+                                  Icons.keyboard_arrow_up_rounded,
                                   color: themeController.isDarkMode.value
-                                      ? AppColors.titleTextColorDark
-                                      : AppColors.titleTextColorLight,
+                                      ? AppColors.iconColor1Dark
+                                      : AppColors.iconColor1Light,
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  'Swipe up to see details of each category',
+                                  style: TextStyle(
+                                    color: themeController.isDarkMode.value
+                                        ? AppColors.titleTextColorDark
+                                        : AppColors.titleTextColorLight,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    );
-                  } else {
-                    return Center(child: NoStatisticsAnimation());
-                  }
+                    ),
+                  );
+                } else if (statisticsController.pageState.value == AppState.error) {
+                  return Center(child: NoStatisticsAnimation());
+                } else if (statisticsController.pageState.value == AppState.empty) {
+                  return Center(child: NoStatisticsAnimation());
+                } else {
+                  return Center(child: NoStatisticsAnimation());
                 }
-                return Center(child: NoStatisticsAnimation());
-              }),
+              },
             ),
           ],
         ),

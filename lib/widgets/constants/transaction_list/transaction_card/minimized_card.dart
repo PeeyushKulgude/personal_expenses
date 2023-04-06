@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../controllers/theme_controller.dart';
 import '../../../../themes/app_colors.dart';
 
+// ignore: must_be_immutable
 class MinimizedTransactionCard extends StatelessWidget {
   final ThemeController themeController = Get.find();
   final dynamic groupedTransactions;

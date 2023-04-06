@@ -4,7 +4,6 @@ import '../../../models/sms.dart';
 import '../../../models/transaction.dart';
 import '../../../controllers/new_transaction_controller.dart';
 import 'package:get/get.dart';
-import 'package:string_validator/string_validator.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../themes/app_colors.dart';
 

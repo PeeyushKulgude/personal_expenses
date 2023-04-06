@@ -70,6 +70,18 @@ CREATE TABLE $tableNotificationCategories (
     }
   }
 
+  Future<List<Category>?> readExpenseCategories() async {
+    final db = await instance.database;
+
+    const orderBy = '${CategoryFields.categoryType} DESC';
+    var map = await db.query(tableCategories, orderBy: orderBy, where: '${CategoryFields.categoryType} = ?', whereArgs: ['Expense']);
+    if (map.isNotEmpty) {
+      return map.map((e) => Category.fromJson(e)).toList();
+    } else {
+      return null;
+    }
+  }
+
   Future<List<Category>?> readAllNotificationCategories() async {
     final db = await instance.database;
     var map = await db.query(tableNotificationCategories);

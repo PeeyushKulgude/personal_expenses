@@ -6,6 +6,7 @@ import 'package:personal_expenses/controllers/theme_controller.dart';
 import '../../../../themes/app_colors.dart';
 import 'category_row.dart';
 
+// ignore: must_be_immutable
 class NotificationCategoriesDisplay extends StatelessWidget {
   final SmsController smsController = Get.find();
   final ThemeController themeController = Get.find();

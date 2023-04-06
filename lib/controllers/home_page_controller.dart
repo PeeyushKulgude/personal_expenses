@@ -9,15 +9,20 @@ import '../widgets/constants/new_transaction/new_transaction.dart';
 import 'theme_controller.dart';
 import '../themes/app_colors.dart';
 
+enum HomePageStates { initial, loading, loaded, error, empty, disabled }
+
 class HomePageController extends GetxController {
   var userTransactions = <Transaction>[].obs;
   var datewiseGroupedTransactions = <Map<String, dynamic>>[].obs;
   var incomeAndExpenseMonthlyTotal = <String, double>{'expense': 0, 'income': 0}.obs;
   final ThemeController themeController = Get.put(ThemeController());
 
-  HomePageController() {
+  var homePageState = HomePageStates.loading.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
     getDatewiseGroupedTransactions();
-    refreshTransactions();
     incomeAndExpenseForLastMonth();
   }
 
@@ -26,21 +31,24 @@ class HomePageController extends GetxController {
     if (list != null) {
       userTransactions.value = list;
       return list;
+    } else {
+      return null;
     }
   }
 
   Future<List<Map<String, dynamic>>?> getDatewiseGroupedTransactions() async {
+    homePageState.value = HomePageStates.loading;
+    refresh();
     var list = await TransactionDatabase.instance.datewiseTransactions();
     if (list != null) {
       datewiseGroupedTransactions.value = list;
+      homePageState.value = HomePageStates.loaded;
+      refresh();
       return list;
     }
+    homePageState.value = HomePageStates.empty;
+    refresh();
     return null;
-  }
-
-  Future<List<Map<String, dynamic>>> getCategoryAndDatewiseTransactions(String categoryName) async {
-    var list = await TransactionDatabase.instance.categoryWiseTransactions(categoryName);
-    return list!;
   }
 
   Future<List<Transaction>?> currentMonthTransactions() async {
@@ -56,25 +64,39 @@ class HomePageController extends GetxController {
     return lst;
   }
 
+  Future<Map<String, double>> incomeAndExpenseForLastMonth() async {
+    var totalIncome = 0.0;
+    var totalExpense = 0.0;
+    var list = await currentMonthTransactions();
+    if (list != null) {
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].type == "Expense") {
+          totalExpense += list[i].amount;
+        } else {
+          totalIncome += list[i].amount;
+        }
+      }
+    }
+    incomeAndExpenseMonthlyTotal.value = {'expense': totalExpense, 'income': totalIncome};
+    return incomeAndExpenseMonthlyTotal;
+  }
+
   void addTx(transaction) async {
     await TransactionDatabase.instance.create(transaction);
-    getDatewiseGroupedTransactions();
-    refreshTransactions();
     incomeAndExpenseForLastMonth();
+    getDatewiseGroupedTransactions();
   }
 
   void editTx(transaction) async {
     await TransactionDatabase.instance.update(transaction.id, transaction);
-    getDatewiseGroupedTransactions();
-    refreshTransactions();
     incomeAndExpenseForLastMonth();
+    getDatewiseGroupedTransactions();
   }
 
   void deleteTransaction(int id) async {
     await TransactionDatabase.instance.delete(id);
-    getDatewiseGroupedTransactions();
-    refreshTransactions();
     incomeAndExpenseForLastMonth();
+    getDatewiseGroupedTransactions();
   }
 
   Widget startAddNewTransaction(BuildContext context, SMS? sms) {
@@ -245,22 +267,5 @@ class HomePageController extends GetxController {
         ),
       ],
     );
-  }
-
-  Future<Map<String, double>> incomeAndExpenseForLastMonth() async {
-    var totalIncome = 0.0;
-    var totalExpense = 0.0;
-    var list = await currentMonthTransactions();
-    if (list != null) {
-      for (int i = 0; i < list.length; i++) {
-        if (list[i].type == "Expense") {
-          totalExpense += list[i].amount;
-        } else {
-          totalIncome += list[i].amount;
-        }
-      }
-    }
-    incomeAndExpenseMonthlyTotal.value = {'expense': totalExpense, 'income': totalIncome};
-    return incomeAndExpenseMonthlyTotal;
   }
 }

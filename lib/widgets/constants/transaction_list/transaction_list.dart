@@ -9,48 +9,41 @@ import '../../../controllers/new_transaction_controller.dart';
 import '../../../themes/app_colors.dart';
 
 class TransactionList extends StatelessWidget {
-  TransactionList({super.key});
-
+  final NewTransactionController newTransactionController = Get.find();
   final HomePageController homePageController = Get.find();
-  final NewTransactionController newTransactionController = Get.put(NewTransactionController());
   final ThemeController themeController = Get.find();
+
+  TransactionList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(
       builder: (homePageController) {
-        return FutureBuilder(
-          future: homePageController.getDatewiseGroupedTransactions(),
-          builder: (context, AsyncSnapshot<List<Map<String, dynamic>>?> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: LoadingAnimationWidget.staggeredDotsWave(
-                  color: themeController.isDarkMode.value
-                      ? AppColors.iconColor1Dark
-                      : AppColors.iconColor1Light,
-                  size: 50,
-                ),
+        if (homePageController.homePageState.value == HomePageStates.loading) {
+          return Center(
+            child: LoadingAnimationWidget.staggeredDotsWave(
+              color: themeController.isDarkMode.value
+                  ? AppColors.iconColor1Dark
+                  : AppColors.iconColor1Light,
+              size: 50,
+            ),
+          );
+        } else if (homePageController.homePageState.value == HomePageStates.loaded) {
+          return ListView.builder(
+            itemCount: homePageController.datewiseGroupedTransactions.length,
+            itemBuilder: (context, index) {
+              final transaction = homePageController.datewiseGroupedTransactions[index];
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                child: TransactionCard(transaction, index),
               );
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    final transaction = snapshot.data![index];
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                      child: TransactionCard(transaction),
-                    );
-                  },
-                );
-              } else {
-                return NoTransactionFoundAnimation();
-              }
-            }
-            return NoTransactionFoundAnimation();
-          },
-        );
+            },
+          );
+        } else if (homePageController.homePageState.value == HomePageStates.empty) {
+          return NoTransactionFoundAnimation();
+        } else {
+          return NoTransactionFoundAnimation();
+        }
       },
     );
   }

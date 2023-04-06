@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/widgets/constants/transaction_list/transaction_card/date_header.dart';
 import 'package:personal_expenses/widgets/constants/transaction_list/transaction_card/expanded_card.dart';
-import 'package:personal_expenses/widgets/constants/transaction_list/transaction_card/transaction_data_display.dart';
-import '../../../../themes/app_colors.dart';
 import '../../../../controllers/theme_controller.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +7,9 @@ import 'minimized_card.dart';
 
 class TransactionCard extends StatefulWidget {
   final dynamic groupedTransactions;
+  final int index;
 
-  const TransactionCard(this.groupedTransactions, {super.key});
+  const TransactionCard(this.groupedTransactions, this.index, {super.key});
 
   @override
   State<TransactionCard> createState() => _TransactionCardState();
@@ -19,12 +17,20 @@ class TransactionCard extends StatefulWidget {
 
 class _TransactionCardState extends State<TransactionCard> {
   final ThemeController themeController = Get.find();
-  late Widget card = DateTime.now().day == widget.groupedTransactions['date'].day &&
-          DateTime.now().month == widget.groupedTransactions['date'].month &&
-          DateTime.now().year == widget.groupedTransactions['date'].year
-      ? ExpandedTransactionCard(widget.groupedTransactions)
-      : MinimizedTransactionCard(widget.groupedTransactions);
-  bool isExpanded = false;
+  late bool isExpanded;
+  late Widget card;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.index == 0 || widget.index == 1) {
+      isExpanded = true;
+      card = ExpandedTransactionCard(widget.groupedTransactions);
+    } else {
+      isExpanded = false;
+      card = MinimizedTransactionCard(widget.groupedTransactions);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,7 @@ class _TransactionCardState extends State<TransactionCard> {
         }
       }),
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 215),
         child: card,
         transitionBuilder: (Widget child, Animation<double> animation) {
           return SizeTransition(sizeFactor: animation, child: child);

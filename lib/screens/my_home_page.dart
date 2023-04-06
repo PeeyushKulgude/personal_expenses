@@ -18,7 +18,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final HomePageController _homePageController = Get.put(HomePageController());
+  final HomePageController homePageController = Get.find();
 
   final ThemeController themeController = Get.find();
 
@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (!isAllowed) {
         showDialog(
             context: context,
-            builder: ((context) => _homePageController.notificationsPermissionDialog(context)));
+            builder: ((context) => homePageController.notificationsPermissionDialog(context)));
       }
     });
     Permission.sms.status.isGranted.then((isAllowed) {
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
           const Duration(seconds: 3),
           (() => showDialog(
                 context: context,
-                builder: ((context) => _homePageController.smsPermissionDialog(context)),
+                builder: ((context) => homePageController.smsPermissionDialog(context)),
               )),
         );
       }
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) =>
-                    _homePageController.startAddNewTransaction(context, null));
+                    homePageController.startAddNewTransaction(context, null));
           }),
           child: const Text(
             "+ Add Transaction",

@@ -59,7 +59,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                 statisticsController.findCategorySum();
                 Navigator.pop(context);
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => const StatisticsDisplay())));
+                    .push(MaterialPageRoute(builder: ((context) => const Scaffold(body: StatisticsDisplay()))));
               }),
             ),
             ListTile(

@@ -17,19 +17,28 @@ class CategoryGraphAndDetails extends StatefulWidget {
   State<CategoryGraphAndDetails> createState() => _CategoryGraphAndDetailsState();
 }
 
-class _CategoryGraphAndDetailsState extends State<CategoryGraphAndDetails> with TickerProviderStateMixin {
+class _CategoryGraphAndDetailsState extends State<CategoryGraphAndDetails>
+    with TickerProviderStateMixin {
   final ThemeController themeController = Get.find();
   final HomePageController homePageController = Get.find();
   final StatisticsController statisticsController = Get.put(StatisticsController());
 
   @override
   Widget build(BuildContext context) {
-    var categoryTabs = List.generate(
-      statisticsController.categoryList.length,
-      (index) => CategoryTab(statisticsController.categoryList[index].title, statisticsController.categoryList[index].iconCode),
-    );
+    List<CategoryTab> categoryTabs = [];
+    for (var element in statisticsController.categoryWiseList.keys) {
+      for (var element2 in statisticsController.categoryList) {
+        if (element2.title == element) {
+          categoryTabs.add(CategoryTab(
+            element2.title,
+            element2.iconCode,
+          ));
+        }
+      }
+    }
 
-    TabController tabBarController = TabController(initialIndex: (statisticsController.categoryList.length / 2).floor(), length: statisticsController.categoryList.length, vsync: this);
+    TabController tabBarController = TabController(
+        initialIndex: (categoryTabs.length / 2).floor(), length: categoryTabs.length, vsync: this);
 
     return Column(
       children: [
@@ -48,19 +57,21 @@ class _CategoryGraphAndDetailsState extends State<CategoryGraphAndDetails> with 
           child: TabBarView(
             controller: tabBarController,
             children: List.generate(
-              statisticsController.categoryList.length,
+              statisticsController.categoryWiseList.length,
               (index) => FutureBuilder(
-                future: homePageController.getCategoryAndDatewiseTransactions(statisticsController.categoryList[index].title),
+                future: statisticsController.getCategoryAndDatewiseTransactions(
+                    statisticsController.categoryWiseList.keys.elementAt(index)),
                 builder: (context, AsyncSnapshot<List<Map<String, dynamic>>?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: themeController.isDarkMode.value ? AppColors.iconColor1Dark : AppColors.iconColor1Light,
+                        color: themeController.isDarkMode.value
+                            ? AppColors.iconColor1Dark
+                            : AppColors.iconColor1Light,
                         size: 50,
                       ),
                     );
-                  }
-                  if (snapshot.connectionState == ConnectionState.done) {
+                  } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       return ListView.builder(
                         itemCount: snapshot.data!.length,
