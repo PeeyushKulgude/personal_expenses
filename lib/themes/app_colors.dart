@@ -56,21 +56,55 @@ class AppColors {
   static Color canvasColorDark = const Color.fromRGBO(17, 17, 17, 1);
   static Color canvasColorLight = const Color.fromRGBO(250, 250, 250, 1);
 
-  static final pieChartColors = <Color>[
-    const Color.fromRGBO(0, 71, 189, 1),
-    const Color.fromRGBO(130, 0, 172, 1),
-    const Color.fromRGBO(154, 240, 0, 1),
-    const Color.fromRGBO(253, 71, 3, 1),
-    const Color.fromRGBO(255, 206, 0, 1),
-    const Color.fromRGBO(255, 179, 0, 1),
-    const Color.fromRGBO(234, 0, 52, 1),
-    const Color.fromRGBO(182, 16, 191, 1),
-    const Color.fromRGBO(255, 230, 0, 1),
-    const Color.fromRGBO(0, 171, 56, 1),
-    const Color.fromRGBO(7, 185, 252, 1),
-    const Color.fromRGBO(0, 149, 67, 1),
-    const Color.fromRGBO(2, 136, 217, 1),
-    const Color.fromRGBO(255, 130, 42, 1),
-    const Color.fromRGBO(204, 114, 245, 1),
+  static final List<Color> pieChartColors = [
+    const Color(0xFFFF0000), // Red
+    const Color(0xFFFFA500), // Orange
+    const Color(0xFFFFFF00), // Yellow
+    const Color(0xFF008000), // Green
+    const Color(0xFF0000FF), // Blue
+    const Color(0xFF800080), // Purple
+    const Color(0xFFFFC0CB), // Pink
+    const Color(0xFFA52A2A), // Brown
+    const Color(0xFFFFFFFF), // White
+    const Color(0xFF808080), // Gray
+    const Color(0xFF00FFFF), // Cyan
+    const Color(0xFFFF00FF), // Magenta
+    const Color(0xFFE6E6FA), // Lavender
+    const Color(0xFF000080), // Navy blue
+    const Color(0xFF40E0D0), // Turquoise
+    const Color(0xFF808000), // Olive green
+    const Color(0xFF800000), // Maroon
+    const Color(0xFFFF7F50), // Coral
+    const Color(0xFFFFE5B4), // Peach
+    const Color(0xFFFA8072), // Salmon
+    const Color(0xFF87CEEB), // Sky blue
+    const Color(0xFFD2B48C), // Tan
+    const Color(0xFF008080), // Teal
+    const Color(0xFFFF6347), // Tomato
+    const Color(0xFFF5F5DC), // Beige
+    const Color(0xFFCB4154), // Brick red
+    const Color(0xFF800020), // Burgundy
+    const Color(0xFF7B3F00), // Chocolate brown
+    const Color(0xFF006400), // Dark green
+    const Color(0xFF228B22), // Forest green
+    const Color(0xFFFFD700), // Gold
+    const Color(0xFFFF69B4), // Hot pink
+    const Color(0xFF4B0082), // Indigo
+    const Color(0xFFFFFFF0), // Ivory
+    const Color(0xFFF0E68C), // Khaki
+    const Color(0xFFADD8E6), // Light blue
+    const Color(0xFFC8A2C8), // Lilac
+    const Color(0xFF00FF00), // Lime green
+    const Color(0xFF98FF98), // Mint green
+    const Color(0xFFFFDB58), // Mustard yellow
+    const Color(0xFF39FF14), // Neon green
+    const Color(0xFF808000), // Olive
+    const Color(0xFFDA70D6), // Orchid
+    const Color(0xFFEEE8AA), // Pale yellow
+    const Color(0xFFFF007F), // Rose
+    const Color(0xFF8B3103), // Rust
+    const Color(0xFF2E8B57), // Sea green
+    const Color(0xFF6A5ACD), // Slate blue
+    const Color(0xFF43464B), // Steel gray
   ];
 }
