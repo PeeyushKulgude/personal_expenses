@@ -17,7 +17,7 @@ import 'screens/my_home_page.dart';
 import './themes/app_themes.dart';
 import 'package:workmanager/workmanager.dart';
 import './database/simple_preferences.dart';
-import './widgets/constants/notifications/notifications.dart';
+import 'widgets/notifications/notifications.dart';
 
 const taskName1 = 'checkMessages';
 const taskName2 = 'dailyReminder';
@@ -123,6 +123,7 @@ class MyApp extends StatelessWidget {
 
   final SmsController _smsController = Get.put(SmsController());
 
+  // ignore: unused_field
   final HomePageController _homePageController = Get.put(HomePageController());
 
   @override

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/widgets/constants/animations/no_sms_animation.dart';
 import '../models/sms.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
 import 'package:personal_expenses/themes/app_colors.dart';
-import 'package:personal_expenses/widgets/constants/appbar/custom_appbar.dart';
-import '../widgets/constants/sms_display/blocked_sender_list.dart';
-import '../widgets/constants/sms_display/sms_card.dart';
+import 'package:personal_expenses/widgets/appbar/custom_appbar.dart';
+import '../widgets/animations/no_sms_animation.dart';
+import '../widgets/sms_display/blocked_sender_list.dart';
+import '../widgets/sms_display/sms_card.dart';
 import 'navigation_drawer.dart';
 import '../controllers/sms_controller.dart';
 import 'package:get/get.dart';
