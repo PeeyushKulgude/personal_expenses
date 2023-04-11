@@ -3,6 +3,7 @@ import 'package:personal_expenses/controllers/sms_controller.dart';
 import 'package:personal_expenses/controllers/statistics_controller.dart';
 import 'package:personal_expenses/screens/settings.dart';
 import 'package:personal_expenses/screens/statistics.dart';
+import 'buy_me_a_coffee_page.dart';
 import 'my_home_page.dart';
 import 'sms_display.dart';
 import '../themes/app_colors.dart';
@@ -19,7 +20,7 @@ class CustomNavigationDrawer extends StatelessWidget {
   Widget buildHeader(BuildContext context) =>
       Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top));
 
-  Widget buildMenuItems(BuildContext context) => Padding(
+  Widget buildMenuItems1(BuildContext context) => Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.height / 30),
         child: Wrap(
           runSpacing: MediaQuery.of(context).size.height * 0.005,
@@ -58,8 +59,8 @@ class CustomNavigationDrawer extends StatelessWidget {
               onTap: (() {
                 statisticsController.findCategorySum();
                 Navigator.pop(context);
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => const Scaffold(body: StatisticsDisplay()))));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => const Scaffold(body: StatisticsDisplay()))));
               }),
             ),
             ListTile(
@@ -128,17 +129,61 @@ class CustomNavigationDrawer extends StatelessWidget {
         ),
       );
 
+  Widget buildMenuItems2(BuildContext context) => Padding(
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.height / 30,
+          right: MediaQuery.of(context).size.height / 30,
+          bottom: MediaQuery.of(context).size.height / 30,
+        ),
+        child: Wrap(
+          runSpacing: MediaQuery.of(context).size.height * 0.005,
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.coffee_rounded,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
+              ),
+              title: Text(
+                'Buy Me A Coffee',
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
+              ),
+              onTap: (() => Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(builder: ((context) => BuyMeACoffeePage())))),
+            ),
+          ],
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: themeController.isDarkMode.value
           ? AppColors.alertDialogBackgroundColorDark
           : AppColors.alertDialogBackgroundColorLight,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [buildHeader(context), buildMenuItems(context)],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          buildHeader(context),
+          buildMenuItems1(context),
+          Expanded(
+            child: Container(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Divider(
+              thickness: 1,
+              color: themeController.isDarkMode.value
+                  ? AppColors.cardBorderSideColorDark.withOpacity(1)
+                  : AppColors.cardBorderSideColorLight,
+            ),
+          ),
+          buildMenuItems2(context),
+        ],
       ),
     );
   }

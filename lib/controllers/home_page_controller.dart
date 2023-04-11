@@ -44,6 +44,7 @@ class HomePageController extends GetxController {
       datewiseGroupedTransactions.value = list;
       homePageState.value = HomePageStates.loaded;
       refresh();
+      incomeAndExpenseMonthlyTotal();
       return list;
     }
     homePageState.value = HomePageStates.empty;
@@ -56,9 +57,11 @@ class HomePageController extends GetxController {
     final DateTime startOfTheMonth =
         DateTime.now().subtract(Duration(days: DateTime.now().day.toInt()));
     var lst = <Transaction>[];
-    for (var element in list!) {
-      if (element.date.isAfter(startOfTheMonth)) {
-        lst.add(element);
+    if (list != null) {
+      for (var element in list!) {
+        if (element.date.isAfter(startOfTheMonth)) {
+          lst.add(element);
+        }
       }
     }
     return lst;
@@ -164,7 +167,7 @@ class HomePageController extends GetxController {
           ? AppColors.alertDialogBackgroundColorDark
           : AppColors.alertDialogBackgroundColorLight,
       title: Text(
-        'Permission To Add Transaction From Notifications',
+        'Permission To Add Transaction From Notifications (Beta)',
         style: TextStyle(
           color: themeController.isDarkMode.value
               ? AppColors.titleTextColorDark
@@ -172,7 +175,7 @@ class HomePageController extends GetxController {
         ),
       ),
       content: Text(
-        'Do you want to directly add a transaction from notifications when a transaction is detected via SMS?',
+        'Do you want to directly add a transaction from notifications when a transaction is detected via SMS?\nNote: Turn off battery saver to enable working of notifications in the background.',
         style: TextStyle(
           color: themeController.isDarkMode.value
               ? AppColors.subtitleTextColorDark

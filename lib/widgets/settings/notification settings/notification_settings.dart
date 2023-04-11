@@ -33,7 +33,7 @@ class NotificationSettings extends StatelessWidget {
                 ),
                 child: ListTile(
                   title: Text(
-                    'New Transaction Detected Notification',
+                    'New Transaction Detected Notification (Beta)',
                     style: TextStyle(
                         color: themeController.isDarkMode.value
                             ? AppColors.titleTextColorDark

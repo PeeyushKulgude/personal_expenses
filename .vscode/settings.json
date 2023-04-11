@@ -2,6 +2,7 @@
   "cmake.sourceDirectory": "${workspaceFolder}/linux",
   "editor.rulers": [],
   "cSpell.words": [
-    "xxxhdpi"
+    "xxxhdpi",
+    "βeta"
   ],
 }

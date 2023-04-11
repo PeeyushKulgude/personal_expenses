@@ -45,10 +45,13 @@ class _TransactionCardState extends State<TransactionCard> {
         }
       }),
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 215),
+        duration: const Duration(milliseconds: 225),
         child: card,
         transitionBuilder: (Widget child, Animation<double> animation) {
-          return SizeTransition(sizeFactor: animation, child: child);
+          return SizeTransition(
+            sizeFactor: animation,
+            child: child,
+          );
         },
       ),
     );

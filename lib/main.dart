@@ -88,9 +88,10 @@ void main() async {
     ),
   ]);
 
-  AwesomeNotifications().actionStream.listen((event) {
+  AwesomeNotifications().actionStream.listen((event) async {
+    HomePageController homePageController = Get.put(HomePageController());
     DateTime date = DateTime.parse(event.payload!['date']!);
-    TransactionDatabase.instance.create(
+    await TransactionDatabase.instance.create(
       Transaction(
         title: event.buttonKeyPressed,
         amount: double.parse(event.payload!['amount']!),
@@ -102,6 +103,8 @@ void main() async {
         categoryType: event.payload!['type']!,
       ),
     );
+    homePageController.getDatewiseGroupedTransactions();
+    homePageController.incomeAndExpenseMonthlyTotal();
   });
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -138,14 +141,14 @@ class MyApp extends StatelessWidget {
         DateTime.now().second.toString(),
         taskName1,
         frequency: const Duration(minutes: 15),
-        initialDelay: const Duration(seconds: 120),
+        initialDelay: const Duration(minutes: 12),
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
       Workmanager().registerPeriodicTask(
         DateTime.now().second.toString(),
         taskName2,
         frequency: const Duration(hours: 24),
-        initialDelay: const Duration(seconds: 40),
+        initialDelay: const Duration(minutes: 10),
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
     }
