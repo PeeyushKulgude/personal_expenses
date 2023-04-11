@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:personal_expenses/controllers/statistics_controller.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
 
+import '../../controllers/account_info_controller.dart';
 import '../../themes/app_colors.dart';
 
-class TimeIntervalSelector extends StatelessWidget {
-  TimeIntervalSelector({super.key});
-  final StatisticsController statisticsController = Get.find();
+class AccountInfoTimeIntervalSelector extends StatelessWidget {
+  AccountInfoTimeIntervalSelector({super.key});
+  final AccountInfoController accountInfoController = Get.find();
   final ThemeController themeController = Get.find();
 
   @override
@@ -46,14 +46,14 @@ class TimeIntervalSelector extends StatelessWidget {
                 );
               },
               context: context,
-              initialDate: statisticsController.startDate.value,
+              initialDate: accountInfoController.startDate.value,
               firstDate: DateTime(2000),
-              lastDate: statisticsController.endDate.value,
+              lastDate: accountInfoController.endDate.value,
             ).then(
               (value) {
                 if (value != null) {
-                  statisticsController.startDate.value = value;
-                  statisticsController.findCategorySum();
+                  accountInfoController.startDate.value = value;
+                  accountInfoController.getAccountWiseTotal();
                 }
                 return;
               },
@@ -70,7 +70,7 @@ class TimeIntervalSelector extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    DateFormat('dd MMM yyyy').format(statisticsController.startDate.value),
+                    DateFormat('dd MMM yyyy').format(accountInfoController.startDate.value),
                     style: TextStyle(
                       color: themeController.isDarkMode.value
                           ? AppColors.dayHeaderDateTextColorDark
@@ -118,14 +118,14 @@ class TimeIntervalSelector extends StatelessWidget {
                 );
               },
               context: context,
-              initialDate: statisticsController.endDate.value,
-              firstDate: statisticsController.startDate.value,
+              initialDate: accountInfoController.endDate.value,
+              firstDate: accountInfoController.startDate.value,
               lastDate: DateTime.now(),
             ).then(
               (value) {
                 if (value != null) {
-                  statisticsController.endDate.value = value;
-                  statisticsController.findCategorySum();
+                  accountInfoController.endDate.value = value;
+                  accountInfoController.getAccountWiseTotal();
                 }
                 return;
               },
@@ -142,7 +142,7 @@ class TimeIntervalSelector extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    DateFormat('dd MMM yyyy').format(statisticsController.endDate.value),
+                    DateFormat('dd MMM yyyy').format(accountInfoController.endDate.value),
                     style: TextStyle(
                       color: themeController.isDarkMode.value
                           ? AppColors.dayHeaderDateTextColorDark

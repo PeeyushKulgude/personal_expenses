@@ -36,7 +36,7 @@ class BuyMeACoffeePage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16),
+                    bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16, top: 16),
                 child: Text(
                   textAlign: TextAlign.center,
                   'As a student and an independent developer, I have spent 5 months making this app. All of its features are free and always will be.\n\nIf you enjoy my work and would like to support me, consider buying me a coffee.\n\nBy buying me a coffee, you\'re not just supporting me financially, you\'re also helping me to continue doing what I love. Every little bit helps, and I\'m incredibly grateful for your generosity.',

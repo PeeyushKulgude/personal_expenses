@@ -5,6 +5,7 @@ import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:personal_expenses/controllers/account_info_controller.dart';
 import 'package:personal_expenses/controllers/new_transaction_controller.dart';
 import 'package:personal_expenses/controllers/sms_controller.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
@@ -128,6 +129,9 @@ class MyApp extends StatelessWidget {
 
   // ignore: unused_field
   final HomePageController _homePageController = Get.put(HomePageController());
+
+  // ignore: unused_field
+  final AccountInfoController _accountInfoController = Get.put(AccountInfoController());
 
   @override
   Widget build(BuildContext context) {

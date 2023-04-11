@@ -114,11 +114,38 @@ class _StatisticsDisplayState extends State<StatisticsDisplay> {
                     ),
                   );
                 } else if (statisticsController.pageState.value == AppState.error) {
-                  return Center(child: NoStatisticsAnimation());
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: MediaQuery.of(context).padding.bottom + 10),
+                    child: Column(
+                      children: [
+                        TimeIntervalSelector(),
+                        Center(child: NoStatisticsAnimation()),
+                      ],
+                    ),
+                  );
                 } else if (statisticsController.pageState.value == AppState.empty) {
-                  return Center(child: NoStatisticsAnimation());
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: MediaQuery.of(context).padding.bottom + 10),
+                    child: Column(
+                      children: [
+                        TimeIntervalSelector(),
+                        Center(child: NoStatisticsAnimation()),
+                      ],
+                    ),
+                  );
                 } else {
-                  return Center(child: NoStatisticsAnimation());
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: MediaQuery.of(context).padding.bottom + 10),
+                    child: Column(
+                      children: [
+                        TimeIntervalSelector(),
+                        Center(child: NoStatisticsAnimation()),
+                      ],
+                    ),
+                  );
                 }
               },
             ),

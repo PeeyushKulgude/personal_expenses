@@ -40,8 +40,15 @@ class StatisticsController extends GetxController {
           break;
         }
       }
-      pageState.value = AppState.loaded;
-      update();
+      if (categoryWiseList.isEmpty) {
+        pageState.value = AppState.empty;
+        update();
+      } else {
+        pageState.value = AppState.loaded;
+        update();
+      
+        
+      }
     } else {
       pageState.value = AppState.empty;
       update();

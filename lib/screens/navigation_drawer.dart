@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/controllers/sms_controller.dart';
 import 'package:personal_expenses/controllers/statistics_controller.dart';
+import 'package:personal_expenses/screens/account_wise_info.dart';
 import 'package:personal_expenses/screens/settings.dart';
 import 'package:personal_expenses/screens/statistics.dart';
 import 'buy_me_a_coffee_page.dart';
@@ -103,6 +104,27 @@ class CustomNavigationDrawer extends StatelessWidget {
 
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: ((context) => const UserCategories())));
+              }),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.account_balance_wallet_rounded,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
+              ),
+              title: Text(
+                'Accounts',
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
+              ),
+              onTap: (() {
+                smsController.getNotificationCategories();
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: ((context) => const AccountWiseInfoPage())));
               }),
             ),
             ListTile(
