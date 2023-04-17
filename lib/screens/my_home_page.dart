@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
 import 'package:personal_expenses/themes/app_colors.dart';
-import 'package:personal_expenses/widgets/appbar/custom_appbar.dart';
-import '../widgets/total_of_transactions/total_of_transactions.dart';
-import '../widgets/transaction_list/transaction_list.dart';
+import 'package:personal_expenses/features/appbar/custom_appbar.dart';
+import '../features/total_of_transactions/total_of_transactions.dart';
+import '../features/transaction_list/transaction_list.dart';
 import '../controllers/home_page_controller.dart';
 import 'navigation_drawer.dart';
 import 'package:get/get.dart';
@@ -46,7 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _refreshHomePage() async {
-    setState(() {});
+    homePageController.incomeAndExpenseForLastMonth();
+    homePageController.getDatewiseGroupedTransactions();
   }
 
   @override

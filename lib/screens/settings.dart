@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
-import 'package:personal_expenses/widgets/appbar/custom_appbar.dart';
+import 'package:personal_expenses/features/appbar/custom_appbar.dart';
 import '../themes/app_colors.dart';
-import '../widgets/settings/notification settings/notification_settings.dart';
+import '../features/settings/notification settings/notification_settings.dart';
 import 'navigation_drawer.dart';
 import 'package:get/get.dart';
 

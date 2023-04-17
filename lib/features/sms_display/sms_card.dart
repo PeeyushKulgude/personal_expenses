@@ -62,7 +62,8 @@ class SMSCard extends StatelessWidget {
                     } else if (isInt(smsBody[i])) {
                       amount += smsBody[i];
                     }
-                  } else if (smsBody[i] == 's' && smsBody[i - 1] == 'r') {
+                  } else if ((smsBody[i] == 's' && smsBody[i - 1] == 'r') ||
+                      (smsBody[i] == 'r' && smsBody[i - 1] == 'n' && smsBody[i - 2] == 'i')) {
                     found = true;
                   }
                 }

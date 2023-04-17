@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:personal_expenses/themes/app_colors.dart';
-import 'package:personal_expenses/widgets/settings/notification%20settings/display_categories.dart';
+import 'package:personal_expenses/features/settings/notification%20settings/display_categories.dart';
 import '../../../controllers/theme_controller.dart';
 import '../../../database/simple_preferences.dart';
 

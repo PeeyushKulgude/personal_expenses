@@ -4,8 +4,7 @@ import '../../controllers/new_transaction_controller.dart';
 import '../../controllers/theme_controller.dart';
 import '../../models/category.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:personal_expenses/widgets/user_categories/category_card.dart';
-
+import 'package:personal_expenses/features/user_categories/category_card.dart';
 import '../../themes/app_colors.dart';
 
 class CategoryList extends StatelessWidget {

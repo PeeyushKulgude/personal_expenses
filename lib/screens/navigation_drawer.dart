@@ -60,7 +60,7 @@ class CustomNavigationDrawer extends StatelessWidget {
               onTap: (() {
                 statisticsController.findCategorySum();
                 Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: ((context) => const Scaffold(body: StatisticsDisplay()))));
               }),
             ),
@@ -82,7 +82,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                 Navigator.pop(context);
 
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => const SmsDisplay())));
+                    .pushReplacement(MaterialPageRoute(builder: ((context) => const SmsDisplay())));
               }),
             ),
             ListTile(
@@ -103,7 +103,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                 Navigator.pop(context);
 
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => const UserCategories())));
+                    .pushReplacement(MaterialPageRoute(builder: ((context) => const UserCategories())));
               }),
             ),
             ListTile(
@@ -124,7 +124,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                 smsController.getNotificationCategories();
                 Navigator.pop(context);
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => const AccountWiseInfoPage())));
+                    .pushReplacement(MaterialPageRoute(builder: ((context) => const AccountWiseInfoPage())));
               }),
             ),
             ListTile(
@@ -144,7 +144,7 @@ class CustomNavigationDrawer extends StatelessWidget {
               onTap: (() {
                 smsController.getNotificationCategories();
                 Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(builder: ((context) => Settings())));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => Settings())));
               }),
             ),
           ],

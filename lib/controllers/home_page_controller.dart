@@ -5,7 +5,7 @@ import '../models/sms.dart';
 import '../models/transaction.dart';
 import '../database/transaction_database.dart';
 import 'package:flutter/material.dart';
-import '../widgets/new_transaction/new_transaction.dart';
+import '../features/new_transaction/new_transaction.dart';
 import 'theme_controller.dart';
 import '../themes/app_colors.dart';
 

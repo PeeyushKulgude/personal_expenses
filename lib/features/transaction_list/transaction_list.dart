@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
-import 'package:personal_expenses/widgets/transaction_list/transaction_card/transaction_card.dart';
 import '../../controllers/home_page_controller.dart';
 import '../../controllers/new_transaction_controller.dart';
 import '../../themes/app_colors.dart';
 import '../animations/no_transaction_animation.dart';
+import 'transaction_card/transaction_card.dart';
 
 class TransactionList extends StatelessWidget {
   final NewTransactionController newTransactionController = Get.find();

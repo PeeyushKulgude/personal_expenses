@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:personal_expenses/controllers/account_info_controller.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
-import 'package:personal_expenses/widgets/account_wise_info/time_interval_selector.dart';
+import 'package:personal_expenses/features/account_wise_info/time_interval_selector.dart';
 
 import '../themes/app_colors.dart';
-import '../widgets/account_wise_info/account_info_tile.dart';
-import '../widgets/appbar/custom_appbar.dart';
+import '../features/account_wise_info/account_info_tile.dart';
+import '../features/appbar/custom_appbar.dart';
 import 'navigation_drawer.dart';
 
 class AccountWiseInfoPage extends StatefulWidget {

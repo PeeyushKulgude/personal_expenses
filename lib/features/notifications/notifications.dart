@@ -79,7 +79,7 @@ Future<void> showTransactionDetectedNotification(
         channelKey: 'new_sms_detected',
         title: 'New Transaction Detected',
         body: '$smsType: ₹$amount. Select category:',
-        notificationLayout: NotificationLayout.MediaPlayer,
+        notificationLayout: NotificationLayout.Default,
         wakeUpScreen: true,
         fullScreenIntent: true,
         displayOnBackground: true,
@@ -93,14 +93,12 @@ Future<void> showTransactionDetectedNotification(
           filteredCategoryList[0].title: filteredCategoryList[0].iconCode.toString(),
           filteredCategoryList[1].title: filteredCategoryList[1].iconCode.toString(),
           filteredCategoryList[2].title: filteredCategoryList[2].iconCode.toString(),
-          filteredCategoryList[3].title: filteredCategoryList[3].iconCode.toString(),
-          filteredCategoryList[4].title: filteredCategoryList[4].iconCode.toString(),
         },
       ),
       actionButtons: List.generate(
         filteredCategoryList.length,
         (index) {
-          return NotificationActionButton(
+          return NotificationActionButton(buttonType: ActionButtonType.Default,
             key: filteredCategoryList[index].title,
             label: filteredCategoryList[index].title,
             icon: CategoryIcons.notificationIconData[filteredCategoryList[index].iconCode],

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:personal_expenses/controllers/home_page_controller.dart';
-import 'package:personal_expenses/widgets/statistics/category_tab.dart';
 
 import '../../controllers/statistics_controller.dart';
 import '../../controllers/theme_controller.dart';
 import '../../themes/app_colors.dart';
 import '../animations/no_transaction_animation.dart';
+import 'category_tab.dart';
 import 'transaction_card_without_buttons.dart';
 
 class CategoryGraphAndDetails extends StatefulWidget {

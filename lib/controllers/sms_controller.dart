@@ -29,6 +29,10 @@ class SmsController extends GetxController {
     return null;
   }
 
+  List<String> getBlockedSendersStringList(List<BlockedSender> list) {
+    return list.map((e) => e.sender).toList();
+  }
+
   Future<List<SMS>?> getAllMessagesFromDB() async {
     var dbList = await SMSDatabase.instance.readAllSMS();
     var deviceList = await getAllMessagesFromDevice();
@@ -96,13 +100,20 @@ class SmsController extends GetxController {
   Future<Iterable<SmsMessage>> getAllMessagesFromDevice() async {
     var permission = await Permission.sms.status;
     var filteredMessages = <SmsMessage>[];
+    int count = 0;
+    var bList = await getAllBlockedSenders() ?? [];
+    var blockList = getBlockedSendersStringList(bList);
     if (permission.isGranted) {
       final messages = await _query.querySms(
         kinds: [SmsQueryKind.inbox],
       );
       for (int i = 0; i < messages.length; i++) {
-        if (await checkMessage(messages[i])) {
+        if (await checkMessage(messages[i], blockList)) {
+          count++;
           filteredMessages.add(messages[i]);
+          if (count >= 200) {
+            break;
+          }
         }
       }
     } else {
@@ -111,17 +122,21 @@ class SmsController extends GetxController {
         kinds: [SmsQueryKind.inbox],
       );
       for (int i = 0; i < messages.length; i++) {
-        if (await checkMessage(messages[i])) {
+        if (await checkMessage(messages[i], blockList)) {
+          count++;
           filteredMessages.add(messages[i]);
+          if (count >= 200) {
+            break;
+          }
         }
       }
     }
     return filteredMessages;
   }
 
-  Future<bool> checkMessage(SmsMessage message) async {
+  Future<bool> checkMessage(SmsMessage message, List<String>? blockList) async {
     String lst = message.body!.toLowerCase();
-    if ((lst.contains('credited') || lst.contains('debited') || lst.contains('transaction')) &&
+    if ((lst.contains('debited') || lst.contains('credited') || lst.contains('transaction')) &&
         !lst.contains('recharge') &&
         !lst.contains('sale') &&
         !lst.contains('expire') &&
@@ -133,12 +148,9 @@ class SmsController extends GetxController {
         !lst.contains('claim') &&
         !lst.contains('get') &&
         !lst.contains('prize')) {
-      var blockedSenderList = await getAllBlockedSenders();
-      if (blockedSenderList != null) {
-        for (var element in blockedSenderList) {
-          if (element.sender == message.sender) {
-            return false;
-          }
+      if (blockList != null) {
+        if (blockList.contains(message.sender!)) {
+          return false;
         }
       }
       return true;
@@ -151,14 +163,10 @@ class SmsController extends GetxController {
     addNotificationCategory(Category(title: 'Food', iconCode: 1, categoryType: 'Expense'));
     addNotificationCategory(Category(title: 'Recharge', iconCode: 2, categoryType: 'Expense'));
     addNotificationCategory(Category(title: 'Household', iconCode: 3, categoryType: 'Expense'));
-    addNotificationCategory(Category(title: 'Entertainment', iconCode: 4, categoryType: 'Expense'));
-    addNotificationCategory(Category(title: 'Education', iconCode: 5, categoryType: 'Expense'));
 
     addNotificationCategory(Category(title: 'Salary', iconCode: 17, categoryType: 'Income'));
     addNotificationCategory(Category(title: 'Investments', iconCode: 18, categoryType: 'Income'));
     addNotificationCategory(Category(title: 'Part-time', iconCode: 19, categoryType: 'Income'));
-    addNotificationCategory(Category(title: 'Awards', iconCode: 20, categoryType: 'Income'));
-    addNotificationCategory(Category(title: 'Others', iconCode: 21, categoryType: 'Income'));
   }
 
   void addNotificationCategory(Category category) async {

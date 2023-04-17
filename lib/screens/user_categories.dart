@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../themes/app_colors.dart';
-import '../widgets/user_categories/category_list.dart';
+import '../features/user_categories/category_list.dart';
 import 'navigation_drawer.dart';
 import '../controllers/theme_controller.dart';
 import '../controllers/new_transaction_controller.dart';
-import '../widgets/appbar/custom_appbar.dart';
-import '../widgets/user_categories/category_add_popup.dart';
+import '../features/appbar/custom_appbar.dart';
+import '../features/user_categories/category_add_popup.dart';
 
 class UserCategories extends StatefulWidget {
   const UserCategories({super.key});

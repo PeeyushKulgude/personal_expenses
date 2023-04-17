@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:personal_expenses/controllers/statistics_controller.dart';
 import 'package:personal_expenses/controllers/theme_controller.dart';
-import 'package:personal_expenses/widgets/appbar/custom_appbar.dart';
+import 'package:personal_expenses/features/appbar/custom_appbar.dart';
 import '../themes/app_colors.dart';
-import '../widgets/animations/no_statistics_animation.dart';
-import '../widgets/statistics/custom_pie_chart.dart';
-import '../widgets/statistics/category_graphs_and_details.dart';
-import '../widgets/statistics/time_interval_selector.dart';
+import '../features/animations/no_statistics_animation.dart';
+import '../features/statistics/custom_pie_chart.dart';
+import '../features/statistics/category_graphs_and_details.dart';
+import '../features/statistics/time_interval_selector.dart';
 import 'navigation_drawer.dart';
 import 'package:get/get.dart';
 

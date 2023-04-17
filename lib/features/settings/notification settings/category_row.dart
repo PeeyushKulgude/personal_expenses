@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:personal_expenses/models/category.dart';
-import 'package:personal_expenses/widgets/settings/notification%20settings/category_gridview.dart';
+import 'package:personal_expenses/features/settings/notification%20settings/category_gridview.dart';
 
 import '../../../controllers/theme_controller.dart';
 import '../../../database/icons_database.dart';

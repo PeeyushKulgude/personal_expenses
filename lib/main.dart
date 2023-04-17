@@ -18,7 +18,7 @@ import 'screens/my_home_page.dart';
 import './themes/app_themes.dart';
 import 'package:workmanager/workmanager.dart';
 import './database/simple_preferences.dart';
-import 'widgets/notifications/notifications.dart';
+import 'features/notifications/notifications.dart';
 
 const taskName1 = 'checkMessages';
 const taskName2 = 'dailyReminder';
@@ -145,7 +145,7 @@ class MyApp extends StatelessWidget {
         DateTime.now().second.toString(),
         taskName1,
         frequency: const Duration(minutes: 15),
-        initialDelay: const Duration(minutes: 12),
+        initialDelay: const Duration(minutes: 15),
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
       Workmanager().registerPeriodicTask(

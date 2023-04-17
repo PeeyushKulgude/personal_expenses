@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expenses/widgets/transaction_list/transaction_card/expanded_card.dart';
+import 'package:personal_expenses/features/transaction_list/transaction_card/expanded_card.dart';
 import '../../../controllers/theme_controller.dart';
 import 'package:get/get.dart';
 
