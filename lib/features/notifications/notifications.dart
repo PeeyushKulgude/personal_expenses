@@ -47,7 +47,7 @@ String checkCreditedDebited(String smsBody) {
       return 'Income';
     }
   }
-  return '';
+  return 'Expense';
 }
 
 Future<void> showTransactionDetectedNotification(
@@ -64,8 +64,6 @@ Future<void> showTransactionDetectedNotification(
   for (int i = 1; i < smsBody.length; i++) {
     if (found) {
       if (smsBody[i] == '.' && isInt(smsBody[i - 1])) {
-        log(smsBody[i - 1]);
-        log(isInt(smsBody[i - 1]).toString());
         break;
       } else if (isAlpha(smsBody[i])) {
         break;

@@ -1,5 +1,5 @@
 name: personal_expenses
-description: A new Flutter project.
+description: An app to keep tab of your expenses.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 

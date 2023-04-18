@@ -1,4 +1,4 @@
-package com.example.personal_expenses
+package com.peeyushkulgude.personal_expenses
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
