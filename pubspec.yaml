@@ -29,6 +29,7 @@ dependencies:
   workmanager: ^0.5.1
   awesome_notifications: ^0.6.21
   lottie: ^2.2.0
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:

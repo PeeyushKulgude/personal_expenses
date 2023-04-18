@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:personal_expenses/controllers/sms_controller.dart';
 import 'package:personal_expenses/controllers/statistics_controller.dart';
 import 'package:personal_expenses/screens/account_wise_info.dart';
 import 'package:personal_expenses/screens/settings.dart';
 import 'package:personal_expenses/screens/statistics.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'buy_me_a_coffee_page.dart';
 import 'my_home_page.dart';
 import 'sms_display.dart';
@@ -102,8 +105,8 @@ class CustomNavigationDrawer extends StatelessWidget {
               onTap: (() {
                 Navigator.pop(context);
 
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: ((context) => const UserCategories())));
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((context) => const UserCategories())));
               }),
             ),
             ListTile(
@@ -123,8 +126,8 @@ class CustomNavigationDrawer extends StatelessWidget {
               onTap: (() {
                 smsController.getNotificationCategories();
                 Navigator.pop(context);
-                Navigator.of(context)
-                    .pushReplacement(MaterialPageRoute(builder: ((context) => const AccountWiseInfoPage())));
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((context) => const AccountWiseInfoPage())));
               }),
             ),
             ListTile(
@@ -144,7 +147,8 @@ class CustomNavigationDrawer extends StatelessWidget {
               onTap: (() {
                 smsController.getNotificationCategories();
                 Navigator.pop(context);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => Settings())));
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(builder: ((context) => Settings())));
               }),
             ),
           ],
@@ -160,6 +164,27 @@ class CustomNavigationDrawer extends StatelessWidget {
         child: Wrap(
           runSpacing: MediaQuery.of(context).size.height * 0.005,
           children: [
+            ListTile(
+              leading: Icon(
+                Icons.privacy_tip_rounded,
+                color: themeController.isDarkMode.value
+                    ? AppColors.iconColor1Dark
+                    : AppColors.iconColor1Light,
+              ),
+              title: Text(
+                'Privacy Policy',
+                style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight),
+              ),
+              onTap: (() async {
+                const url = 'https://sanjanamali.blogspot.com/2023/04/personalexpensesprivacypolicy.blogspot.com202304blog-post.html';
+                if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
+                  log("Couldn't open site.");
+                }
+              }),
+            ),
             ListTile(
               leading: Icon(
                 Icons.coffee_rounded,

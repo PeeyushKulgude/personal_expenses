@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
@@ -55,20 +57,23 @@ Future<void> showTransactionDetectedNotification(
   String amount = '';
   String smsType = checkCreditedDebited(smsBody);
   var filteredCategoryList = categoryList
-          .where(
-            (element) => element.categoryType == smsType,
-          )
-          .toList();
+      .where(
+        (element) => element.categoryType == smsType,
+      )
+      .toList();
   for (int i = 1; i < smsBody.length; i++) {
     if (found) {
       if (smsBody[i] == '.' && isInt(smsBody[i - 1])) {
+        log(smsBody[i - 1]);
+        log(isInt(smsBody[i - 1]).toString());
         break;
       } else if (isAlpha(smsBody[i])) {
         break;
       } else if (isInt(smsBody[i])) {
         amount += smsBody[i];
       }
-    } else if (smsBody[i] == 's' && smsBody[i - 1] == 'r') {
+    } else if ((smsBody[i] == 's' && smsBody[i - 1] == 'r') ||
+        (smsBody[i] == 'r' && smsBody[i - 1] == 'n' && smsBody[i - 2] == 'i')) {
       found = true;
     }
   }
@@ -98,7 +103,8 @@ Future<void> showTransactionDetectedNotification(
       actionButtons: List.generate(
         filteredCategoryList.length,
         (index) {
-          return NotificationActionButton(buttonType: ActionButtonType.Default,
+          return NotificationActionButton(
+            buttonType: ActionButtonType.Default,
             key: filteredCategoryList[index].title,
             label: filteredCategoryList[index].title,
             icon: CategoryIcons.notificationIconData[filteredCategoryList[index].iconCode],
