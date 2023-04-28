@@ -11,29 +11,31 @@ class NoTransactionFoundAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
-          child: Lottie.asset(
-            'assets/animations/no_transaction.json',
+    return ClipRect(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+            child: Lottie.asset(
+              'assets/animations/no_transaction.json',
+            ),
           ),
-        ),
-        Obx(
-          (() => Text(
-                'No transactions found.',
-                style: TextStyle(
-                  color: themeController.isDarkMode.value
-                      ? AppColors.titleTextColorDark
-                      : AppColors.titleTextColorLight,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              )),
-        ),
-      ],
+          Obx(
+            (() => Text(
+                  'No transactions found.',
+                  style: TextStyle(
+                    color: themeController.isDarkMode.value
+                        ? AppColors.titleTextColorDark
+                        : AppColors.titleTextColorLight,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                )),
+          ),
+        ],
+      ),
     );
   }
 }

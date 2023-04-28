@@ -179,7 +179,8 @@ class CustomNavigationDrawer extends StatelessWidget {
                         : AppColors.titleTextColorLight),
               ),
               onTap: (() async {
-                const url = 'https://sanjanamali.blogspot.com/2023/04/personalexpensesprivacypolicy.blogspot.com202304blog-post.html';
+                const url =
+                    'https://personalexpenses-privacypolicy.blogspot.com/2023/04/privacy-policy-personal-expenses.html';
                 if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
                   log("Couldn't open site.");
                 }

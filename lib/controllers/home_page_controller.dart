@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../models/sms.dart';
@@ -197,9 +196,7 @@ class HomePageController extends GetxController {
           ),
         ),
         TextButton(
-          onPressed: () => AwesomeNotifications()
-              .requestPermissionToSendNotifications()
-              .then((_) => Navigator.pop(context)),
+          onPressed: () => Permission.notification.request().then((_) => Navigator.pop(context)),
           child: Text(
             'Allow',
             style: TextStyle(

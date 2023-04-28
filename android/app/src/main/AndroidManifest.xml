@@ -2,6 +2,7 @@
     package="com.peeyushkulgude.personal_expenses">
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
    <application
         android:allowBackup="false"
         android:fullBackupOnly="false"
