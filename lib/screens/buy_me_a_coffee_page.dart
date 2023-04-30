@@ -19,22 +19,21 @@ class BuyMeACoffeePage extends StatelessWidget {
       appBar: CustomAppBar('Buy Me A Coffee'),
       drawer: CustomNavigationDrawer(),
       body: Obx(
-        () => Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            BuyMeACoffeeAnimation(),
-            Expanded(
-              child: Padding(
+        () => SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              BuyMeACoffeeAnimation(),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
                   'assets/images/qr.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
+              Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).padding.bottom, left: 16, right: 16, top: 16),
                 child: Text(
@@ -47,8 +46,8 @@ class BuyMeACoffeePage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
