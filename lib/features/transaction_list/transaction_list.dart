@@ -40,9 +40,9 @@ class TransactionList extends StatelessWidget {
             },
           );
         } else if (homePageController.homePageState.value == HomePageStates.empty) {
-          return NoTransactionFoundAnimation();
+          return SingleChildScrollView(child: NoTransactionFoundAnimation());
         } else {
-          return NoTransactionFoundAnimation();
+          return SingleChildScrollView(child: NoTransactionFoundAnimation());
         }
       },
     );

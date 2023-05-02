@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,15 @@ Future<void> showTransactionDetectedNotification(
     }
   }
   if (amount != '' && filteredCategoryList.isNotEmpty && smsType.isNotEmpty) {
+    log({
+      'amount': amount,
+      'date': sms.date!.toString(),
+      'type': checkCreditedDebited(smsBody),
+      'account': (smsBody.contains('upi') ? 'UPI' : 'DebitCard'),
+      filteredCategoryList[0].title: filteredCategoryList[0].iconCode.toString(),
+      filteredCategoryList[1].title: filteredCategoryList[1].iconCode.toString(),
+      'Other': Icons.mail_outline_rounded.codePoint.toString(),
+    }.toString());
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: createUniqueId(),
@@ -94,20 +104,29 @@ Future<void> showTransactionDetectedNotification(
           'account': (smsBody.contains('upi') ? 'UPI' : 'DebitCard'),
           filteredCategoryList[0].title: filteredCategoryList[0].iconCode.toString(),
           filteredCategoryList[1].title: filteredCategoryList[1].iconCode.toString(),
-          filteredCategoryList[2].title: filteredCategoryList[2].iconCode.toString(),
+          'Other': Icons.mail_outline_rounded.codePoint.toString(),
         },
       ),
-      actionButtons: List.generate(
-        filteredCategoryList.length,
-        (index) {
-          return NotificationActionButton(
-            buttonType: ActionButtonType.Default,
-            key: filteredCategoryList[index].title,
-            label: filteredCategoryList[index].title,
-            icon: CategoryIcons.notificationIconData[filteredCategoryList[index].iconCode],
-          );
-        },
-      ),
+      actionButtons: [
+        NotificationActionButton(
+          buttonType: ActionButtonType.Default,
+          key: filteredCategoryList[0].title,
+          label: filteredCategoryList[0].title,
+          icon: CategoryIcons.notificationIconData[filteredCategoryList[0].iconCode],
+        ),
+        NotificationActionButton(
+          buttonType: ActionButtonType.Default,
+          key: filteredCategoryList[1].title,
+          label: filteredCategoryList[1].title,
+          icon: CategoryIcons.notificationIconData[filteredCategoryList[1].iconCode],
+        ),
+        NotificationActionButton(
+          buttonType: ActionButtonType.Default,
+          key: 'Other',
+          label: 'Other',
+          icon: CategoryIcons.notificationIconData[filteredCategoryList[1].iconCode],
+        ),
+      ],
     );
   }
 }

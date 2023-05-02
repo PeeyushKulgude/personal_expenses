@@ -11,6 +11,8 @@ import '../themes/app_colors.dart';
 enum HomePageStates { initial, loading, loaded, error, empty, disabled }
 
 class HomePageController extends GetxController {
+  var shouldOpenDialogForAddingTransaction = false.obs;
+  var otherTransactionFromNotificationPayload = <String, String>{}.obs;
   var userTransactions = <Transaction>[].obs;
   var datewiseGroupedTransactions = <Map<String, dynamic>>[].obs;
   var incomeAndExpenseMonthlyTotal = <String, double>{'expense': 0, 'income': 0}.obs;
@@ -23,6 +25,12 @@ class HomePageController extends GetxController {
     super.onInit();
     getDatewiseGroupedTransactions();
     incomeAndExpenseForLastMonth();
+  }
+
+  void addOtherTransactionFromNotification(Map<String, String> payload) {
+    shouldOpenDialogForAddingTransaction.value = true;
+    otherTransactionFromNotificationPayload.value = payload;
+    refresh();
   }
 
   Future refreshTransactions() async {

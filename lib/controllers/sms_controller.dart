@@ -162,11 +162,9 @@ class SmsController extends GetxController {
   void addNotificationCategories() {
     addNotificationCategory(Category(title: 'Food', iconCode: 1, categoryType: 'Expense'));
     addNotificationCategory(Category(title: 'Recharge', iconCode: 2, categoryType: 'Expense'));
-    addNotificationCategory(Category(title: 'Household', iconCode: 3, categoryType: 'Expense'));
 
     addNotificationCategory(Category(title: 'Salary', iconCode: 17, categoryType: 'Income'));
     addNotificationCategory(Category(title: 'Investments', iconCode: 18, categoryType: 'Income'));
-    addNotificationCategory(Category(title: 'Part-time', iconCode: 19, categoryType: 'Income'));
   }
 
   void addNotificationCategory(Category category) async {

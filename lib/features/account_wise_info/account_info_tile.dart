@@ -28,12 +28,15 @@ class AccountInfoTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            iconAddress,
-            color: themeController.isDarkMode.value
-                ? AppColors.newTransactionIconColorDark
-                : AppColors.newTransactionIconColorLight,
-            height: MediaQuery.of(context).size.width * 0.2,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.2,
+            child: SvgPicture.asset(
+              iconAddress,
+              color: themeController.isDarkMode.value
+                  ? AppColors.newTransactionIconColorDark
+                  : AppColors.newTransactionIconColorLight,
+              height: MediaQuery.of(context).size.width * 0.2,
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

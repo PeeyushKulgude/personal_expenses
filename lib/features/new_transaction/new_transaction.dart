@@ -28,8 +28,7 @@ class NewTransaction extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.01),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
             child: Text(
               editing == 0 ? 'New Transaction' : 'Edit Transaction',
               style: TextStyle(
@@ -37,15 +36,51 @@ class NewTransaction extends StatelessWidget {
                     ? AppColors.titleTextColorDark
                     : AppColors.titleTextColorLight,
                 fontSize: 18,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
-          TextInputFields(),
-          const CategorySelect(),
-          DateChoice(),
-          AccountChoice(),
-          TypeChoice(),
-          AddTransaction(addTx, editing, sms),
+          Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+            child: TextInputFields(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const CategorySelect(),
+                DateChoice(),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+            child: const TypeChoice(),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+              child: Text(
+                ' Payment Method',
+                style: TextStyle(
+                  color: themeController.isDarkMode.value
+                      ? AppColors.titleTextColorDark.withOpacity(0.7)
+                      : AppColors.titleTextColorLight.withOpacity(0.7),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+            child: AccountChoice(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+            child: AddTransaction(addTx, editing, sms),
+          ),
         ],
       ),
     );

@@ -62,46 +62,36 @@ class _UserCategoriesState extends State<UserCategories> with TickerProviderStat
               controller: tabBarController,
               children: [
                 RefreshIndicator(
-                    color: AppColors.appBarFillColor,
-                    onRefresh: (() => changeState()),
-                    child: CategoryList('Expense', changeState),),
+                  color: AppColors.appBarFillColor,
+                  onRefresh: (() => changeState()),
+                  child: CategoryList('Expense', changeState),
+                ),
                 RefreshIndicator(
-                    color: AppColors.appBarFillColor,
-                    onRefresh: (() => changeState()),
-                    child: CategoryList('Income', changeState),),
+                  color: AppColors.appBarFillColor,
+                  onRefresh: (() => changeState()),
+                  child: CategoryList('Income', changeState),
+                ),
               ],
             ),
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        height: 45,
-        width: 150,
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-        child: FloatingActionButton(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25)),
-          ),
-          onPressed: (() {
-            showDialog<void>(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return CategoryPopUp(
-                    0,
-                    '',
-                    0,
-                    0,
-                    changeState,
-                  );
-                });
-          }),
-          child: const Text(
-            "+ Add Category",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          showDialog<void>(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return CategoryPopUp(
+                  0,
+                  '',
+                  0,
+                  0,
+                  changeState,
+                );
+              });
+        }),
+        child: const Icon(Icons.add_rounded, color: Colors.white),
       ),
     );
   }

@@ -91,21 +91,25 @@ void main() async {
 
   AwesomeNotifications().actionStream.listen((event) async {
     HomePageController homePageController = Get.put(HomePageController());
-    DateTime date = DateTime.parse(event.payload!['date']!);
-    await TransactionDatabase.instance.create(
-      Transaction(
-        title: event.buttonKeyPressed,
-        amount: double.parse(event.payload!['amount']!),
-        date: DateTime(date.year, date.month, date.day),
-        type: event.payload!['type']!,
-        account: event.payload!['account']!,
-        category: event.buttonKeyPressed,
-        iconCode: int.parse(event.payload![event.buttonKeyPressed]!),
-        categoryType: event.payload!['type']!,
-      ),
-    );
-    homePageController.getDatewiseGroupedTransactions();
-    homePageController.incomeAndExpenseMonthlyTotal();
+    if (event.buttonKeyPressed != 'Other') {
+      DateTime date = DateTime.parse(event.payload!['date']!);
+      await TransactionDatabase.instance.create(
+        Transaction(
+          title: event.buttonKeyPressed,
+          amount: double.parse(event.payload!['amount']!),
+          date: DateTime(date.year, date.month, date.day),
+          type: event.payload!['type']!,
+          account: event.payload!['account']!,
+          category: event.buttonKeyPressed,
+          iconCode: int.parse(event.payload![event.buttonKeyPressed]!),
+          categoryType: event.payload!['type']!,
+        ),
+      );
+      homePageController.getDatewiseGroupedTransactions();
+      homePageController.incomeAndExpenseMonthlyTotal();
+    } else {
+      homePageController.addOtherTransactionFromNotification(event.payload!);
+    }
   });
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -145,7 +149,7 @@ class MyApp extends StatelessWidget {
         DateTime.now().second.toString(),
         taskName1,
         frequency: const Duration(minutes: 15),
-        initialDelay: const Duration(minutes: 10),
+        initialDelay: const Duration(minutes: 5),
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
       Workmanager().registerPeriodicTask(
@@ -156,7 +160,6 @@ class MyApp extends StatelessWidget {
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
     }
-
     return SimpleBuilder(builder: (_) {
       _themeController.isDarkMode.value = _themeController.appData.read(darkmode);
       return GetMaterialApp(

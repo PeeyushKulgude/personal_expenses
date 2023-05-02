@@ -132,80 +132,109 @@ class CategoryPopUp extends StatelessWidget {
                     ),
                   )),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.45,
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            'Income',
-                            style: TextStyle(
-                              color: themeController.isDarkMode.value
-                                  ? AppColors.titleTextColorDark
-                                  : AppColors.titleTextColorLight,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(
+                  (() => InkWell(
+                        onTap: (() => newTransactionController.typeChoice.value = 1),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: newTransactionController.typeChoice.value == 1
+                                  ? AppColors.incomeBorderColor
+                                  : Colors.transparent,
+                              width: 1,
                             ),
+                            color: newTransactionController.typeChoice.value == 1
+                                ? AppColors.incomeBackgroundColor
+                                : themeController.isDarkMode.value
+                                    ? AppColors.canvasColorDark
+                                    : AppColors.canvasColorLight,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            'Expense',
-                            style: TextStyle(
-                              color: themeController.isDarkMode.value
-                                  ? AppColors.titleTextColorDark
-                                  : AppColors.titleTextColorLight,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Obx(
-                          (() => IconButton(
-                                icon: SvgPicture.asset(
-                                  'assets/images/down-arrow.svg',
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.arrow_downward_rounded,
                                   color: newTransactionController.typeChoice.value == 1
                                       ? AppColors.incomePrimaryColor
                                       : themeController.isDarkMode.value
-                                          ? AppColors.newTransactionIconColorDark
-                                          : AppColors.newTransactionIconColorLight,
+                                          ? AppColors.iconColor1Dark
+                                          : AppColors.iconColor1Light,
                                 ),
-                                onPressed: (() => newTransactionController.typeChoice.value = 1),
-                                color: Colors.black,
-                                splashRadius: 1,
-                              )),
+                                Text(
+                                  'Income',
+                                  style: TextStyle(
+                                    color: newTransactionController.typeChoice.value == 1
+                                        ? AppColors.incomePrimaryColor
+                                        : themeController.isDarkMode.value
+                                            ? AppColors.subtitleTextColorDark
+                                            : AppColors.subtitleTextColorLight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Obx(
-                          (() => IconButton(
-                                icon: SvgPicture.asset(
-                                  'assets/images/up-arrow.svg',
+                      )),
+                ),
+                Obx(
+                  (() => InkWell(
+                        onTap: (() => newTransactionController.typeChoice.value = 2),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: newTransactionController.typeChoice.value == 2
+                                  ? AppColors.expenseBorderColor
+                                  : Colors.transparent,
+                              width: 1,
+                            ),
+                            color: newTransactionController.typeChoice.value == 2
+                                ? AppColors.expenseBackgroundColor
+                                : themeController.isDarkMode.value
+                                    ? AppColors.canvasColorDark
+                                    : AppColors.canvasColorLight,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.arrow_upward_rounded,
                                   color: newTransactionController.typeChoice.value == 2
                                       ? AppColors.expensePrimaryColor
                                       : themeController.isDarkMode.value
-                                          ? AppColors.newTransactionIconColorDark
-                                          : AppColors.newTransactionIconColorLight,
+                                          ? AppColors.iconColor1Dark
+                                          : AppColors.iconColor1Light,
                                 ),
-                                onPressed: (() => newTransactionController.typeChoice.value = 2),
-                                color: Colors.black,
-                                splashRadius: 1,
-                              )),
+                                Text(
+                                  'Expense',
+                                  style: TextStyle(
+                                    color: newTransactionController.typeChoice.value == 2
+                                        ? AppColors.expensePrimaryColor
+                                        : themeController.isDarkMode.value
+                                            ? AppColors.subtitleTextColorDark
+                                            : AppColors.subtitleTextColorLight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                      )),
+                ),
+              ],
             ),
           ],
         ),

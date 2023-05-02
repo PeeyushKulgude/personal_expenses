@@ -69,102 +69,97 @@ class AddTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.37,
-      padding: const EdgeInsets.only(top: 12),
-      child: TextButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-              side: BorderSide(
-                width: 1,
-                color: themeController.isDarkMode.value
-                    ? AppColors.titleTextColorDark
-                    : AppColors.titleTextColorLight,
-              ),
-            ),
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(AppColors.appBarFillColor),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
-        onPressed: (() {
-          String acc = "";
-          if (c.accountChoice.value == 1) {
-            acc = "Cash";
-          } else if (c.accountChoice.value == 2) {
-            acc = "UPI";
-          } else if (c.accountChoice.value == 3) {
-            acc = "DebitCard";
-          }
+      ),
+      onPressed: (() {
+        String acc = "";
+        if (c.accountChoice.value == 1) {
+          acc = "Cash";
+        } else if (c.accountChoice.value == 2) {
+          acc = "UPI";
+        } else if (c.accountChoice.value == 3) {
+          acc = "DebitCard";
+        }
 
-          String currType = "";
-          if (c.typeChoice.value == 1) {
-            currType = "Income";
-          } else if (c.typeChoice.value == 2) {
-            currType = "Expense";
-          }
+        String currType = "";
+        if (c.typeChoice.value == 1) {
+          currType = "Income";
+        } else if (c.typeChoice.value == 2) {
+          currType = "Expense";
+        }
 
-          var enteredTitle = c.titleController.value.text;
+        var enteredTitle = c.titleController.value.text;
 
-          if (enteredTitle == '') {
-            c.titleController.value.text = c.currCategoryTitle.value;
-          }
-          if (double.tryParse(c.amountController.value.text) == null ||
-              double.parse(c.amountController.value.text) <= 0 ||
-              c.accountChoice.value == 0 ||
-              c.typeChoice.value == 0 ||
-              c.currCategoryTitle.value == '' ||
-              ((c.typeChoice.value == 1 ? 'Income' : 'Expense') != c.currCategoryType.value)) {
-            wrongInputDialog(context);
-            return;
+        if (enteredTitle == '') {
+          c.titleController.value.text = c.currCategoryTitle.value;
+        }
+        if (double.tryParse(c.amountController.value.text) == null ||
+            double.parse(c.amountController.value.text) <= 0 ||
+            c.accountChoice.value == 0 ||
+            c.typeChoice.value == 0 ||
+            c.currCategoryTitle.value == '' ||
+            ((c.typeChoice.value == 1 ? 'Income' : 'Expense') != c.currCategoryType.value)) {
+          wrongInputDialog(context);
+          return;
+        } else {
+          DateTime now = c.currDate.value;
+          if (editing != 0) {
+            aT(Transaction(
+                id: editing,
+                title: c.titleController.value.text,
+                amount: double.parse(c.amountController.value.text),
+                date: DateTime(now.year, now.month, now.day),
+                type: currType,
+                account: acc,
+                category: c.currCategoryTitle.value,
+                iconCode: c.currCategoryIconCode.value,
+                categoryType: 'Expense'));
           } else {
-            DateTime now = c.currDate.value;
-            if (editing != 0) {
-              aT(Transaction(
-                  id: editing,
-                  title: c.titleController.value.text,
-                  amount: double.parse(c.amountController.value.text),
-                  date: DateTime(now.year, now.month, now.day),
-                  type: currType,
-                  account: acc,
-                  category: c.currCategoryTitle.value,
-                  iconCode: c.currCategoryIconCode.value,
-                  categoryType: 'Expense'));
-            } else {
-              aT(Transaction(
-                  title: c.titleController.value.text,
-                  amount: double.parse(c.amountController.value.text),
-                  date: DateTime(now.year, now.month, now.day),
-                  type: currType,
-                  account: acc,
-                  category: c.currCategoryTitle.value,
-                  iconCode: c.currCategoryIconCode.value,
-                  categoryType: 'Expense'));
-            }
-            if (sms != null) {
-              smsController.markSMSAsAdded(sms!);
-            }
-
-            c.accountChoice = 0.obs;
-            c.typeChoice = 0.obs;
-            c.currCategoryTitle = ''.obs;
-
-            c.titleController.value.clear();
-            c.amountController.value.clear();
-            c.currDate.value = DateTime.now();
-            c.currCategoryTitle = "".obs;
-            c.currCategoryType = "".obs;
-            c.currCategoryIconCode = 0.obs;
-
-            Navigator.pop(context);
-            return;
+            aT(Transaction(
+                title: c.titleController.value.text,
+                amount: double.parse(c.amountController.value.text),
+                date: DateTime(now.year, now.month, now.day),
+                type: currType,
+                account: acc,
+                category: c.currCategoryTitle.value,
+                iconCode: c.currCategoryIconCode.value,
+                categoryType: 'Expense'));
           }
-        }),
+          if (sms != null) {
+            smsController.markSMSAsAdded(sms!);
+          }
+
+          c.accountChoice = 0.obs;
+          c.typeChoice = 0.obs;
+          c.currCategoryTitle = ''.obs;
+
+          c.titleController.value.clear();
+          c.amountController.value.clear();
+          c.currDate.value = DateTime.now();
+          c.currCategoryTitle = "".obs;
+          c.currCategoryType = "".obs;
+          c.currCategoryIconCode = 0.obs;
+
+          Navigator.pop(context);
+          return;
+        }
+      }),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 32),
         child: Text(
-          editing == 0 ? 'Add Transaction' : 'Submit Changes',
+          'Done',
           style: TextStyle(
             color: themeController.isDarkMode.value
                 ? AppColors.titleTextColorDark
                 : AppColors.titleTextColorLight,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

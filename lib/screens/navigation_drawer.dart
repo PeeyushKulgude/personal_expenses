@@ -117,7 +117,7 @@ class CustomNavigationDrawer extends StatelessWidget {
                     : AppColors.iconColor1Light,
               ),
               title: Text(
-                'Accounts',
+                'Payment Methods',
                 style: TextStyle(
                     color: themeController.isDarkMode.value
                         ? AppColors.titleTextColorDark

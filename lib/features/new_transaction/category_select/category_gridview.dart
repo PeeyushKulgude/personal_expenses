@@ -37,8 +37,7 @@ class CategoryGridView extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
                 itemCount: snapshot.data!.length,
                 itemBuilder: ((context, index) {
                   final category = snapshot.data![index];
@@ -46,12 +45,11 @@ class CategoryGridView extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: (() {
-                          newTransactionController.currCategoryTitle.value =
-                              category.title;
-                          newTransactionController.currCategoryIconCode.value =
-                              category.iconCode;
-                          newTransactionController.currCategoryType.value =
-                              category.categoryType;
+                          newTransactionController.currCategoryTitle.value = category.title;
+                          newTransactionController.currCategoryIconCode.value = category.iconCode;
+                          newTransactionController.currCategoryType.value = category.categoryType;
+                          newTransactionController.typeChoice.value =
+                              category.categoryType == 'Income' ? 1 : 2;
                           Navigator.of(context).pop();
                         }),
                         icon: SvgPicture.asset(

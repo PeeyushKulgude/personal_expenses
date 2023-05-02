@@ -33,7 +33,7 @@ class _AccountWiseInfoPageState extends State<AccountWiseInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: CustomAppBar('Account Wise Information'),
+      appBar: CustomAppBar('Payment Methods'),
       drawer: CustomNavigationDrawer(),
       body: GetBuilder<AccountInfoController>(builder: (accountInfoController) {
         if (accountInfoController.pageState.value == AppState.loaded) {

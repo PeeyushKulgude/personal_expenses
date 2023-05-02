@@ -13,58 +13,129 @@ class AccountChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-              child: Obx(
-            () => IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/cash.svg',
-                color: c.accountChoice.value == 1
-                    ? const Color.fromARGB(255, 179, 3, 0)
-                    : themeController.isDarkMode.value
-                        ? AppColors.newTransactionIconColorDark
-                        : AppColors.newTransactionIconColorLight,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Obx(
+            () => InkWell(
+              onTap: (() => c.accountChoice.value = 1),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.09,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: c.accountChoice.value == 1
+                      ? AppColors.appBarFillColor
+                      : themeController.isDarkMode.value
+                          ? AppColors.canvasColorDark
+                          : AppColors.canvasColorLight,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/cash.svg',
+                      color: themeController.isDarkMode.value
+                          ? AppColors.newTransactionIconColorDark
+                          : AppColors.newTransactionIconColorLight,
+                    ),
+                    Text(
+                      'Cash',
+                      style: TextStyle(
+                        color: themeController.isDarkMode.value
+                            ? AppColors.titleTextColorDark.withOpacity(0.7)
+                            : AppColors.titleTextColorLight.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              onPressed: (() => c.accountChoice.value = 1),
-              color: Colors.black,
-              splashRadius: 1,
             ),
-          )),
-          Expanded(
-              child: Obx((() => IconButton(
-                    icon: SvgPicture.asset(
+          ),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+        Expanded(
+          child: Obx(
+            () => InkWell(
+              onTap: (() => c.accountChoice.value = 2),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.09,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: c.accountChoice.value == 2
+                      ? AppColors.appBarFillColor
+                      : themeController.isDarkMode.value
+                          ? AppColors.canvasColorDark
+                          : AppColors.canvasColorLight,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
                       'assets/images/upi.svg',
-                      color: c.accountChoice.value == 2
-                          ? const Color.fromARGB(255, 179, 3, 0)
-                          : themeController.isDarkMode.value
-                              ? AppColors.newTransactionIconColorDark
-                              : AppColors.newTransactionIconColorLight,
+                      color: themeController.isDarkMode.value
+                          ? AppColors.newTransactionIconColorDark
+                          : AppColors.newTransactionIconColorLight,
                     ),
-                    onPressed: (() => c.accountChoice.value = 2),
-                    color: Colors.black,
-                    splashRadius: 1,
-                  )))),
-          Expanded(
-              child: Obx((() => IconButton(
-                    icon: SvgPicture.asset(
+                    Text(
+                      'UPI',
+                      style: TextStyle(
+                        color: themeController.isDarkMode.value
+                            ? AppColors.titleTextColorDark.withOpacity(0.7)
+                            : AppColors.titleTextColorLight.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+        Expanded(
+          child: Obx(
+            () => InkWell(
+              onTap: (() => c.accountChoice.value = 3),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.09,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: c.accountChoice.value == 3
+                      ? AppColors.appBarFillColor
+                      : themeController.isDarkMode.value
+                          ? AppColors.canvasColorDark
+                          : AppColors.canvasColorLight,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
                       'assets/images/debitcard.svg',
-                      color: c.accountChoice.value == 3
-                          ? const Color.fromARGB(255, 179, 3, 0)
-                          : themeController.isDarkMode.value
-                              ? AppColors.newTransactionIconColorDark
-                              : AppColors.newTransactionIconColorLight,
+                      color: themeController.isDarkMode.value
+                          ? AppColors.newTransactionIconColorDark
+                          : AppColors.newTransactionIconColorLight,
                     ),
-                    onPressed: (() => c.accountChoice.value = 3),
-                    color: Colors.black,
-                    splashRadius: 1,
-                  )))),
-        ],
-      ),
+                    Text(
+                      'Card',
+                      style: TextStyle(
+                        color: themeController.isDarkMode.value
+                            ? AppColors.titleTextColorDark.withOpacity(0.7)
+                            : AppColors.titleTextColorLight.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
