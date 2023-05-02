@@ -37,7 +37,7 @@ class CategoryPopUp extends StatelessWidget {
       elevation: 10,
       backgroundColor: themeController.isDarkMode.value
           ? AppColors.alertDialogBackgroundColorDark
-          : AppColors.alertDialogBackgroundColorLight,
+          : Colors.white,
       title: Text(editing == 0 ? 'Add A New Category' : 'Edit Category',
           style: TextStyle(
             color: themeController.isDarkMode.value
@@ -153,7 +153,7 @@ class CategoryPopUp extends StatelessWidget {
                                 ? AppColors.incomeBackgroundColor
                                 : themeController.isDarkMode.value
                                     ? AppColors.canvasColorDark
-                                    : AppColors.canvasColorLight,
+                                    : AppColors.fieldColorLight,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
@@ -202,7 +202,7 @@ class CategoryPopUp extends StatelessWidget {
                                 ? AppColors.expenseBackgroundColor
                                 : themeController.isDarkMode.value
                                     ? AppColors.canvasColorDark
-                                    : AppColors.canvasColorLight,
+                                    : AppColors.fieldColorLight,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(

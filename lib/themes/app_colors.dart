@@ -51,10 +51,12 @@ class AppColors {
   static Color newTransactionIconColorLight = const Color.fromARGB(255, 126, 126, 126);
 
   static Color newTransactionTextFieldColorDark = const Color.fromARGB(255, 33, 150, 243);
-  static Color newTransactionTextFieldColorLight = const Color.fromARGB(255, 126, 126, 126);
+  static Color newTransactionTextFieldColorLight = const Color.fromARGB(255, 0, 0, 0);
 
   static Color canvasColorDark = const Color.fromRGBO(17, 17, 17, 1);
   static Color canvasColorLight = const Color.fromRGBO(250, 250, 250, 1);
+
+  static Color fieldColorLight = const Color.fromRGBO(240, 240, 240, 1);
 
   static final List<Color> pieChartColors = [
     const Color(0xFFFF0000), // Red

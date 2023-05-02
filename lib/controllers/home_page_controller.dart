@@ -126,7 +126,7 @@ class HomePageController extends GetxController {
             elevation: 10,
             backgroundColor: themeController.isDarkMode.value
                 ? AppColors.alertDialogBackgroundColorDark
-                : AppColors.alertDialogBackgroundColorLight,
+                : Colors.white,
             actions: <Widget>[NewTransaction(addTx, 0, sms)],
           ),
         ),

@@ -21,7 +21,7 @@ class DateChoice extends StatelessWidget {
         decoration: BoxDecoration(
           color: themeController.isDarkMode.value
               ? AppColors.canvasColorDark
-              : AppColors.canvasColorLight,
+              : AppColors.fieldColorLight,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -31,6 +31,7 @@ class DateChoice extends StatelessWidget {
             SvgPicture.asset(
               'assets/images/date.svg',
               height: MediaQuery.of(context).size.height * 0.03,
+              color: AppColors.appBarFillColor,
             ),
             Obx((() => FittedBox(
                   child: Text(

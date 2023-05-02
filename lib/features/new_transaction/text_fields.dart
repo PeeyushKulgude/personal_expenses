@@ -20,7 +20,7 @@ class TextInputFields extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeController.isDarkMode.value
                   ? AppColors.canvasColorDark
-                  : AppColors.canvasColorLight,
+                  : AppColors.fieldColorLight,
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
@@ -66,7 +66,7 @@ class TextInputFields extends StatelessWidget {
             decoration: BoxDecoration(
               color: themeController.isDarkMode.value
                   ? AppColors.canvasColorDark
-                  : AppColors.canvasColorLight,
+                  : AppColors.fieldColorLight,
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(

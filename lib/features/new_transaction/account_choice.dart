@@ -28,7 +28,7 @@ class AccountChoice extends StatelessWidget {
                       ? AppColors.appBarFillColor
                       : themeController.isDarkMode.value
                           ? AppColors.canvasColorDark
-                          : AppColors.canvasColorLight,
+                          : AppColors.fieldColorLight,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -46,7 +46,7 @@ class AccountChoice extends StatelessWidget {
                       style: TextStyle(
                         color: themeController.isDarkMode.value
                             ? AppColors.titleTextColorDark.withOpacity(0.7)
-                            : AppColors.titleTextColorLight.withOpacity(0.7),
+                            : AppColors.titleTextColorLight,
                       ),
                     ),
                   ],
@@ -68,7 +68,7 @@ class AccountChoice extends StatelessWidget {
                       ? AppColors.appBarFillColor
                       : themeController.isDarkMode.value
                           ? AppColors.canvasColorDark
-                          : AppColors.canvasColorLight,
+                          : AppColors.fieldColorLight,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -86,7 +86,7 @@ class AccountChoice extends StatelessWidget {
                       style: TextStyle(
                         color: themeController.isDarkMode.value
                             ? AppColors.titleTextColorDark.withOpacity(0.7)
-                            : AppColors.titleTextColorLight.withOpacity(0.7),
+                            : AppColors.titleTextColorLight,
                       ),
                     ),
                   ],
@@ -108,7 +108,7 @@ class AccountChoice extends StatelessWidget {
                       ? AppColors.appBarFillColor
                       : themeController.isDarkMode.value
                           ? AppColors.canvasColorDark
-                          : AppColors.canvasColorLight,
+                          : AppColors.fieldColorLight,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -126,7 +126,7 @@ class AccountChoice extends StatelessWidget {
                       style: TextStyle(
                         color: themeController.isDarkMode.value
                             ? AppColors.titleTextColorDark.withOpacity(0.7)
-                            : AppColors.titleTextColorLight.withOpacity(0.7),
+                            : AppColors.titleTextColorLight,
                       ),
                     ),
                   ],

@@ -93,7 +93,7 @@ class _CategorySelectState extends State<CategorySelect> with TickerProviderStat
         decoration: BoxDecoration(
           color: themeController.isDarkMode.value
               ? AppColors.canvasColorDark
-              : AppColors.canvasColorLight,
+              : AppColors.fieldColorLight,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Obx(
@@ -105,6 +105,7 @@ class _CategorySelectState extends State<CategorySelect> with TickerProviderStat
                     SvgPicture.asset(
                       'assets/images/category.svg',
                       height: MediaQuery.of(context).size.height * 0.025,
+                      color: AppColors.appBarFillColor,
                     ),
                     const SizedBox(
                       width: 8,
