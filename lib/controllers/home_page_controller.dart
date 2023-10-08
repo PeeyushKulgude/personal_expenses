@@ -12,6 +12,7 @@ enum HomePageStates { initial, loading, loaded, error, empty, disabled }
 
 class HomePageController extends GetxController {
   var shouldOpenDialogForAddingTransaction = false.obs;
+  var balance = 0.0.obs;
   var otherTransactionFromNotificationPayload = <String, String>{}.obs;
   var userTransactions = <Transaction>[].obs;
   var datewiseGroupedTransactions = <Map<String, dynamic>>[].obs;
@@ -61,8 +62,7 @@ class HomePageController extends GetxController {
 
   Future<List<Transaction>?> currentMonthTransactions() async {
     var list = await refreshTransactions();
-    final DateTime startOfTheMonth =
-        DateTime.now().subtract(Duration(days: DateTime.now().day.toInt()));
+    final DateTime startOfTheMonth = DateTime(DateTime.now().year, DateTime.now().month, 1);
     var lst = <Transaction>[];
     if (list != null) {
       for (var element in list!) {
@@ -77,17 +77,26 @@ class HomePageController extends GetxController {
   Future<Map<String, double>> incomeAndExpenseForLastMonth() async {
     var totalIncome = 0.0;
     var totalExpense = 0.0;
-    var list = await currentMonthTransactions();
+    var totalBalance = 0.0;
+    final DateTime startOfTheMonth = DateTime(DateTime.now().year, DateTime.now().month, 1);
+    var list = await refreshTransactions();
     if (list != null) {
       for (int i = 0; i < list.length; i++) {
         if (list[i].type == "Expense") {
-          totalExpense += list[i].amount;
+          if (list[i].date.isAfter(startOfTheMonth)) {
+            totalExpense += list[i].amount;
+          }
+          totalBalance -= list[i].amount;
         } else {
-          totalIncome += list[i].amount;
+          if (list[i].date.isAfter(startOfTheMonth)) {
+            totalIncome += list[i].amount;
+          }
+          totalBalance += list[i].amount;
         }
       }
     }
     incomeAndExpenseMonthlyTotal.value = {'expense': totalExpense, 'income': totalIncome};
+    balance.value = totalBalance;
     return incomeAndExpenseMonthlyTotal;
   }
 

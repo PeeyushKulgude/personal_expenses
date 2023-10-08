@@ -108,10 +108,10 @@ class _SmsDisplayState extends State<SmsDisplay> {
               }),
             );
           }),
-          child: Row(
+          child: const Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Padding(
                 padding: EdgeInsets.all(4.0),
                 child: Icon(

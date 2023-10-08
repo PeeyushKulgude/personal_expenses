@@ -149,7 +149,7 @@ class MyApp extends StatelessWidget {
         DateTime.now().second.toString(),
         taskName1,
         frequency: const Duration(minutes: 15),
-        initialDelay: const Duration(minutes: 5),
+        initialDelay: const Duration(seconds: 10),
         existingWorkPolicy: ExistingWorkPolicy.append,
       );
       Workmanager().registerPeriodicTask(

@@ -53,7 +53,6 @@ String checkCreditedDebited(String smsBody) {
 Future<void> showTransactionDetectedNotification(
     SmsMessage sms, List<Category> categoryList) async {
   final smsBody = sms.body!.toLowerCase();
-  bool found = false;
   String amount = '';
   String smsType = checkCreditedDebited(smsBody);
   var filteredCategoryList = categoryList
@@ -61,20 +60,26 @@ Future<void> showTransactionDetectedNotification(
         (element) => element.categoryType == smsType,
       )
       .toList();
-  for (int i = 1; i < smsBody.length; i++) {
-    if (found) {
-      if (smsBody[i] == '.' && isInt(smsBody[i - 1])) {
-        break;
-      } else if (isAlpha(smsBody[i])) {
-        break;
-      } else if (isInt(smsBody[i])) {
-        amount += smsBody[i];
+
+  RegExp exp = RegExp(r"[-+]?\d*\.\d+|\d+");
+
+  for (var word in smsBody.split(' ')) {
+    if (isFloat(word)) {
+      amount = word;
+      break;
+    } else if (isInt(word)) {
+      amount = word;
+      break;
+    } else if (exp.hasMatch(word) && (word.contains('rs') || word.contains('inr'))) {
+      var extracted = exp.firstMatch(word);
+      amount = extracted!.group(0)!;
+      if (amount[0] == '.') {
+        amount = amount.substring(1);
       }
-    } else if ((smsBody[i] == 's' && smsBody[i - 1] == 'r') ||
-        (smsBody[i] == 'r' && smsBody[i - 1] == 'n' && smsBody[i - 2] == 'i')) {
-      found = true;
+      break;
     }
   }
+
   if (amount != '' && filteredCategoryList.isNotEmpty && smsType.isNotEmpty) {
     log({
       'amount': amount,

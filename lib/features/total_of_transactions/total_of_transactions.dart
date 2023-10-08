@@ -111,9 +111,7 @@ class TotalOfTransactions extends StatelessWidget {
                     Expanded(
                       child: Center(
                         child: Text(
-                          (homePageController.incomeAndExpenseMonthlyTotal['income']! -
-                                  homePageController.incomeAndExpenseMonthlyTotal['expense']!)
-                              .toStringAsFixed(2),
+                          (homePageController.balance.value).toStringAsFixed(2),
                           style: TextStyle(
                             color: themeController.isDarkMode.value
                                 ? AppColors.titleTextColorDark
